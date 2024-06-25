@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Access Demo</title>
+</head>
+<body>
+    <h1>Webcam Access Demo</h1>
+    <video id="webcam" width="640" height="480" autoplay></video>
+    <script src="script.js"></script>
+	<p>https://levelup.gitconnected.com/how-to-access-the-webcam-in-javascript-a-beginners-guide-3b5cc4f53b0b</p>
+    <p>
+
+        Business
+            Accounting
+            Economics
+            Finance
+            Investment
+            Management
+            Marketing
+            Organizations
+            Planning & Activities
+            Product & Services
+            Structure & Systems
+        Miscellaneous
+            Career & Education
+            Culture
+            Entertainment
+            Fashion & Beauty
+            Geography
+            History
+            Legal
+            Politics
+                Ideology
+                Leaders
+                Political Institutions
+            Religion
+                Islam
+            Sports
+        Technology
+            Gadgets
+            Gaming
+            SmartPhones
+            Tablets
+            Software
+            internet
+            Hardware
+            Protocols & Formats
+            Communication
+            Web Applications
+            Industrial
+            Household Equipments
+            Auto
+            Career and Certifications
+        Science
+            Biology
+            Chemistry
+            Health
+            Disease
+            Diet & Fitness
+            Drugs
+            Mathematics & Statistics
+            Nature
+            Animals
+            Birds
+            Physics
+            Psychology
+        Objects
+            Food
+            Processed Foods
+            Vegetables & Fruits
+        Language
+            Words
+            Grammar
+
+Difference between mmap and malloc
+
+• Categorized under Hardware | Difference between mmap and malloc
+
+mmap vs malloc
+
+There is dynamic memory in C and this points to allocation of memory in the C programming language through a set of functions present in the C standard library. One of these is malloc, which refers to memory allocation. In the UNIX system there is mmap, which refers to a memory mapped system that comes with its own unique I/O. These two (mmap and malloc) will at face value perform the same function but further scrutiny reveals some differences. These differences, that arise from functionality, are outlined below.
+
+Differences
+
+First off, it is important to establish whether there is any evidence indicating that there is significant stifling of the memory available. This is done through the measurement of the program’s performance against memory management .
+
+The main memory allocation interface is malloc. This is the largest in the C library. Part of the management code contained in it is mmap.  When malloc is running, it gathers all available system facilities. Additional system facilities can be mobilized through the kernel, which is one of the memory management strategies that systems use to ensure that there is satisfactory memory allocation. The process is  not straightforward, though, and has been made to be complicated for the sole reason of preventing people from creating simple programs that can disorganize memory allocation and hence create poor performance.
+
+‘mmap’ on the other hand is a system call that takes charge and requests the kernel to find an unused and contiguous region in an application’s address that is large enough to allow for the mapping of several pages of memory. There is also the creation of virtual memory management structures which in effect cannot result in a segfault.
+
+Malloc generally functions in most of the memory management process. In the event the program requires additional memory, this is borrowed from the OS. Mmap on the other hand makes use of a context switch that converts into kernel land.
+
+Malloc is best suited for allocating memory in any application running on the system as opposed to the use of mmap. This is what is required to happen by default, other than in special cases when it may be permitted.
+
+Mmap can be used to speed up the response given by applications. This is however not advisable as it ends up sacrificing some bytes to pages so that the application can run smoothly. Although the data content may seem small in the beginning, extrapolating it when numerous applications want to run may in effect slow down the system even further.
+
+After measuring performance and usage of resources, a thorough evaluation of data usage by all applications running on the system should be done.  If the lifetimes of the applications running can be shown it can become better.
+
+Use of mmap for allocating memory comes with the disadvantage that the allocation and deallocation of data in chunks is expensive. This is because data is split into numerous areas, and also denies mmap from making system calls.
+
+Mmap is advantageous over malloc because memory used up by mmap is immediately returned to the OS.   The memory used up by malloc is never returned unless there is a data segment break. This memory is specially kept to be reused.
+
+Summary
+
+‘malloc’ stands for main memory allocation point
+
+A mmap system calls and requests a kernel to find unused regions in application addresses which can accommodate mapping of several memory pages
+
+Mmap is not recommended for allocating memory as it splits available memory and cannot make system calls
+
+A benefit of mmap over malloc is the availability of memory, as opposed to malloc memory, which is reused.
+
+Read more: Difference between mmap and malloc | Difference Between http://www.differencebetween.net/technology/hardware-technology/difference-between-mmap-and-malloc/#ixzz8dnPSkbPX
+
+
+
+
+
+    </p>
+</body>
+</html>
