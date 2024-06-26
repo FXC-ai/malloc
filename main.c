@@ -27,9 +27,9 @@ int main()
 	int pid = getpid();
 	printf("pid = %d\n", pid);
 
-	// const char *fileName = "maped_memory.txt";
+	const char *fileName = "maped_memory.txt";
 
-	// const int size_file = 25;
+	const int size_file = 25;
 
 	char *ptr_test = (char *) malloc (sizeof(char) * 4);
 
