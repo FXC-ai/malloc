@@ -1,10 +1,17 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c
-OBJS = main.o
+SRCS = lib.c
+OBJS = lib.o
 
-all: test
+HOSTTYPE = ""
+
+all: $(OBJS)
+ifeq ($(HOSTTYPE),)
+HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+	gcc $(CFLAGS) $(OBJS) -shared -o libmy_lib.so
 
 test: $(OBJS)
-	$(CC) $(CFLAGS) -o test $(OBJS)
+	$(CC) -fPIC -c $(CFLAGS) -o test $(OBJS)
+
