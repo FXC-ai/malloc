@@ -1,35 +1,44 @@
+COLOUR_GREEN=\033[0;32m
+COLOUR_RED=\033[0;31m
+COLOUR_BLUE=\033[0;34m
+COLOUR_END=\033[0m
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS := lib.c
 OBJS := lib.o
 
-NAME = libft_malloc.so
+NAME := libft_malloc.so
 
 ifeq ($(HOSTTYPE),)
 HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
+REAL_LIB := libft_malloc_$(HOSTTYPE).so
+
 all : $(NAME)
 
-$(NAME) : libft_malloc_$(HOSTTYPE).so
-	@echo Create libft_malloc.so
-	ln -s libft_malloc_$(HOSTTYPE).so $(NAME)
+$(NAME) : $(REAL_LIB)
+	@ln -s $(REAL_LIB) $(NAME)
+	@echo "$(COLOUR_GREEN)libft_malloc.so created$(COLOUR_END)"
 
-libft_malloc_$(HOSTTYPE).so : $(OBJS)
-	@echo Create libft_malloc_$(HOSTTYPE).so
-	$(CC) $(CFLAGS) $(OBJS) -shared -o libft_malloc_$(HOSTTYPE).so
+$(REAL_LIB) : $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -shared -o $(REAL_LIB)
+	@echo "$(COLOUR_GREEN)$(REAL_LIB) created$(COLOUR_END)"
 
 $(OBJS) : $(SRCS)
-	@echo "Create .o files"
-	$(CC) $(CFLAGS) -fPIC -c $(SRCS) -o $(OBJS)
+	@$(CC) $(CFLAGS) -fPIC -c $(SRCS) -o $(OBJS)
+	@echo "$(COLOUR_GREEN).o files created$(COLOUR_END)"
 
 clean :
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
+	@echo "$(COLOUR_RED).o files deleted$(COLOUR_RED)"
 
 fclean : clean
-	rm -f $(NAME)
+	@rm -f $(NAME) $(REAL_LIB)
+	@echo "$(COLOUR_RED)$(NAME) $(REAL_LIB) deleted$(COLOUR_RED)"
 
 re : fclean all
 
-
+.PHONY: all clean fclean re
