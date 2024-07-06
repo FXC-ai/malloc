@@ -15,13 +15,13 @@ ifeq ($(HOSTTYPE),)
 HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-REAL_LIB := $(NAME)_$(HOSTTYPE).so
+REAL_LIB := libft_malloc_$(HOSTTYPE).so
 
 all : $(NAME)
 
 $(NAME) : $(REAL_LIB)
 	@ln -s $(REAL_LIB) $(NAME)
-	@echo "$(COLOUR_GREEN)$(NAME).so created$(COLOUR_END)"
+	@echo "$(COLOUR_GREEN)$(NAME) created$(COLOUR_END)"
 
 $(REAL_LIB) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -shared -o $(REAL_LIB)
