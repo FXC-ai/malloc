@@ -9,6 +9,7 @@ void *heap_start = NULL;
 
 typedef struct s_block_meta
 {
+	int size_previous;
 	int size;
 	void *previous;
 	void *next;
@@ -17,40 +18,92 @@ typedef struct s_block_meta
 } block_meta;
 
 
+void *find_last_block_meta (block_meta *start)
+{
+	block_meta *current = start;
+
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	return current;
+}
+
+
 void *ft_malloc (int size)
 {
-	void *ptr_tiny = NULL;
-	void *ptr_small = NULL;
-	void *ptr_large = NULL;
-
-
 
 	if (heap_start == NULL)
 	{
+		void *ptr_tiny = NULL;
+		void *ptr_small = NULL;
+		void *ptr_large = NULL;
+		/*Inutile d'allouer systematiquement...*/
 		ptr_tiny = mmap(NULL, 384000000, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-		printf("ptr_tiny = %p\n", ptr_tiny);
+		if (ptr_tiny == MAP_FAILED)
+		{
+			perror("mmap");
+			return NULL;
+		}	
 		ptr_small = mmap(ptr_tiny, 1024000000, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-		printf("ptr_small = %p\n", ptr_small);
+		if (ptr_small == MAP_FAILED)
+		{
+			perror("mmap");
+			return NULL;
+		}
 		ptr_large = mmap(ptr_small, 8192000000, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-		printf("ptr_large = %p\n", ptr_large);
-
-		// printf ("%ld %ld\n", ptr_large - ptr_small, ptr_small - ptr_tiny);
-
-		printf("sizeof(block_meta) = %lu\n", sizeof(block_meta));
-		block_meta *initial_block = (block_meta *) ptr_tiny;
-		initial_block->size = size;
-		initial_block->previous = NULL;
-		initial_block->next = NULL;
-		initial_block->is_free = false;
+		if (ptr_large == MAP_FAILED)
+		{
+			perror("mmap");
+			return NULL;
+		}	
 
 		heap_start = ptr_tiny;
 
-		return (void *) ptr_tiny + sizeof(block_meta);
+		if (size <= 512)
+		{
+			block_meta *initial_block_tiny = (block_meta *) ptr_tiny;
+			initial_block_tiny->size = size;
+			initial_block_tiny->size_previous = 0;
+			initial_block_tiny->previous = NULL;
+			initial_block_tiny->next = NULL;
+			initial_block_tiny->is_free = false;
+			void* r = (void *) (initial_block_tiny + sizeof(block_meta));
+			return (void *) (ptr_tiny + sizeof(block_meta));
+		}
+		else if (size <= 8192)
+		{
+			block_meta *initial_block_small = (block_meta *) ptr_small;
+			initial_block_small->size = size;
+			initial_block_small->size_previous = 0;
+			initial_block_small->previous = NULL;
+			initial_block_small->next = NULL;
+			initial_block_small->is_free = false;
+			return (void *) (ptr_small + sizeof(block_meta));
+		}
+		else if (size <= 131072)
+		{
+			block_meta *initial_block_large = (block_meta *) ptr_small;
+			initial_block_large->size = size;
+			initial_block_large->size_previous = 0;
+			initial_block_large->previous = NULL;
+			initial_block_large->next = NULL;
+			initial_block_large->is_free = false;
+			return (void *) (ptr_large + sizeof(block_meta));
+
+		}
+
 	}
+	else
+	{
+		if (size <= 512)
+		{	
+			block_meta *last = find_last_block_meta((block_meta *) heap_start);
+			printf("test = %d %p %p %d %d\n",last->size_previous, last->previous, last->next, last->size, last->is_free);
+		}
 
-
-
-	return ptr_tiny;
+	}
+	return NULL;
 }
 
 
@@ -60,7 +113,10 @@ int main()
 	printf("TEST 0\n");
 
 	char *ptr_test0 = (char *) ft_malloc(12);
+	char *ptr_test1 = (char *) ft_malloc(12);
 
+	printf("ptr_test0 = %p\n", ptr_test0);
+	printf("ptr_test1 = %p\n", ptr_test1);
 
 
 
