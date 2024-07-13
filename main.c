@@ -1,6 +1,15 @@
 #include "lib.h"
 
+void *ft_malloc (int size)
+{
+	void *ptr;
 
+	ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+	if (shared_mem == MAP_FAILED) {
+		return NULL;
+	}
+	return ptr;
+}
 
 int main()
 {
