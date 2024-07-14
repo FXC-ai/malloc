@@ -153,5 +153,7 @@ int main()
 	char *ptr_test1 = (char *) ft_malloc(10);
 	printf("ptr_test1 = %p\n",ptr_test1);
 
+
+
 	return 0;
 }
