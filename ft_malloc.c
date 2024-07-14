@@ -9,12 +9,14 @@ void *heap_start = NULL;
 
 typedef struct s_block_meta
 {
-	int size_previous;
+
 	int size;
 	struct s_block_meta *previous;
 	struct s_block_meta *next;
 	bool is_free;
-	
+
+
+
 } block_meta;
 
 
@@ -32,6 +34,8 @@ void *find_last_block_meta (block_meta *start)
 
 void *ft_malloc (int size)
 {
+
+	size = size + sizeof(int);
 
 	if (heap_start == NULL)
 	{
@@ -64,7 +68,7 @@ void *ft_malloc (int size)
 		{
 			block_meta *initial_block_tiny = (block_meta *) ptr_tiny;
 			initial_block_tiny->size = size;
-			initial_block_tiny->size_previous = 0;
+
 			initial_block_tiny->previous = NULL;
 			initial_block_tiny->next = NULL;
 			initial_block_tiny->is_free = false;
@@ -75,7 +79,7 @@ void *ft_malloc (int size)
 		{
 			block_meta *initial_block_small = (block_meta *) ptr_small;
 			initial_block_small->size = size;
-			initial_block_small->size_previous = 0;
+
 			initial_block_small->previous = NULL;
 			initial_block_small->next = NULL;
 			initial_block_small->is_free = false;
@@ -85,7 +89,7 @@ void *ft_malloc (int size)
 		{
 			block_meta *initial_block_large = (block_meta *) ptr_small;
 			initial_block_large->size = size;
-			initial_block_large->size_previous = 0;
+
 			initial_block_large->previous = NULL;
 			initial_block_large->next = NULL;
 			initial_block_large->is_free = false;
@@ -100,19 +104,24 @@ void *ft_malloc (int size)
 		{	
 			block_meta *last = find_last_block_meta((block_meta *) heap_start);
 			block_meta *new = (void *) last + sizeof(block_meta) + last->size;
-			// printf("last = %p\n", last);
-			// printf("new = %p\n", new);
+			
+			// printf("last = %p\n", last);	
+			printf("int du new = %p\n", (void *) new + sizeof(block_meta) + (size - 4));
+
+			int *security = (void *) new + sizeof(block_meta) + (size - sizeof(int));
+
+			*security = size - sizeof(int);
 			// printf("diff = %ld\n", (void *) new - (void *) last);
 
-			new->size_previous = last->size;
-			new->size = size;
+
+			new->size = size - sizeof(int);
 			new->previous = last;
 			new->next = NULL;
 			new->is_free = false;
 
 			last->next = new;
 
-			return (void *) (new + sizeof(block_meta));
+			return (void *) new + sizeof(block_meta);
 		}
 
 	}
@@ -123,7 +132,7 @@ void *ft_malloc (int size)
 int main()
 {
 
-    // printf("Size of block_meta: %lu\n", sizeof(block_meta));
+    printf("Size of block_meta: %lu\n", sizeof(block_meta));
     // printf("Offset of size_previous: %lu\n", offsetof(block_meta, size_previous));
     // printf("Offset of size: %lu\n", offsetof(block_meta, size));
     // printf("Offset of previous: %lu\n", offsetof(block_meta, previous));
@@ -132,7 +141,11 @@ int main()
 	// printf("sizeof block meta = %ld\n", sizeof(block_meta));
 
 	char *ptr_test0 = (char *) ft_malloc(10);
-	printf("TEST 0 : %p\n", heap_start);
+
+	printf("First memory address = %p\n", heap_start);
+
+	printf("ptr_test0 = %p\n",  ptr_test0);
+
 
 	ptr_test0[0] = 'a';
 	ptr_test0[1] = 'a';
@@ -146,14 +159,17 @@ int main()
 	ptr_test0[9] = '\0';
 
 
-	printf("%p %p\n",  ptr_test0, &ptr_test0[9]);
 
 
 
 	char *ptr_test1 = (char *) ft_malloc(10);
 	printf("ptr_test1 = %p\n",ptr_test1);
 
+	char *ptr_test2 = (char *) ft_malloc(10);
+	printf("ptr_test2 = %p\n",ptr_test2);
 
+	char *ptr_test3 = (char *) ft_malloc(10);
+	printf("ptr_test3 = %p\n",ptr_test3);
 
 	return 0;
 }
