@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/mman.h>
-
+#import <stddef.h>
 #include <stdbool.h>
 
 void *heap_start = NULL;
@@ -11,8 +11,8 @@ typedef struct s_block_meta
 {
 	int size_previous;
 	int size;
-	void *previous;
-	void *next;
+	struct s_block_meta *previous;
+	struct s_block_meta *next;
 	bool is_free;
 	
 } block_meta;
@@ -99,7 +99,20 @@ void *ft_malloc (int size)
 		if (size <= 512)
 		{	
 			block_meta *last = find_last_block_meta((block_meta *) heap_start);
-			printf("test = %d %p %p %d %d\n",last->size_previous, last->previous, last->next, last->size, last->is_free);
+			block_meta *new = (void *) last + sizeof(block_meta) + last->size;
+			// printf("last = %p\n", last);
+			// printf("new = %p\n", new);
+			// printf("diff = %ld\n", (void *) new - (void *) last);
+
+			new->size_previous = last->size;
+			new->size = size;
+			new->previous = last;
+			new->next = NULL;
+			new->is_free = false;
+
+			last->next = new;
+
+			return (void *) (new + sizeof(block_meta));
 		}
 
 	}
@@ -110,16 +123,35 @@ void *ft_malloc (int size)
 int main()
 {
 
-	printf("TEST 0\n");
+    // printf("Size of block_meta: %lu\n", sizeof(block_meta));
+    // printf("Offset of size_previous: %lu\n", offsetof(block_meta, size_previous));
+    // printf("Offset of size: %lu\n", offsetof(block_meta, size));
+    // printf("Offset of previous: %lu\n", offsetof(block_meta, previous));
+    // printf("Offset of next: %lu\n", offsetof(block_meta, next));
+    // printf("Offset of is_free: %lu\n", offsetof(block_meta, is_free));
+	// printf("sizeof block meta = %ld\n", sizeof(block_meta));
 
-	char *ptr_test0 = (char *) ft_malloc(12);
-	char *ptr_test1 = (char *) ft_malloc(12);
+	char *ptr_test0 = (char *) ft_malloc(10);
+	printf("TEST 0 : %p\n", heap_start);
 
-	printf("ptr_test0 = %p\n", ptr_test0);
-	printf("ptr_test1 = %p\n", ptr_test1);
+	ptr_test0[0] = 'a';
+	ptr_test0[1] = 'a';
+	ptr_test0[2] = 'a';
+	ptr_test0[3] = 'a';
+	ptr_test0[4] = 'a';
+	ptr_test0[5] = 'a';
+	ptr_test0[6] = 'a';
+	ptr_test0[7] = 'a';
+	ptr_test0[8] = 'a';
+	ptr_test0[9] = '\0';
+
+
+	printf("%p %p\n",  ptr_test0, &ptr_test0[9]);
 
 
 
+	char *ptr_test1 = (char *) ft_malloc(10);
+	printf("ptr_test1 = %p\n",ptr_test1);
 
 	return 0;
 }
