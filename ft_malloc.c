@@ -4,16 +4,15 @@
 #import <stddef.h>
 #include <stdbool.h>
 
-
-#define TINY 384000000
-#define SMALL 1024000000
-#define LARGE 8192000000
-
 #define COLOUR_GREEN "\033[0;32m"
 #define COLOUR_RED "\033[0;31m"
 #define COLOUR_BLUE "\033[0;34m"
 #define COLOUR_PURPLE "\033[0;35m"
 #define COLOUR_END "\033[0m"
+
+#define TINY 51200
+#define SMALL 819200
+
 
 size_t ft_round_eight(size_t size);
 
@@ -148,37 +147,21 @@ void *ft_malloc (size_t size)
 
 		// printf("%ld %ld\n", ptr_small - ptr_tiny, ptr_large - ptr_small);
 
-	
-
 		if (size <= 512)
 		{
 			ptr_tiny = ft_init_zone(TINY);
 			heap_start = ptr_tiny;
-
 			return ft_create_new_list(ptr_tiny, size);
 		}
 		else if (size <= 8192)
 		{
 			ptr_small = ft_init_zone(SMALL);
-			block_meta *initial_block_small = (block_meta *) ptr_small;
-			initial_block_small->size = size;
-
-			initial_block_small->previous = NULL;
-			initial_block_small->next = NULL;
-			initial_block_small->is_free = false;
-			return (void *) (ptr_small + sizeof(block_meta));
+			heap_start = ptr_small;
+			return ft_create_new_list(ptr_small, size);
 		}
-		else if (size <= 131072)
+		else
 		{
-			ptr_large = ft_init_zone(LARGE);
-			block_meta *initial_block_large = (block_meta *) ptr_small;
-			initial_block_large->size = size;
-
-			initial_block_large->previous = NULL;
-			initial_block_large->next = NULL;
-			initial_block_large->is_free = false;
-			return (void *) (ptr_large + sizeof(block_meta));
-
+			/* need to code that */
 		}
 		// Il y aura besoin d'un else pour les allocations encore plus grande...
 
@@ -240,7 +223,7 @@ size_t ft_round_eight(size_t size)
 int main()
 {
 
-    printf("Size of block_meta: %lu\n", sizeof(block_meta));
+    printf("Size of block_meta: %lu %lu\n", sizeof(block_meta), sizeof(int));
     // printf("Offset of size_previous: %lu\n", offsetof(block_meta, size_previous));
     // printf("Offset of size: %lu\n", offsetof(block_meta, size));
     // printf("Offset of previous: %lu\n", offsetof(block_meta, previous));
