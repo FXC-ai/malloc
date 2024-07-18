@@ -259,9 +259,13 @@ int main()
 	char *ptr_test3 = (char *) ft_malloc(10);
 	printf("ptr_test3 = %p\n",ptr_test3);
 
+
 	char *str_test  = "0123456789";
 	char *sub_str_test = ft_substr(str_test, 1, 4);
 	printf("sub_str_test = %s\n", sub_str_test);
+
+	char *ptr_test4 = (char *) ft_malloc(200);
+	printf("ptr_test4 = %p\n",ptr_test4);
 
 	display_memory(heap_start);
 
