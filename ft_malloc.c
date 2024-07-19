@@ -31,6 +31,11 @@ typedef struct s_block_meta
 } block_meta;
 
 
+typedef struct s_heap_starts
+{
+
+} heap_starts;
+
 /* display a block meta */
 void display_block_meta(block_meta *block, size_t index)
 {
@@ -141,11 +146,6 @@ void *ft_malloc (size_t size)
 		void *ptr_tiny = NULL;
 		void *ptr_small = NULL;
 		void *ptr_large = NULL;
-		/*Inutile d'allouer systematiquement... ?*/
-		
-		// besoin d etre amelioré !!!!!!!!!!!! PAs besoin d allouer systematiquement ....
-
-		// printf("%ld %ld\n", ptr_small - ptr_tiny, ptr_large - ptr_small);
 
 		if (size <= 512)
 		{
@@ -163,14 +163,13 @@ void *ft_malloc (size_t size)
 		{
 			/* need to code that */
 		}
-		// Il y aura besoin d'un else pour les allocations encore plus grande...
 
 	}
 	else
 	{
 		if (size <= 512)
 		{
-			return ft_add_new_block(heap_start, size);
+			return ft_add_new_block(ptr_tiny, size);
 		}
 
 	}
@@ -237,7 +236,6 @@ int main()
 
 	printf("ptr_test0 = %p\n",  ptr_test0);
 
-
 	ptr_test0[0] = 'a';
 	ptr_test0[1] = 'a';
 	ptr_test0[2] = 'a';
@@ -249,7 +247,6 @@ int main()
 	ptr_test0[8] = 'a';
 	ptr_test0[9] = '\0';
 
-
 	char *ptr_test1 = (char *) ft_malloc(10);
 	printf("ptr_test1 = %p\n",ptr_test1);
 
@@ -259,7 +256,6 @@ int main()
 	char *ptr_test3 = (char *) ft_malloc(10);
 	printf("ptr_test3 = %p\n",ptr_test3);
 
-
 	char *str_test  = "0123456789";
 	char *sub_str_test = ft_substr(str_test, 1, 4);
 	printf("sub_str_test = %s\n", sub_str_test);
@@ -268,8 +264,6 @@ int main()
 	printf("ptr_test4 = %p\n",ptr_test4);
 
 	display_memory(heap_start);
-
-	
 
 	return 0;
 }
