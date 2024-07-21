@@ -1,7 +1,7 @@
 #include "malloc.h"
 
 /* pre-allocate” the first heap  */
-t_heap *ft_init_heap(t_heap_size heap_size)
+t_heap *ft_init_heap(size_t heap_size)
 {
 	t_heap *first_heap;
 
@@ -49,7 +49,7 @@ t_heap *ft_find_last_heap (t_heap *first_heap)
 }
 
 /* add a new heap */
-t_heap *ft_add_new_heap (t_heap *first_heap, t_heap_size heap_size)
+t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size)
 {	
 	t_heap *new_heap;
 	t_heap *last_heap;
@@ -71,17 +71,20 @@ t_heap *ft_add_new_heap (t_heap *first_heap, t_heap_size heap_size)
 	{
 		case TINY_HEAP_ALLOCATION_SIZE:
 			new_heap->group = TINY;
+			new_heap->total_size = heap_size;
 			break;
 		case SMALL_HEAP_ALLOCATION_SIZE:
 			new_heap->group = SMALL;
+			new_heap->total_size = heap_size;
 			break;
 		default :
 			new_heap->group = LARGE;
+			new_heap->total_size = heap_size + sizeof(t_heap);
 	}
-	new_heap->total_size = heap_size;
 
 
-	new_heap->free_size = heap_size - sizeof(t_heap);
+
+	new_heap->free_size = new_heap->total_size - sizeof(t_heap);
 	new_heap->block_count = 0;
 
 

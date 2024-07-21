@@ -67,9 +67,8 @@ int main()
 	t_heap *added = ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
 	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
 	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, 66000);
+
 	display_heap_meta(new_heap, 0);
 	display_heap_meta(last_heap, 0);
 	display_heap_meta(added, 1);

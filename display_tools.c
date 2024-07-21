@@ -42,16 +42,18 @@ void display_memory(t_block_meta *first_block)
 
 void display_heap_meta(t_heap *heap, size_t index)
 {
-    printf("------------------------------\n");
+    printf("--------------------------------\n");
 
-    printf("|  %sid heap   = %s%*zu   |\n",COLOUR_PURPLE, COLOUR_END, 11,index);
-    printf("|  %saddr heap = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 11,heap);
-    printf("|  %sprevious  = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 11,heap->previous);
-    printf("|  %snext      = %s%*p   |\n", COLOUR_GREEN, COLOUR_END,11,heap->next);
-    printf("|  %ssize      = %s%*zu   |\n", COLOUR_GREEN, COLOUR_END,11,heap->total_size);
-    printf("|  %sfree_size = %s%*zu   |\n",COLOUR_GREEN, COLOUR_END, 11,heap->free_size);
+    printf("|  %sid heap     = %s%*zu   |\n",COLOUR_PURPLE, COLOUR_END, 11,index);
+    printf("|  %saddr heap   = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 11,heap);
+    printf("|  %sprevious    = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 11,heap->previous);
+    printf("|  %snext        = %s%*p   |\n", COLOUR_GREEN, COLOUR_END,11,heap->next);
+    printf("|  %sgroup       = %s%*d   |\n", COLOUR_GREEN, COLOUR_END,11,heap->group);
+    printf("|  %stotal_size  = %s%*zu   |\n", COLOUR_GREEN, COLOUR_END,11,heap->total_size);
+    printf("|  %sfree_size   = %s%*zu   |\n",COLOUR_GREEN, COLOUR_END, 11,heap->free_size);
+    printf("|  %sblock_count = %s%*zu   |\n",COLOUR_GREEN, COLOUR_END, 11,heap->block_count);
 
-    printf("------------------------------\n");
+    printf("--------------------------------\n");
 }
 
 

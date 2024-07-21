@@ -17,17 +17,17 @@
 // #define TINY_HEAP_ALLOCATION_SIZE 16384
 // #define SMALL 819200
 
+#define	TINY_HEAP_ALLOCATION_SIZE 16384
+#define	SMALL_HEAP_ALLOCATION_SIZE 65536
+
+
 typedef enum e_heap_group {
 	TINY,
 	SMALL,
 	LARGE
 } t_heap_group;
 
-typedef enum e_heap_size
-{
-	TINY_HEAP_ALLOCATION_SIZE = 16384,
-	SMALL_HEAP_ALLOCATION_SIZE = 65536
-} t_heap_size;
+
 
 typedef struct s_heap {
 	struct s_heap *previous;
@@ -50,8 +50,8 @@ typedef struct s_block_meta
 } t_block_meta;
 
 /*heap_manager_tool.c*/
-t_heap *ft_init_heap(t_heap_size heap_size);
-t_heap *ft_add_new_heap (t_heap *first_heap, t_heap_size heap_size);
+t_heap *ft_init_heap(size_t heap_size);
+t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size);
 t_heap *ft_find_last_heap (t_heap *first_heap);
 
 
