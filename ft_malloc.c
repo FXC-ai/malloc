@@ -2,44 +2,112 @@
 
 void *heap_start = NULL;
 
+
+size_t ft_calculate_heap_size (size_t size)
+{
+	size = ft_round_eight(size);
+
+	if (size <= 128 )
+		return TINY_HEAP_ALLOCATION_SIZE;
+	else if (size <= 512)
+		return SMALL_HEAP_ALLOCATION_SIZE;
+	else
+		return size + sizeof(t_heap);
+}
+
+t_heap_group ft_find_group (size_t size)
+{
+	if (size <= 128)
+		return TINY;
+	else if (size <= 512)
+		return SMALL;
+	else
+		return LARGE;
+}
+
 void *ft_malloc (size_t size)
 {
-	printf("%zu", size);
-	// size = size + sizeof(int);
+	printf("size asked = %zu\n", size);
 
-	// if (heap_start == NULL)
-	// {
-	// 	void *ptr_tiny = NULL;
-	// 	void *ptr_small = NULL;
-	// 	void *ptr_large = NULL;
+	if (heap_start == NULL)
+	{
+		heap_start = ft_init_heap(ft_calculate_heap_size(size));
+		// display_heap_meta(heap_start, 0);
+		return HEAP_SHIFT(heap_start);
+	}
+	else
+	{
+		t_heap *heap_found = ft_find_heap_group(heap_start, ft_find_group(size));
+		if (heap_found == NULL)
+		{
+			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size));
+			if (new_heap == NULL)
+				return NULL;
+			return HEAP_SHIFT(new_heap);
+		}
+		else
+		{
+			// une heap avec le groupe adaptée existe
+			printf("need to think...\n");
+		}
 
-	// 	if (size <= 512)
-	// 	{
-	// 		ptr_tiny = ft_init_zone(51200);
-	// 		heap_start = ptr_tiny;
-	// 		return ft_create_new_list(ptr_tiny, size);
-	// 	}
-	// 	else if (size <= 8192)
-	// 	{
-	// 		ptr_small = ft_init_zone(SMALL);
-	// 		heap_start = ptr_small;
-	// 		return ft_create_new_list(ptr_small, size);
-	// 	}
-	// 	else
-	// 	{
-	// 		/* need to code that */
-	// 	}
+	}
 
-	// }
-	// else
-	// {
-	// 	if (size <= 512)
-	// 	{
-	// 		return ft_add_new_block(heap_start, size);
-	// 	}
-
-	// }
 	return NULL;
+}
+
+void ut_ft_init_heap()
+{
+	t_heap *new_heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE);
+	t_heap *new_heap_small = ft_init_heap(SMALL_HEAP_ALLOCATION_SIZE);
+	t_heap *new_heap_large = ft_init_heap(66000);
+
+	display_heap_meta(new_heap,0);
+	display_heap_meta(new_heap_small,1);
+	display_heap_meta(new_heap_large,2);
+}
+
+void ut_ft_find_last_heap(t_heap *first_heap)
+{
+	t_heap *last_heap = ft_find_last_heap(first_heap);
+	display_heaps_chain(first_heap);
+	display_heap_meta(last_heap,0);
+}
+
+void ut_ft_add_new_heap(t_heap *first_heap)
+{
+
+	t_heap *first_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	t_heap *second_added = ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	t_heap *third_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	t_heap *fourth_added = ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	t_heap *fifth_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	t_heap *sixth_added = ft_add_new_heap(first_heap, 100000);
+
+	display_heaps_chain(first_heap);
+}
+
+void ut_ft_find_heap_group()
+{
+	t_heap *first_heap = ft_init_heap(100000);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+
+	t_heap *found_heap = ft_find_heap_group(first_heap, SMALL);
+
+	display_heaps_chain(first_heap);
+	display_heap_meta(found_heap, 0);
+}
+
+void ut_ft_find_group ()
+{
+	printf("size = 128 : %d\n", ft_find_group(128));
+	printf("size = 512 : %d\n", ft_find_group(512));
+	printf("size = 1280 : %d\n", ft_find_group(1280));
 }
 
 int main()
@@ -48,73 +116,16 @@ int main()
     printf("Size of t_block_meta: %lu\n", sizeof(t_block_meta));
     printf("Size of meta_data_heap: %lu\n", sizeof(t_heap));
 
-	/*Tests unitaires */
-
-	/* ft_init_heap */
-	t_heap *new_heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE);
-	t_heap *new_heap_small = ft_init_heap(SMALL_HEAP_ALLOCATION_SIZE);
-
-	display_heap_meta(new_heap, 0);
-	// display_heap_meta(new_heap_small, 1);
-
-	/* ft_find_last_heap */
-
-	t_heap *last_heap = ft_find_last_heap(new_heap);
-	display_heap_meta(last_heap, 0);
 
 
-	/* ft_add_new_heap */
-	t_heap *added = ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(new_heap, 66000);
+	void * ptr_writable = ft_malloc(12);
+	ft_malloc(1300);
+	ft_malloc(1300);
 
-	display_heap_meta(new_heap, 0);
-	display_heap_meta(last_heap, 0);
-	display_heap_meta(added, 1);
-	display_heaps_chain(new_heap);
+	display_heaps_chain(heap_start);
 
-    // printf("Offset of size_previous: %lu\n", offsetof(t_block_meta, size_previous));
-    // printf("Offset of size: %lu\n", offsetof(t_block_meta, size));
-    // printf("Offset of previous: %lu\n", offsetof(t_block_meta, previous));
-    // printf("Offset of next: %lu\n", offsetof(t_block_meta, next));
-    // printf("Offset of is_free: %lu\n", offsetof(t_block_meta, is_free));
-	// printf("sizeof block meta = %ld\n", sizeof(t_block_meta));
 
-	// char *ptr_test0 = (char *) ft_malloc(10);
 
-	// printf("First memory address = %p\n", heap_start);
-
-	// printf("ptr_test0 = %p\n",  ptr_test0);
-
-	// ptr_test0[0] = 'a';
-	// ptr_test0[1] = 'a';
-	// ptr_test0[2] = 'a';
-	// ptr_test0[3] = 'a';
-	// ptr_test0[4] = 'a';
-	// ptr_test0[5] = 'a';
-	// ptr_test0[6] = 'a';
-	// ptr_test0[7] = 'a';
-	// ptr_test0[8] = 'a';
-	// ptr_test0[9] = '\0';
-
-	// char *ptr_test1 = (char *) ft_malloc(10);
-	// printf("ptr_test1 = %p\n",ptr_test1);
-
-	// char *ptr_test2 = (char *) ft_malloc(10);
-	// printf("ptr_test2 = %p\n",ptr_test2);
-
-	// char *ptr_test3 = (char *) ft_malloc(10);
-	// printf("ptr_test3 = %p\n",ptr_test3);
-
-	// char *str_test  = "0123456789";
-	// char *sub_str_test = ft_substr(str_test, 1, 4);
-	// printf("sub_str_test = %s\n", sub_str_test);
-
-	// char *ptr_test4 = (char *) ft_malloc(200);
-	// printf("ptr_test4 = %p\n",ptr_test4);
-
-	// display_memory(heap_start);
 
 	return 0;
 }

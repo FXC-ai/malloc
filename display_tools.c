@@ -63,11 +63,11 @@ void display_heaps_chain(t_heap *first_heap)
 	t_heap *current_heap;
 	size_t counter;
 
-    printf("%s__________HEAPS LIST__________%s\n", COLOUR_BLUE, COLOUR_END);
+    printf("%s___________HEAPS LIST___________%s\n", COLOUR_BLUE, COLOUR_END);
 
 	counter = 0;
 	current_heap = first_heap;
-	while (current_heap->next != NULL)
+	while (current_heap != NULL)
 	{
 		display_heap_meta(current_heap, counter);
         printf("%s              |               %s\n",COLOUR_BLUE, COLOUR_END);
@@ -75,8 +75,7 @@ void display_heaps_chain(t_heap *first_heap)
 		current_heap = current_heap->next;
 		++counter;
 	}
-    display_heap_meta(current_heap, counter);
-    printf("%s              |               %s\n",COLOUR_BLUE, COLOUR_END);
-    printf("%s              v               %s\n",COLOUR_BLUE, COLOUR_END);
 	printf("%s            NULL              %s\n",COLOUR_RED, COLOUR_END);
+    printf("%s________________________________%s\n", COLOUR_BLUE, COLOUR_END);
+
 }

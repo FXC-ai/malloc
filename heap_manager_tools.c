@@ -48,6 +48,24 @@ t_heap *ft_find_last_heap (t_heap *first_heap)
 	return current;
 }
 
+/*Return the first heap with the given group in parameter*/
+t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group)
+{
+	t_heap *current = first_heap;
+
+	if (first_heap == NULL)
+		return NULL;
+	while (current != NULL)
+	{
+		if (current->group == group)
+		{
+			return current;
+		}
+		current = current->next;
+	}
+	return NULL;
+}
+
 /* add a new heap */
 t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size)
 {	
@@ -71,20 +89,17 @@ t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size)
 	{
 		case TINY_HEAP_ALLOCATION_SIZE:
 			new_heap->group = TINY;
-			new_heap->total_size = heap_size;
 			break;
 		case SMALL_HEAP_ALLOCATION_SIZE:
 			new_heap->group = SMALL;
-			new_heap->total_size = heap_size;
 			break;
 		default :
 			new_heap->group = LARGE;
-			new_heap->total_size = heap_size + sizeof(t_heap);
 	}
+	new_heap->total_size = heap_size;
 
 
-
-	new_heap->free_size = new_heap->total_size - sizeof(t_heap);
+	new_heap->free_size = heap_size - sizeof(t_heap);
 	new_heap->block_count = 0;
 
 
