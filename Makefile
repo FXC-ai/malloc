@@ -6,8 +6,8 @@ COLOUR_END=\033[0m
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS := lib.c
-OBJS := lib.o
+SRCS := ft_malloc.c heap_manager_tools.c block_manager_tools.c display_tools.c
+OBJS := $(SRCS:.c=.o)
 
 NAME := libft_malloc.so
 
@@ -27,8 +27,8 @@ $(REAL_LIB) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -shared -o $(REAL_LIB)
 	@echo "$(COLOUR_GREEN)$(REAL_LIB) created$(COLOUR_END)"
 
-$(OBJS) : $(SRCS)
-	@$(CC) $(CFLAGS) -fPIC -c $(SRCS) -o $(OBJS)
+%.o : %.c
+	@$(CC) $(CFLAGS) -fPIC -c $< -o $@
 	@echo "$(COLOUR_GREEN).o files created$(COLOUR_END)"
 
 clean :
@@ -40,5 +40,8 @@ fclean : clean
 	@echo "$(COLOUR_RED)$(NAME) $(REAL_LIB) deleted$(COLOUR_RED)"
 
 re : fclean all
+
+dev :
+	gcc $(FLAGS) -fsanitize=address $(SRCS)
 
 .PHONY: all clean fclean re
