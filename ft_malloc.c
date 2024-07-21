@@ -48,13 +48,32 @@ int main()
     printf("Size of t_block_meta: %lu\n", sizeof(t_block_meta));
     printf("Size of meta_data_heap: %lu\n", sizeof(t_heap));
 
+	/*Tests unitaires */
+
+	/* ft_init_heap */
 	t_heap *new_heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE);
 	t_heap *new_heap_small = ft_init_heap(SMALL_HEAP_ALLOCATION_SIZE);
 
 	display_heap_meta(new_heap, 0);
-	display_heap_meta(new_heap_small, 1);
+	// display_heap_meta(new_heap_small, 1);
+
+	/* ft_find_last_heap */
+
+	t_heap *last_heap = ft_find_last_heap(new_heap);
+	display_heap_meta(last_heap, 0);
 
 
+	/* ft_add_new_heap */
+	t_heap *added = ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(new_heap, SMALL_HEAP_ALLOCATION_SIZE);
+	display_heap_meta(new_heap, 0);
+	display_heap_meta(last_heap, 0);
+	display_heap_meta(added, 1);
+	display_heaps_chain(new_heap);
 
     // printf("Offset of size_previous: %lu\n", offsetof(t_block_meta, size_previous));
     // printf("Offset of size: %lu\n", offsetof(t_block_meta, size));

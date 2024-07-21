@@ -53,3 +53,28 @@ void display_heap_meta(t_heap *heap, size_t index)
 
     printf("------------------------------\n");
 }
+
+
+/* display the chained list of memory block */
+void display_heaps_chain(t_heap *first_heap)
+{
+	t_heap *current_heap;
+	size_t counter;
+
+    printf("%s__________HEAPS LIST__________%s\n", COLOUR_BLUE, COLOUR_END);
+
+	counter = 0;
+	current_heap = first_heap;
+	while (current_heap->next != NULL)
+	{
+		display_heap_meta(current_heap, counter);
+        printf("%s              |               %s\n",COLOUR_BLUE, COLOUR_END);
+        printf("%s              v               %s\n",COLOUR_BLUE, COLOUR_END);
+		current_heap = current_heap->next;
+		++counter;
+	}
+    display_heap_meta(current_heap, counter);
+    printf("%s              |               %s\n",COLOUR_BLUE, COLOUR_END);
+    printf("%s              v               %s\n",COLOUR_BLUE, COLOUR_END);
+	printf("%s            NULL              %s\n",COLOUR_RED, COLOUR_END);
+}

@@ -51,7 +51,9 @@ typedef struct s_block_meta
 
 /*heap_manager_tool.c*/
 t_heap *ft_init_heap(t_heap_size heap_size);
-t_heap *ft_add_new_heap (t_heap *first_heap);
+t_heap *ft_add_new_heap (t_heap *first_heap, t_heap_size heap_size);
+t_heap *ft_find_last_heap (t_heap *first_heap);
+
 
 /*block_manager_tools.c*/
 void *find_last_block_meta (t_block_meta *first_block);
@@ -63,5 +65,7 @@ size_t ft_round_eight(size_t size);
 void display_block_meta(t_block_meta *block, size_t index);
 void display_memory(t_block_meta *first_block);
 void display_heap_meta(t_heap *heap, size_t index);
+void display_heaps_chain(t_heap *first_heap);
+
 
 #endif
