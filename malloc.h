@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <sys/mman.h>
 #import <stddef.h>
+#include <unistd.h>
 
 
 #define COLOUR_GREEN "\033[0;32m"
@@ -41,6 +42,7 @@ typedef struct s_heap {
 
 } t_heap;
 
+
 typedef struct s_block
 {
 
@@ -55,7 +57,7 @@ typedef struct s_block
 
 size_t ft_round_eight(size_t size);
 
-t_heap *ft_init_heap(size_t heap_size);
+t_heap *ft_init_heap(size_t heap_size, t_heap_group group);
 t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size);
 t_heap *ft_find_last_heap (t_heap *first_heap);
 t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group);
