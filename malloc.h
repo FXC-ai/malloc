@@ -71,7 +71,8 @@ t_block *ft_add_new_block(t_heap *heap, size_t size);
 
 /*display_tools.c*/
 void display_block(t_block *block, size_t index);
-void display_memory(t_block *first_block);
+void display_blocks_chain(t_heap *heap);
+
 void display_heap_meta(t_heap *heap, size_t index);
 void display_heaps_chain(t_heap *first_heap);
 

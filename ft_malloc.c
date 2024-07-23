@@ -112,11 +112,26 @@ void ut_ft_find_group ()
 }
 
 
-void ut_ft_find_last_block ()
+void ut_ft_add_new_block ()
 {
+	t_heap *first_heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE);
 
-	
+	t_block *new_block = ft_add_new_block(first_heap, 75);
+	t_block *new_block1 = ft_add_new_block(first_heap, 12);
+	t_block *new_block2 = ft_add_new_block(first_heap, 12);
+	t_block *new_block3 = ft_add_new_block(first_heap, 12);
+	t_block *new_block4 = ft_add_new_block(first_heap, 12);
+	t_block *new_block5 = ft_add_new_block(first_heap, 0);
+	t_block *new_block6 = ft_add_new_block(first_heap, 12);
+	t_block *new_block7 = ft_add_new_block(first_heap, 1);
+	t_block *new_block8 = ft_add_new_block(first_heap, 12);
+	t_block *new_block9 = ft_add_new_block(first_heap, 110);
+	t_block *new_block10 = ft_add_new_block(first_heap, 12);
+	t_block *new_block11 = ft_add_new_block(first_heap, 12);
+	t_block *new_block12 = ft_add_new_block(first_heap, 128);
 
+
+	display_blocks_chain(first_heap);
 }
 
 
@@ -138,42 +153,10 @@ int main()
 	// ft_malloc(1300);
 	// ft_malloc(1300);
 
-	display_heaps_chain(first_heap);
-
-
-	t_block *new_block = ft_add_new_block(first_heap, 75);
-	t_block *new_block1 = ft_add_new_block(first_heap, 12);
-	t_block *new_block2 = ft_add_new_block(first_heap, 12);
-	t_block *new_block3 = ft_add_new_block(first_heap, 12);
-	t_block *new_block4 = ft_add_new_block(first_heap, 12);
-	t_block *new_block5 = ft_add_new_block(first_heap, 12);
-	t_block *new_block6 = ft_add_new_block(first_heap, 12);
-	t_block *new_block7 = ft_add_new_block(first_heap, 12);
-	t_block *new_block8 = ft_add_new_block(first_heap, 12);
-	t_block *new_block9 = ft_add_new_block(first_heap, 12);
-	t_block *new_block10 = ft_add_new_block(first_heap, 12);
-	t_block *new_block11 = ft_add_new_block(first_heap, 12);
-	t_block *new_block12 = ft_add_new_block(first_heap, 12);
-
-	display_block(new_block, 0);
-	display_block(new_block1, 1);
-	display_block(new_block2, 1);
-	display_block(new_block3, 1);
-	display_block(new_block4, 1);
-	display_block(new_block5, 1);
-	display_block(new_block6, 1);
-	display_block(new_block7, 1);
-	display_block(new_block8, 1);
-	display_block(new_block9, 1);
-	display_block(new_block10, 1);
-	display_block(new_block11, 1);
-	display_block(new_block12, 1);
-
-	display_memory(new_block);
+	ut_ft_add_new_block();
 
 
 
-	display_heaps_chain(first_heap);
 
 
 
