@@ -7,6 +7,48 @@ size_t ft_round_eight(size_t size)
 	return (size + 7) & ~7;
 }
 
+
+/* Return the adapted size of the heap given the size of allocated bytes asked */
+size_t ft_calculate_heap_size (size_t size)
+{
+	size = ft_round_eight(size);
+
+	if (size <= 128)
+		return TINY_HEAP_ALLOCATION_SIZE;
+	else if (size <= 512)
+		return SMALL_HEAP_ALLOCATION_SIZE;
+	else
+		return size + sizeof(t_heap);
+}
+
+/* Return the type of heap needed (TINY SMALL OR LARGE)*/
+t_heap_group ft_find_group (size_t size)
+{
+	if (size <= 128)
+		return TINY;
+	else if (size <= 512)
+		return SMALL;
+	else
+		return LARGE;
+}
+
+size_t ft_find_heap_size(t_heap_group group)
+{
+
+	switch (group)
+	{
+		case 0:
+			return TINY_HEAP_ALLOCATION_SIZE;
+			break;
+		case 1:
+			return SMALL_HEAP_ALLOCATION_SIZE;
+			break;
+		default :
+			return LARGE;
+	}
+
+}
+
 /* pre-allocate” the first heap  */
 t_heap *ft_init_heap(size_t heap_size)
 {
@@ -15,6 +57,7 @@ t_heap *ft_init_heap(size_t heap_size)
 
 	t_heap *first_heap;
 
+	// t_heap_group group = ft_find_group(size);
 	// security about heap_size ???
 
 	first_heap = (t_heap *) mmap(NULL, heap_size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -44,9 +87,9 @@ t_heap *ft_init_heap(size_t heap_size)
 	first_heap->block_count = 0;
 	
 	
-	void * first_block = (void *) HEAP_SHIFT(first_heap);
+	// void * first_block = (void *) HEAP_SHIFT(first_heap);
 
-	printf("first_heap = %p first_block = %p\n", first_heap, first_block);
+	// printf("first_heap = %p first_block = %p\n", first_heap, first_block);
 
 
 	return (first_heap);

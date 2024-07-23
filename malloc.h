@@ -21,6 +21,7 @@
 
 
 #define HEAP_SHIFT(start)((void *)start + sizeof(t_heap))
+#define BLOCK_SHIFT(start)((void *)start + sizeof(t_block))
 
 
 typedef enum e_heap_group
@@ -62,6 +63,9 @@ t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group);
 
 
 /*block_manager_tools.c*/
+size_t ft_calculate_heap_size (size_t size);
+t_heap_group ft_find_group (size_t size);
+
 void *ft_find_last_block (t_heap *heap);
 void ft_create_block(t_block *previous_block, t_block *new_block, size_t size);
 // void *ft_create_new_list(t_block *first_block, size_t size);
