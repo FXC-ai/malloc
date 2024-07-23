@@ -32,7 +32,8 @@ void *ft_malloc (size_t size)
 	if (heap_start == NULL)
 	{
 		heap_start = ft_init_heap(ft_calculate_heap_size(size));
-		// display_heap_meta(heap_start, 0);
+
+
 		return HEAP_SHIFT(heap_start);
 	}
 	else
@@ -110,21 +111,75 @@ void ut_ft_find_group ()
 	printf("size = 1280 : %d\n", ft_find_group(1280));
 }
 
+
+void ut_ft_find_last_block ()
+{
+
+	
+
+}
+
+
+
 int main()
 {
 
-    printf("Size of t_block_meta: %lu\n", sizeof(t_block_meta));
+    printf("Size of t_block: %lu\n", sizeof(t_block));
     printf("Size of meta_data_heap: %lu\n", sizeof(t_heap));
 
 
 
-	void * ptr_writable = ft_malloc(12);
-	ft_malloc(1300);
-	ft_malloc(1300);
-
-	display_heaps_chain(heap_start);
 
 
+	t_heap *first_heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE);
+
+
+	// void * ptr_writable = ft_malloc(12);
+	// ft_malloc(1300);
+	// ft_malloc(1300);
+
+	display_heaps_chain(first_heap);
+
+
+	t_block *new_block = ft_add_new_block(first_heap, 75);
+	t_block *new_block1 = ft_add_new_block(first_heap, 12);
+	t_block *new_block2 = ft_add_new_block(first_heap, 12);
+	t_block *new_block3 = ft_add_new_block(first_heap, 12);
+	t_block *new_block4 = ft_add_new_block(first_heap, 12);
+	t_block *new_block5 = ft_add_new_block(first_heap, 12);
+	t_block *new_block6 = ft_add_new_block(first_heap, 12);
+	t_block *new_block7 = ft_add_new_block(first_heap, 12);
+	t_block *new_block8 = ft_add_new_block(first_heap, 12);
+	t_block *new_block9 = ft_add_new_block(first_heap, 12);
+	t_block *new_block10 = ft_add_new_block(first_heap, 12);
+	t_block *new_block11 = ft_add_new_block(first_heap, 12);
+	t_block *new_block12 = ft_add_new_block(first_heap, 12);
+
+	display_block(new_block, 0);
+	display_block(new_block1, 1);
+	display_block(new_block2, 1);
+	display_block(new_block3, 1);
+	display_block(new_block4, 1);
+	display_block(new_block5, 1);
+	display_block(new_block6, 1);
+	display_block(new_block7, 1);
+	display_block(new_block8, 1);
+	display_block(new_block9, 1);
+	display_block(new_block10, 1);
+	display_block(new_block11, 1);
+	display_block(new_block12, 1);
+
+	display_memory(new_block);
+
+
+
+	display_heaps_chain(first_heap);
+
+
+
+	// void *test = HEAP_SHIFT(heap_start);
+
+	// printf("%p\n", test);
 
 
 	return 0;

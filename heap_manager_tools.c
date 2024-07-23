@@ -1,11 +1,22 @@
 #include "malloc.h"
 
+/* round to the superior 8th byte */
+size_t ft_round_eight(size_t size)
+{
+	// return size + (8 - (size % 8));
+	return (size + 7) & ~7;
+}
+
 /* pre-allocate” the first heap  */
 t_heap *ft_init_heap(size_t heap_size)
 {
+
+	// need to put that in the global variable !!!
+
 	t_heap *first_heap;
 
-	/* MAP_SHARED */
+	// security about heap_size ???
+
 	first_heap = (t_heap *) mmap(NULL, heap_size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (first_heap == MAP_FAILED)
 	{
@@ -31,12 +42,17 @@ t_heap *ft_init_heap(size_t heap_size)
 
 	first_heap->free_size = heap_size - sizeof(t_heap); //-16 bytes !!!!
 	first_heap->block_count = 0;
+	
+	
+	void * first_block = (void *) HEAP_SHIFT(first_heap);
+
+	printf("first_heap = %p first_block = %p\n", first_heap, first_block);
 
 
 	return (first_heap);
 }
 
-/*Return th pointer of the last heap*/
+/*Return the pointer of the last heap*/
 t_heap *ft_find_last_heap (t_heap *first_heap)
 {
 	t_heap *current = first_heap;

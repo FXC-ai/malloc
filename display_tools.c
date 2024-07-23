@@ -2,7 +2,7 @@
 
 
 /* display a block meta */
-void display_block_meta(t_block_meta *block, size_t index)
+void display_block(t_block *block, size_t index)
 {
     printf("--------------------------------\n");
 
@@ -17,16 +17,16 @@ void display_block_meta(t_block_meta *block, size_t index)
 }
 
 /* display the chained list of memory block */
-void display_memory(t_block_meta *first_block)
+void display_memory(t_block *first_block)
 {
-	t_block_meta *current_block;
+	t_block *current_block;
 	size_t counter;
 
 	counter = 0;
 	current_block = first_block;
 	while (current_block->next != NULL)
 	{
-		display_block_meta(current_block, counter);
+		display_block(current_block, counter);
 		printf("%s              |               %s\n",COLOUR_BLUE, COLOUR_END);
 		printf("%s              v               %s\n",COLOUR_BLUE, COLOUR_END);
 		current_block = current_block->next;

@@ -6,7 +6,7 @@ COLOUR_END=\033[0m
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS := ft_malloc.c heap_manager_tools.c block_manager_tools.c display_tools.c
+SRCS := ft_malloc.c heap_manager_tools.c display_tools.c block_manager_tools.c
 OBJS := $(SRCS:.c=.o)
 
 NAME := libft_malloc.so

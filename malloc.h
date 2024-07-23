@@ -40,17 +40,20 @@ typedef struct s_heap {
 
 } t_heap;
 
-typedef struct s_block_meta
+typedef struct s_block
 {
 
 	int size;
-	struct s_block_meta *previous;
-	struct s_block_meta *next;
+	struct s_block *previous;
+	struct s_block *next;
 	bool is_free;
 
-} t_block_meta;
+} t_block;
 
 /*heap_manager_tool.c*/
+
+size_t ft_round_eight(size_t size);
+
 t_heap *ft_init_heap(size_t heap_size);
 t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size);
 t_heap *ft_find_last_heap (t_heap *first_heap);
@@ -59,14 +62,16 @@ t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group);
 
 
 /*block_manager_tools.c*/
-void *find_last_block_meta (t_block_meta *first_block);
-void *ft_create_new_list(t_block_meta *first_block, size_t size);
-void *ft_add_new_block(t_block_meta *first_block, size_t size);
-size_t ft_round_eight(size_t size);
+void *ft_find_last_block (t_heap *heap);
+void ft_create_block(t_block *previous_block, t_block *new_block, size_t size);
+// void *ft_create_new_list(t_block *first_block, size_t size);
+t_block *ft_add_new_block(t_heap *heap, size_t size);
+
+// size_t ft_round_eight(size_t size);
 
 /*display_tools.c*/
-void display_block_meta(t_block_meta *block, size_t index);
-void display_memory(t_block_meta *first_block);
+void display_block(t_block *block, size_t index);
+void display_memory(t_block *first_block);
 void display_heap_meta(t_heap *heap, size_t index);
 void display_heaps_chain(t_heap *first_heap);
 
