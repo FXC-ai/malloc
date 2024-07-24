@@ -165,7 +165,6 @@ t_block * ft_find_free_block(t_heap *heap, size_t size)
 	t_block *current;
 	current = (t_block *) HEAP_SHIFT(heap);
 
-
 	while (current != NULL)
 	{
 		if (current->is_free == true && current->size >= ft_round_eight(size) + sizeof(t_block))
@@ -178,8 +177,24 @@ t_block * ft_find_free_block(t_heap *heap, size_t size)
 	return NULL;
 }
 
+/* Return the heap with group and the minimum size in paramaaters*/
 
 
+t_heap *ft_find_heap_with_group_and_size (t_heap *heap_start, t_heap_group group, size_t size)
+{
+	t_heap *current;
+	current = heap_start;
+
+	while(current != NULL)
+	{
+		if (current->group == group && current->size >= ft_round_eight(size))
+		{
+			return current;
+		}
+		current = current->next;
+	}
+	return NULL;
+}
 
 void *ft_malloc (size_t size_of_block)
 {
@@ -208,7 +223,7 @@ void *ft_malloc (size_t size_of_block)
 		}
 		else
 		{
-			t_heap_group group_researched = ft_find_group(size_of_block);
+			// t_heap_group group_researched = ft_find_group(size_of_block);
 			// printf("need to think... %d\n", group_researched);
 
 			if (heap_found->free_size >= (ft_round_eight(size_of_block) + sizeof(t_block)))
