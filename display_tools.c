@@ -4,16 +4,23 @@
 /* display a block meta */
 void display_block(t_block *block, size_t index)
 {
-    printf("          --------------------------------\n");
 
-    printf("          |  %sID BLOCK   = %s%*zu   |\n",COLOUR_PURPLE,  COLOUR_END, 12,index);
-    printf("          |  %saddr block = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 12,block);
-    printf("          |  %ssize       = %s%*d   |\n", COLOUR_GREEN, COLOUR_END,12,block->size);
-    printf("          |  %sprevious   = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 12,block->previous);
-    printf("          |  %snext       = %s%*p   |\n", COLOUR_GREEN, COLOUR_END,12,block->next);
-    printf("          |  %sis_free    = %s%*d   |\n",COLOUR_GREEN, COLOUR_END, 12,block->is_free);
+	if (block == NULL)
+		printf("%s                      NULL              %s\n",COLOUR_RED, COLOUR_END);
+	else
+	{
+		printf("          --------------------------------\n");
 
-    printf("          --------------------------------\n");
+		printf("          |  %sID BLOCK   = %s%*zu   |\n",COLOUR_PURPLE,  COLOUR_END, 12,index);
+		printf("          |  %saddr block = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 12,block);
+		printf("          |  %ssize       = %s%*d   |\n", COLOUR_GREEN, COLOUR_END,12,block->size);
+		printf("          |  %sprevious   = %s%*p   |\n",COLOUR_GREEN, COLOUR_END, 12,block->previous);
+		printf("          |  %snext       = %s%*p   |\n", COLOUR_GREEN, COLOUR_END,12,block->next);
+		printf("          |  %sis_free    = %s%*d   |\n",COLOUR_GREEN, COLOUR_END, 12,block->is_free);
+
+		printf("          --------------------------------\n");
+	}
+
 }
 
 /* display the chained list of memory block */

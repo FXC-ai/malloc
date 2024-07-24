@@ -65,11 +65,12 @@ t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group);
 /*block_manager_tools.c*/
 size_t ft_calculate_heap_size (size_t size);
 t_heap_group ft_find_group (size_t size);
-
 void *ft_find_last_block (t_heap *heap);
 void ft_create_block(t_block *previous_block, t_block *new_block, size_t size);
-// void *ft_create_new_list(t_block *first_block, size_t size);
 t_block *ft_add_new_block(t_heap *heap, size_t size);
+t_block * ft_find_free_block(t_heap *heap, size_t size);
+
+
 
 // size_t ft_round_eight(size_t size);
 

@@ -55,6 +55,7 @@ void ut_ft_find_heap_group()
 void ut_ft_find_group ()
 {
 	printf("size = 128 : %d\n", ft_find_group(128));
+	printf("size = 130 : %d\n", ft_find_group(130));
 	printf("size = 512 : %d\n", ft_find_group(512));
 	printf("size = 1280 : %d\n", ft_find_group(1280));
 }
@@ -131,36 +132,100 @@ t_heap_group ft_find_group (size_t size)
 		return LARGE;
 }
 
-void *ft_malloc (size_t size)
+
+/*  */
+void ut_ft_find_free_block()
+{
+	t_heap *heap = ft_init_heap(TINY_HEAP_ALLOCATION_SIZE, TINY);
+
+	t_block *bloc0 = ft_add_new_block(heap, 12);
+	t_block *bloc1 = ft_add_new_block(heap, 120);
+	t_block *bloc2 = ft_add_new_block(heap, 54);
+	t_block *bloc3 = ft_add_new_block(heap, 38);
+	t_block *bloc4 = ft_add_new_block(heap, 67);
+	t_block *bloc5 = ft_add_new_block(heap, 7);
+	t_block *bloc6 = ft_add_new_block(heap, 119);
+
+	bloc1->is_free = true;
+	bloc2->is_free = true;
+	
+	t_block *block_found = ft_find_free_block(heap, 18);
+	t_block *block_found1 = ft_find_free_block(heap, 250);
+
+	display_blocks_chain(heap);
+	display_block(block_found, 1);
+	display_block(NULL, 1);
+
+}
+
+
+/* Return the first free block with enough space*/
+t_block * ft_find_free_block(t_heap *heap, size_t size)
+{
+	t_block *current;
+	current = (t_block *) HEAP_SHIFT(heap);
+
+
+	while (current != NULL)
+	{
+		if (current->is_free == true && current->size >= ft_round_eight(size) + sizeof(t_block))
+		{
+			return current;
+		}
+		current = current->next;
+	}
+
+	return NULL;
+}
+
+
+
+
+void *ft_malloc (size_t size_of_block)
 {
 	// printf("size asked = %zu\n", size);
 
 	if (heap_start == NULL)
 	{
-		size_t heap_size = ft_calculate_heap_size(size);
-		t_heap_group group = ft_find_group(size);
+		size_t heap_size = ft_calculate_heap_size(size_of_block);
+		t_heap_group group = ft_find_group(size_of_block);
 
 		heap_start = ft_init_heap(heap_size, group);
-		t_block *first_block = ft_add_new_block(heap_start, size);
+		t_block *first_block = ft_add_new_block(heap_start, size_of_block);
 
 		return BLOCK_SHIFT(first_block);
 	}
 	else
 	{
-		t_heap *heap_found = ft_find_heap_group(heap_start, ft_find_group(size));
+		t_heap *heap_found = ft_find_heap_group(heap_start, ft_find_group(size_of_block));
 		if (heap_found == NULL)
 		{
-			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size), ft_find_group(size));
+			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size_of_block), ft_find_group(size_of_block));
 			if (new_heap == NULL)
 				return NULL;
-			t_block *first_block = ft_add_new_block(heap_start, size);
+			t_block *first_block = ft_add_new_block(heap_start, size_of_block);
 			return BLOCK_SHIFT(first_block);
 		}
 		else
 		{
-			t_heap_group group_researched = ft_find_group(size);
-			// une heap avec le groupe adaptée existe
+			t_heap_group group_researched = ft_find_group(size_of_block);
 			printf("need to think... %d\n", group_researched);
+
+			if (heap_found->free_size >= (ft_round_eight(size_of_block) + sizeof(t_block)))
+			{
+				t_block *free_block = ft_find_free_block(heap_found, size_of_block);
+				if (free_block == NULL)
+				{
+					ft_add_new_block(heap_found, size);
+				}
+				else
+				{
+					printf("Need to code something like realloc...")
+				}
+
+
+			}
+			// une heap avec le groupe adaptée existe
 		}
 
 	}
@@ -174,7 +239,7 @@ int main()
     printf("Size of t_block: %lu\n", sizeof(t_block));
     printf("Size of t_heap : %lu\n", sizeof(t_heap));
 
-
+	ut_ft_find_free_block();
 
 	// ut_ft_init_heap();
 	// ut_ft_find_last_heap();
@@ -183,18 +248,19 @@ int main()
 	// ut_ft_add_new_heap();
 
 
-	void * ptr_writable = ft_malloc(25);
+	// void * ptr_writable = ft_malloc(25);
+	// void *ptr_writable1 = ft_malloc(269);
+	// void *ptr_writable2 = ft_malloc(1300);
 
-	void *ptr_writable1 = ft_malloc(269);
-	void *ptr_writable2 = ft_malloc(1300);
-	void *ptr_writable3 = ft_malloc(1300);
+	// display_block(ptr_writable, 0);
+	// display_block(ptr_writable1, 1);
+	// display_block(ptr_writable2, 2);
 
-	display_block(ptr_writable, 0);
-	display_block(ptr_writable1, 1);
-	display_block(ptr_writable2, 2);
+	// display_heaps_chain(heap_start);
 
-	display_heaps_chain(heap_start);
+	// void *ptr_writable3 = ft_malloc(130);
 
+	// ut_ft_find_group();
 	// ut_ft_add_new_block();
 
 
