@@ -1,5 +1,25 @@
 #include "malloc.h"
 
+void display_memory (t_heap *first_heap)
+{
+	t_heap *current_heap;
+	size_t counter;
+
+    printf("%s___________HEAPS LIST___________%s\n", COLOUR_BLUE, COLOUR_END);
+
+	counter = 0;
+	current_heap = first_heap;
+	while (current_heap != NULL)
+	{
+		// display_heap_meta(current_heap, counter);
+		display_blocks_chain(current_heap);
+		current_heap = current_heap->next;
+		++counter;
+	}
+	printf("%s            NULL              %s\n",COLOUR_RED, COLOUR_END);
+    printf("%s________________________________%s\n", COLOUR_BLUE, COLOUR_END);
+
+}
 
 /* display a block meta */
 void display_block(t_block *block, size_t index)

@@ -203,27 +203,31 @@ void *ft_malloc (size_t size_of_block)
 			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size_of_block), ft_find_group(size_of_block));
 			if (new_heap == NULL)
 				return NULL;
-			t_block *first_block = ft_add_new_block(heap_start, size_of_block);
+			t_block *first_block = ft_add_new_block(new_heap, size_of_block);
 			return BLOCK_SHIFT(first_block);
 		}
 		else
 		{
 			t_heap_group group_researched = ft_find_group(size_of_block);
-			printf("need to think... %d\n", group_researched);
+			// printf("need to think... %d\n", group_researched);
 
 			if (heap_found->free_size >= (ft_round_eight(size_of_block) + sizeof(t_block)))
 			{
 				t_block *free_block = ft_find_free_block(heap_found, size_of_block);
 				if (free_block == NULL)
 				{
-					ft_add_new_block(heap_found, size);
+					ft_add_new_block(heap_found, size_of_block);
 				}
 				else
 				{
-					printf("Need to code something like realloc...")
+					printf("Need to code something like realloc...");
 				}
 
 
+			}
+			else
+			{
+				printf("need to find an other heap... or create a new one.");
 			}
 			// une heap avec le groupe adaptée existe
 		}
@@ -239,7 +243,7 @@ int main()
     printf("Size of t_block: %lu\n", sizeof(t_block));
     printf("Size of t_heap : %lu\n", sizeof(t_heap));
 
-	ut_ft_find_free_block();
+	// ut_ft_find_free_block();
 
 	// ut_ft_init_heap();
 	// ut_ft_find_last_heap();
@@ -248,17 +252,28 @@ int main()
 	// ut_ft_add_new_heap();
 
 
-	// void * ptr_writable = ft_malloc(25);
-	// void *ptr_writable1 = ft_malloc(269);
-	// void *ptr_writable2 = ft_malloc(1300);
+	void * ptr_writable0 = ft_malloc(25);
+	void * ptr_writable01 = ft_malloc(25);
+	void * ptr_writable02 = ft_malloc(25);
+	void * ptr_writable03 = ft_malloc(25);
+	void * ptr_writable04 = ft_malloc(25);
+	void *ptr_writable1 = ft_malloc(269);
+	void *ptr_writable11 = ft_malloc(269);
+	void *ptr_writable12 = ft_malloc(269);
+	void *ptr_writable2 = ft_malloc(1300);
+	void *ptr_writable13 = ft_malloc(130);
+	void *ptr_writable21 = ft_malloc(600);
+	void *ptr_writable22 = ft_malloc(1900);
 
 	// display_block(ptr_writable, 0);
 	// display_block(ptr_writable1, 1);
 	// display_block(ptr_writable2, 2);
+	// display_block(ptr_writable3, 3);
 
 	// display_heaps_chain(heap_start);
+	// display_blocks_chain(heap_start);
 
-	// void *ptr_writable3 = ft_malloc(130);
+	display_memory(heap_start);
 
 	// ut_ft_find_group();
 	// ut_ft_add_new_block();

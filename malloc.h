@@ -81,5 +81,8 @@ void display_blocks_chain(t_heap *heap);
 void display_heap_meta(t_heap *heap, size_t index);
 void display_heaps_chain(t_heap *first_heap);
 
+void display_memory (t_heap *first_heap);
+
+
 
 #endif
