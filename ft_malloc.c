@@ -14,8 +14,9 @@ void ut_ft_init_heap()
 	display_heap_meta(new_heap_large,2);
 }
 
-void ut_ft_find_last_heap(t_heap *first_heap)
+void ut_ft_find_last_heap()
 {
+	t_heap *first_heap = ft_init_heap(SMALL_HEAP_ALLOCATION_SIZE, SMALL);
 	t_heap *last_heap = ft_find_last_heap(first_heap);
 	display_heaps_chain(first_heap);
 	display_heap_meta(last_heap,0);
@@ -25,12 +26,12 @@ void ut_ft_add_new_heap()
 {
 	t_heap *first_heap = ft_init_heap(SMALL_HEAP_ALLOCATION_SIZE, SMALL);
 
-	t_heap *first_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	t_heap *second_added = ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
-	t_heap *third_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	t_heap *fourth_added = ft_add_new_heap(first_heap, 600);
-	t_heap *fifth_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	t_heap *sixth_added = ft_add_new_heap(first_heap, 100000);
+	t_heap *first_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE, SMALL);
+	t_heap *second_added = ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE, TINY);
+	t_heap *third_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE, SMALL);
+	t_heap *fourth_added = ft_add_new_heap(first_heap, ft_calculate_heap_size(600), LARGE);
+	t_heap *fifth_added = ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE, SMALL);
+	t_heap *sixth_added = ft_add_new_heap(first_heap, ft_calculate_heap_size(100000), LARGE);
 
 	display_heaps_chain(first_heap);
 }
@@ -38,12 +39,12 @@ void ut_ft_add_new_heap()
 void ut_ft_find_heap_group()
 {
 	t_heap *first_heap = ft_init_heap(100000, LARGE);
-	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE);
-	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE, TINY);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE, TINY);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE, TINY);
+	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE, SMALL);
+	ft_add_new_heap(first_heap, SMALL_HEAP_ALLOCATION_SIZE, SMALL);
+	ft_add_new_heap(first_heap, TINY_HEAP_ALLOCATION_SIZE, TINY);
 
 	t_heap *found_heap = ft_find_heap_group(first_heap, SMALL);
 
@@ -84,6 +85,7 @@ void ut_ft_add_new_block ()
 void ut_ft_calculate_heap_size()
 {
 
+	printf("%d : %zu (%zu pages)\n", 1, ft_calculate_heap_size(1), ft_calculate_heap_size(1) / getpagesize());
 	printf("%d : %zu (%zu pages)\n", 10, ft_calculate_heap_size(10), ft_calculate_heap_size(10) / getpagesize());
 	printf("%d : %zu (%zu pages)\n", 100, ft_calculate_heap_size(100), ft_calculate_heap_size(100) / getpagesize());
 	printf("%d : %zu (%zu pages)\n", 120, ft_calculate_heap_size(120), ft_calculate_heap_size(120) / getpagesize());
@@ -112,12 +114,9 @@ size_t ft_calculate_heap_size (size_t size)
 	else
 	{
 		size_t r = getpagesize() * ((size + sizeof(t_heap)) / getpagesize());
-
 		if (size % getpagesize() > 0)
 			r += getpagesize();
-
 		return r;
-
 	}
 }
 
@@ -141,7 +140,6 @@ void *ft_malloc (size_t size)
 		size_t heap_size = ft_calculate_heap_size(size);
 		t_heap_group group = ft_find_group(size);
 
-
 		heap_start = ft_init_heap(heap_size, group);
 		t_block *first_block = ft_add_new_block(heap_start, size);
 
@@ -152,15 +150,17 @@ void *ft_malloc (size_t size)
 		t_heap *heap_found = ft_find_heap_group(heap_start, ft_find_group(size));
 		if (heap_found == NULL)
 		{
-			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size));
+			t_heap *new_heap = ft_add_new_heap(heap_start, ft_calculate_heap_size(size), ft_find_group(size));
 			if (new_heap == NULL)
 				return NULL;
-			return HEAP_SHIFT(new_heap);
+			t_block *first_block = ft_add_new_block(heap_start, size);
+			return BLOCK_SHIFT(first_block);
 		}
 		else
 		{
+			t_heap_group group_researched = ft_find_group(size);
 			// une heap avec le groupe adaptée existe
-			printf("need to think...\n");
+			printf("need to think... %d\n", group_researched);
 		}
 
 	}
@@ -174,18 +174,28 @@ int main()
     printf("Size of t_block: %lu\n", sizeof(t_block));
     printf("Size of t_heap : %lu\n", sizeof(t_heap));
 
-	ut_ft_calculate_heap_size();
+
+
+	// ut_ft_init_heap();
+	// ut_ft_find_last_heap();
+	// ut_ft_calculate_heap_size();
 
 	// ut_ft_add_new_heap();
 
 
-	// void * ptr_writable = ft_malloc(2500);
+	void * ptr_writable = ft_malloc(25);
 
-	// display_blocks_chain(heap_start);
-	// ft_malloc(1300);
-	// ft_malloc(1300);
+	void *ptr_writable1 = ft_malloc(269);
+	void *ptr_writable2 = ft_malloc(1300);
+	void *ptr_writable3 = ft_malloc(1300);
 
+	display_block(ptr_writable, 0);
+	display_block(ptr_writable1, 1);
+	display_block(ptr_writable2, 2);
 
+	display_heaps_chain(heap_start);
+
+	// ut_ft_add_new_block();
 
 
 	return 0;

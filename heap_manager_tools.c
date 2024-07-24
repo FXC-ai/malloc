@@ -7,21 +7,9 @@ size_t ft_round_eight(size_t size)
 	return (size + 7) & ~7;
 }
 
-
-
-
-
-
 /* pre-allocate” the first heap  */
 t_heap *ft_init_heap(size_t heap_size, t_heap_group group)
 {
-
-	// need to put that in the global variable !!!
-
-
-
-	// t_heap_group group = ft_find_group(size);
-	// security about heap_size ???
 	t_heap *new_heap;
 
 	new_heap = (t_heap *) mmap(NULL, heap_size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -33,31 +21,12 @@ t_heap *ft_init_heap(size_t heap_size, t_heap_group group)
 
 	new_heap->previous = NULL;
 	new_heap->next = NULL;
-	// switch (heap_size)
-	// {
-	// 	case TINY_HEAP_ALLOCATION_SIZE:
-	// 		first_heap->group = TINY;
-	// 		break;
-	// 	case SMALL_HEAP_ALLOCATION_SIZE:
-	// 		first_heap->group = SMALL;
-	// 		break;
-	// 	default :
-	// 		first_heap->group = LARGE;
-	// }
 	new_heap->group = group;
 	new_heap->total_size = heap_size;
-
-
 	new_heap->free_size = heap_size - sizeof(t_heap); //-16 bytes !!!!
 	new_heap->block_count = 0;
 	
-	
-	// void * first_block = (void *) HEAP_SHIFT(first_heap);
-
-	// printf("first_heap = %p first_block = %p\n", first_heap, first_block);
-
-
-	return (NULL);
+	return (new_heap);
 }
 
 /*Return the pointer of the last heap*/
@@ -91,7 +60,7 @@ t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group)
 }
 
 /* add a new heap */
-t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size)
+t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size, t_heap_group group)
 {	
 	t_heap *new_heap;
 	t_heap *last_heap;
@@ -109,17 +78,7 @@ t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size)
 
 	new_heap->previous = last_heap;
 	new_heap->next = NULL;
-	switch (heap_size)
-	{
-		case TINY_HEAP_ALLOCATION_SIZE:
-			new_heap->group = TINY;
-			break;
-		case SMALL_HEAP_ALLOCATION_SIZE:
-			new_heap->group = SMALL;
-			break;
-		default :
-			new_heap->group = LARGE;
-	}
+	new_heap->group = group;
 	new_heap->total_size = heap_size;
 
 

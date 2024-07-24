@@ -32,25 +32,23 @@ typedef enum e_heap_group
 	LARGE
 } t_heap_group;
 
-typedef struct s_heap {
+typedef struct s_heap 
+{
 	struct s_heap *previous;
 	struct s_heap *next;
 	t_heap_group group;
 	size_t total_size;
 	size_t free_size;
 	size_t block_count;
-
 } t_heap;
 
 
 typedef struct s_block
 {
-
 	int size;
 	struct s_block *previous;
 	struct s_block *next;
 	bool is_free;
-
 } t_block;
 
 /*heap_manager_tool.c*/
@@ -58,7 +56,7 @@ typedef struct s_block
 size_t ft_round_eight(size_t size);
 
 t_heap *ft_init_heap(size_t heap_size, t_heap_group group);
-t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size);
+t_heap *ft_add_new_heap (t_heap *first_heap, size_t heap_size, t_heap_group group);
 t_heap *ft_find_last_heap (t_heap *first_heap);
 t_heap *ft_find_heap_group (t_heap *first_heap, t_heap_group group);
 
