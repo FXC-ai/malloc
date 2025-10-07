@@ -5,7 +5,8 @@ void *ft_malloc (int size)
 	void *ptr;
 
 	ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-	if (shared_mem == MAP_FAILED) {
+	if (ptr == MAP_FAILED)
+	{
 		return NULL;
 	}
 	return ptr;
@@ -50,7 +51,7 @@ int main()
 	const char * msg = "only a test";
 	strncpy(file_memory, msg, strlen(msg));
 
-	printf("content of the file memory : %s",(char *)file_memory);
+	printf("content of the file memory : %s\n",(char *)file_memory);
 
 	munmap(file_memory, size_file);
 	close(fd);

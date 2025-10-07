@@ -6,9 +6,6 @@
 struct memory_bloc
 {
 	int size;
-	
-
-
 }
 
 struct memory_block_free
