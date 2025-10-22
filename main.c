@@ -1,11 +1,32 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdint.h>
 
-void *malloc (size_t size)
+
+
+void display_hex (uintptr_t nb)
 {
-    (void) size;
+    const char *str = "0123456789abcdef";
+    if (nb / 16)
+    {
+        display_hex( nb / 16);
+    }
+    write(1, &str[nb % 16], 1);
+}
 
-    char c = 'o';
-    write(1, &c, 1);
-    return NULL;
+int main()
+{
+
+    printf("Welcome back\n");
+
+    void *ptr = malloc(234);
+
+    printf("%p\n", ptr);
+    display_hex((uintptr_t) ptr);
+
+
+    printf("\n");
+
+    return 0;
 }
