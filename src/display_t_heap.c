@@ -34,5 +34,5 @@ void display_t_heap(t_heap *heap)
     display_nb(heap->block_count);
     write(1, "\n", 1);
 
-    write(1, "--------------------------\n\n", 28);
+    write(1, "--------------------------\n", 28);
 }

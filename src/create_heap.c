@@ -1,7 +1,7 @@
 #include "../inc/malloc.h"
 
 
-t_heap *create_heap(size_t heap_size)
+t_heap *create_heap(t_heap_group heap_group, size_t heap_size)
 {
     t_heap *heap = mmap
     (
@@ -19,11 +19,14 @@ t_heap *create_heap(size_t heap_size)
         return NULL;
     }
 
-    heap->total_size = heap_size;
-    heap->free_size = heap_size - sizeof(t_heap);
+    heap->group       = heap_group;
+    heap->total_size  = heap_size;
+    heap->free_size   = heap_size - sizeof(t_heap);
     heap->block_count = 0;
-    heap->next = NULL;
-    heap->prev = NULL;
+    heap->next        = NULL;
+    heap->prev        = NULL;
+
+    ft_bzero(HEAP_SHIFT(heap), heap_size - sizeof(t_heap));
 
     return heap;
 }

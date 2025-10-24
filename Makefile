@@ -16,7 +16,16 @@ SRCS := malloc.c \
 		add_heap_front.c \
 		display_t_heap.c \
 		display_t_heap_chain.c \
-		display_t_heap_group.c
+		display_t_heap_group.c \
+		t_heap_chain_iter.c \
+		display_t_block.c \
+		add_block_back.c \
+		ft_bzero.c \
+		init_block_chain.c \
+		display_block_chain.c \
+		search_block.c \
+		search_heap.c \
+		split_block.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 
