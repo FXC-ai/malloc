@@ -25,8 +25,6 @@ t_block *split_block
 
     write(1,"CC\n", 3);
 
-
-
     if (sizeof(t_block) + BLOCK_MIN_SIZE + size > left_block->data_size)
         return left_block;
 
@@ -45,7 +43,7 @@ t_block *split_block
     left_block->data_size = size;
     left_block->is_free = is_free;
 
-    heap->block_count -= 1;
+    heap->block_count += 1;
 
     return right_block;
 }

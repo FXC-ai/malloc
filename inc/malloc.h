@@ -13,7 +13,6 @@
 # define SMALL_HEAP_SIZE (size_t)(32 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_HEAP_SIZE / 128)
 
-extern void *heap_anchor;
 
 typedef enum	e_bool
 {
@@ -60,6 +59,9 @@ typedef struct	s_block
 # define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
 # define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
 
+extern t_heap *heap_anchor;
+
+
 void         free(void *ptr);
 void         *malloc(size_t size);
 void         *realloc(void *ptr, size_t size);
@@ -67,17 +69,23 @@ void         *realloc(void *ptr, size_t size);
 size_t       ceil_size(size_t size, int multiple_of);
 
 t_heap_group get_heap_group_from_block_size(size_t block_size);
-size_t       get_heap_size_from_heap_group(t_heap_group heap_group);
+size_t       get_heap_size_from_heap_group(t_heap_group heap_group, size_t size);
+
+void         set_heap (t_heap *heap, size_t total_size, size_t free_size, size_t block_count);
+void         set_heap_group (t_heap *heap, t_heap_group group);
+void         set_heap_total_size(t_heap *heap, size_t total_size);
+void         set_heap_free_size(t_heap *heap, size_t free_size);
+void         set_heap_block_count(t_heap *heap, size_t block_count);
 
 t_block      *search_block(t_heap *heap, size_t min_data_size, t_bool is_free);
-t_heap       *search_heap(t_heap *heap_anchor, t_heap_group	group, size_t total_size, size_t free_size, size_t block_count);
+t_heap       *search_heap(t_heap *heap_start, t_heap_group	group, size_t total_size, size_t free_size, size_t block_count);
 t_block 	 *split_block(t_heap  *heap, t_block *left_block, size_t  size, t_bool  is_free);
 
 void         create_block(t_block *ptr_block, size_t data_size, t_bool is_free);
 
 t_heap       *create_heap(t_heap_group heap_group, size_t heap_size);
 t_block      *add_block_back(t_heap *heap, size_t data_size, t_bool is_free);
-void         add_heap_front(t_heap *heap_anchor, t_heap *heap_to_add);
+void         add_heap_front(t_heap *heap_start, t_heap *heap_to_add);
 
 void         t_heap_chain_iter(t_heap *first_heap, void (*f)(t_heap *));
 
@@ -89,7 +97,7 @@ void         display_t_heap(t_heap *heap);
 void         display_t_heap_group(t_heap_group heap_group);
 void         display_t_heap_chain(t_heap *first_heap);
 void         display_t_block(t_block *block);
-void         display_block_chain(t_heap *heap);
+void         display_block_chain(t_block *b);
 
 void	     ft_bzero(void *s, size_t n);
 

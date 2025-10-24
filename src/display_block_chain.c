@@ -1,8 +1,8 @@
 #include "../inc/malloc.h"
 
-void         display_block_chain(t_heap *heap)
+void         display_block_chain(t_block *first_block)
 {
-    t_block *current_block = HEAP_SHIFT(heap);
+    t_block *current_block = first_block;
 
     while (current_block)
     {

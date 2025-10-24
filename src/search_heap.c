@@ -2,14 +2,14 @@
 
 t_heap *search_heap
 (
-    t_heap          *heap_anchor,
+    t_heap          *heap_start,
 	t_heap_group	group,
 	size_t			total_size,
 	size_t			free_size,
 	size_t			block_count
 )
 {
-    t_heap* current_heap = heap_anchor;
+    t_heap* current_heap = heap_start;
 
     while (current_heap)
     {

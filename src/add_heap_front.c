@@ -1,17 +1,17 @@
 #include "../inc/malloc.h"
 #include <stdio.h>
 
-void add_heap_front(t_heap *heap_anchor, t_heap *heap)
+void add_heap_front(t_heap *heap_start, t_heap *heap)
 {
 
-    if (heap_anchor == NULL)
+    if (heap_start == NULL)
     {
-        heap_anchor = heap;
+        heap_start = heap;
         return;
     }
 
-    heap->next = heap_anchor;
-    heap_anchor->prev = heap;
-    heap_anchor = heap;
+    heap->next = heap_start;
+    heap_start->prev = heap;
+    heap_start = heap;
 
 }
