@@ -7,6 +7,7 @@ void *malloc (size_t size)
 
     size_t size_alloc;
     t_block *block = NULL;
+    t_block_found = NULL;
     t_heap *heap_found = NULL;
     t_heap *new_heap = NULL;
 
@@ -25,7 +26,12 @@ void *malloc (size_t size)
 
     if (heap_anchor != NULL)
     {
-        heap_found = search_heap(heap_anchor, heap_group, 0, size_alloc + sizeof(t_block),0);
+
+        heap_found = search_heap(heap_anchor, heap_group, 0, size_alloc + sizeof(t_block), 0);
+
+        
+
+
         block = add_block_back(heap_found, size_alloc, FALSE);
     }
 
@@ -37,11 +43,9 @@ void *malloc (size_t size)
             return NULL;
         }
 
-        add_heap_front(&heap_anchor, new_heap); ///// ???????
+        add_heap_front(&heap_anchor, new_heap);
         block = init_block_chain(heap_anchor, size_alloc);
     }
 
-
-
-    return block;
+    return BLOCK_SHIFT(block);
 }

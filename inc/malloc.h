@@ -78,7 +78,12 @@ void         set_heap_free_size(t_heap *heap, size_t free_size);
 void         set_heap_block_count(t_heap *heap, size_t block_count);
 
 t_block      *search_block(t_heap *heap, size_t min_data_size, t_bool is_free);
+
+
 t_heap       *search_heap(t_heap *heap_start, t_heap_group	group, size_t total_size, size_t free_size, size_t block_count);
+
+
+
 t_block 	 *split_block(t_heap  *heap, t_block *left_block, size_t  size, t_bool  is_free);
 
 void         create_block(t_block *ptr_block, size_t data_size, t_bool is_free);

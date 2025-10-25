@@ -25,7 +25,7 @@ t_heap *create_heap(t_heap_group heap_group, size_t heap_size)
     heap->block_count = 0;
     heap->next        = NULL;
     heap->prev        = NULL;
-
+    
     ft_bzero(HEAP_SHIFT(heap), heap_size - sizeof(t_heap));
 
     return heap;

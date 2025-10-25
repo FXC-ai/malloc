@@ -6,6 +6,7 @@ size_t get_heap_size_from_heap_group(t_heap_group heap_group, size_t size)
         return TINY_HEAP_SIZE;
     else if (heap_group == SMALL)
         return SMALL_HEAP_SIZE;
-    
-    return size + sizeof(t_heap);
+        
+    // display_nb(size + sizeof(t_heap));
+    return size + sizeof(t_heap) + sizeof(t_block);
 }
