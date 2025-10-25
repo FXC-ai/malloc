@@ -67,7 +67,7 @@ void         free(void *ptr);
 void         *malloc(size_t size);
 void         *realloc(void *ptr, size_t size);
 
-size_t       ceil_size(size_t size, int multiple_of);
+size_t       round_nearest_multiple(size_t size, size_t multiple_of);
 
 t_heap_group get_heap_group_from_block_size(size_t block_size);
 size_t       get_heap_size_from_heap_group(t_heap_group heap_group, size_t size);

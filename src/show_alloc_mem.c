@@ -59,4 +59,5 @@ static void show_alloc_heap(t_heap *heap)
 void show_alloc_mem()
 {
     t_heap_chain_iter(heap_anchor, show_alloc_heap);
+    // ATTENTION IL MANQUE LE TOTAL !!!!
 }

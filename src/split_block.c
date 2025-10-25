@@ -18,6 +18,12 @@ void split_block
     if (size == 0)
         return;
 
+
+    if (left_block->data_size < size + sizeof(t_block) + BLOCK_MIN_SIZE)
+    {
+        return;
+    }
+
     t_block *right_block = BLOCK_SHIFT(left_block) + size;
 
     right_block->next = left_block->next;
