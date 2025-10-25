@@ -25,7 +25,11 @@ SRCS := malloc.c \
 		display_block_chain.c \
 		search_block.c \
 		search_heap.c \
-		split_block.c
+		split_block.c \
+		show_alloc_mem.c \
+		ft_strlen.c \
+		ft_putstr_fd.c \
+		block_chain_iter.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

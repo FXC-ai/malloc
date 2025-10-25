@@ -9,7 +9,12 @@ t_heap *search_heap
 	size_t			block_count
 )
 {
+
+
     t_heap* current_heap = heap_start;
+
+
+
 
     while (current_heap)
     {

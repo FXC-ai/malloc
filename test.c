@@ -3,11 +3,18 @@
 int main()
 {
 
-    t_block *block0 = malloc(8005);
-    write(1, "\n", 1);
+    t_block *block0 = malloc(96);
 
+    t_block *block1 = malloc(37);
 
+    t_block *block2 = malloc(120);
 
+    t_block *block3 = malloc(150);
+
+    t_block *block4 = malloc(150);
+   
+
+    show_alloc_mem();
 
     /*   
     void *heap1= create_heap(TINY, TINY_HEAP_SIZE);
@@ -32,6 +39,6 @@ int main()
     display_block_chain(heap1);
 
     display_t_heap(heap1);
-*/
+    */
     return 0;
 }

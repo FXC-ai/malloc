@@ -85,9 +85,10 @@ void         create_block(t_block *ptr_block, size_t data_size, t_bool is_free);
 
 t_heap       *create_heap(t_heap_group heap_group, size_t heap_size);
 t_block      *add_block_back(t_heap *heap, size_t data_size, t_bool is_free);
-void         add_heap_front(t_heap *heap_start, t_heap *heap_to_add);
+void         add_heap_front(t_heap **heap_start, t_heap *heap_to_add);
 
 void         t_heap_chain_iter(t_heap *first_heap, void (*f)(t_heap *));
+void         block_chain_iter(t_block *first_block, void (*f)(t_block *));
 
 t_block      *init_block_chain(t_heap *heap, size_t data_size);
 
@@ -98,7 +99,10 @@ void         display_t_heap_group(t_heap_group heap_group);
 void         display_t_heap_chain(t_heap *first_heap);
 void         display_t_block(t_block *block);
 void         display_block_chain(t_block *b);
+void         show_alloc_mem();
 
 void	     ft_bzero(void *s, size_t n);
+void	     ft_putstr_fd(char *s, int fd);
+size_t	     ft_strlen(const char *str);
 
 #endif

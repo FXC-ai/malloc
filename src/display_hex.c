@@ -7,5 +7,9 @@ void display_hex (uintptr_t nb)
     {
         display_hex( nb / 16);
     }
+    else
+    {
+        write(1, "0x", 2);
+    }
     write(1, &str[nb % 16], 1);
 }
