@@ -58,6 +58,7 @@ typedef struct	s_block
 
 # define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
 # define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
+# define BLOCK_UNSHIFT(start) ((void*)start - sizeof(t_block))
 
 extern t_heap *heap_anchor;
 
@@ -77,14 +78,19 @@ void         set_heap_total_size(t_heap *heap, size_t total_size);
 void         set_heap_free_size(t_heap *heap, size_t free_size);
 void         set_heap_block_count(t_heap *heap, size_t block_count);
 
-t_block      *search_block(t_heap *heap, size_t min_data_size, t_bool is_free);
+void		 set_block_prev(t_block *block, t_block *prev);
+void         set_block_next(t_block *block, t_block *next);
+void         set_block_data_size(t_block *block, size_t size);
+void         set_block_is_free(t_block *block, t_bool is_free);
 
+
+t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 
 t_heap       *search_heap(t_heap *heap_start, t_heap_group	group, size_t total_size, size_t free_size, size_t block_count);
 
 
 
-t_block 	 *split_block(t_heap  *heap, t_block *left_block, size_t  size, t_bool  is_free);
+void     	 split_block(t_heap  *heap, t_block *left_block, size_t  size);
 
 void         create_block(t_block *ptr_block, size_t data_size, t_bool is_free);
 

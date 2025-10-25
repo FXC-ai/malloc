@@ -1,5 +1,14 @@
 #include "../inc/malloc.h"
 
+static void display_bool(t_bool bool)
+{
+    if (bool == TRUE)
+        ft_putstr_fd("TRUE", 1);
+    else
+        ft_putstr_fd("FALSE", 1);
+
+
+}
 
 /*
 
@@ -15,8 +24,13 @@ static void show_alloc_block(t_block *block)
     ft_putstr_fd(" : ", 1);
     display_nb(block->data_size);
     ft_putstr_fd(" bytes", 1);
+    ft_putstr_fd(" (", 1);
+    display_bool(block->is_free);
+    ft_putstr_fd(")", 1);
+
 
     write(1, "\n", 1);
+    
 
 }
 

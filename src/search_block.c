@@ -1,9 +1,9 @@
 #include "../inc/malloc.h"
 
 
-t_block *search_block(t_heap *heap, size_t min_data_size, t_bool is_free)
+t_block *search_block(t_block *first_block, size_t min_data_size, t_bool is_free)
 {
-    t_block *current_block = HEAP_SHIFT(heap);
+    t_block *current_block = first_block;
 
     while (current_block)
     {

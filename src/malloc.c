@@ -4,10 +4,9 @@ t_heap *heap_anchor = NULL;
 
 void *malloc (size_t size)
 {
-
     size_t size_alloc;
     t_block *block = NULL;
-    t_block_found = NULL;
+    t_block *block_found = NULL;
     t_heap *heap_found = NULL;
     t_heap *new_heap = NULL;
 
@@ -26,11 +25,41 @@ void *malloc (size_t size)
 
     if (heap_anchor != NULL)
     {
+        heap_found = heap_anchor;
 
+        while (heap_found)
+        {
+            block_found = search_block
+            (
+                HEAP_SHIFT(heap_found),
+                sizeof(t_block) + BLOCK_MIN_SIZE + size_alloc,
+                TRUE
+            );
+            
+            if (block_found != NULL)
+            {
+
+                split_block(heap_found, block_found, size_alloc);
+
+                /*
+                    Attention si un block n'est pas assez gros pour etre splité
+                    il conserve sa taille initiale
+                    Du coup dans le show_alloc_meme ce n'est pas la taille demandé
+                    par l'utilisateur qui est visible...
+                    Il faudrait split systematiquement...
+                
+                */
+
+                return BLOCK_SHIFT(block_found);
+            }
+
+            heap_found = heap_found->next;
+        }
+    }
+
+    if (heap_anchor != NULL)
+    {
         heap_found = search_heap(heap_anchor, heap_group, 0, size_alloc + sizeof(t_block), 0);
-
-        
-
 
         block = add_block_back(heap_found, size_alloc, FALSE);
     }

@@ -1,36 +1,22 @@
 #include "../inc/malloc.h"
 
 
-t_block *split_block
+void split_block
 (
     t_heap  *heap,
     t_block *left_block,
-    size_t  size,
-    t_bool  is_free
+    size_t  size
+
 )
 {
     if (left_block == NULL)
-        return NULL;
+        return;
     
-    write(1,"AA\n", 3);
-
     if (left_block->is_free == FALSE)
-        return NULL;
+        return;
 
-    write(1,"BB\n", 3);
-    
-    
     if (size == 0)
-        return left_block;
-
-    write(1,"CC\n", 3);
-
-    if (sizeof(t_block) + BLOCK_MIN_SIZE + size > left_block->data_size)
-        return left_block;
-
-
-    write(1,"DD\n", 3);
-
+        return;
 
     t_block *right_block = BLOCK_SHIFT(left_block) + size;
 
@@ -41,9 +27,8 @@ t_block *split_block
 
     left_block->next = right_block;
     left_block->data_size = size;
-    left_block->is_free = is_free;
+    left_block->is_free = FALSE;
 
     heap->block_count += 1;
 
-    return right_block;
 }
