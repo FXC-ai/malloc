@@ -84,6 +84,7 @@ void         set_block_data_size(t_block *block, size_t size);
 void         set_block_is_free(t_block *block, t_bool is_free);
 
 t_block      *merge_previous_block (t_block *block);
+t_block      *merge_next_block(t_block *block);
 
 t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 

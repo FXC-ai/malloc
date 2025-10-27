@@ -154,53 +154,150 @@ void test5()
 void test6()
 {
     void *ptr1 = malloc(16);
+
     void *ptr2 = malloc(16);
-    void *ptr3 = malloc(7);
+    
+    void *ptr3 = malloc(16);
+
+    void *ptr4 = malloc(7);
+
+    void *ptr5 = malloc(7);
+
+    void *ptr6 = malloc(7);
+
+    void *ptr7 = malloc(7);
+
+    void *ptr8 = malloc(7);
+
+    void *ptr9 = malloc(7);
+
+    void *ptr10 = malloc(7);
+
+    //set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr2), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr3), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr4), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr5), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr6), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr7), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr8), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr9), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr10), TRUE);
 
     show_alloc_mem();
 
     write(1, "\n", 1);
+    
+    merge_previous_block(BLOCK_UNSHIFT(ptr2));
+    //merge_previous_block(BLOCK_UNSHIFT(ptr3));
+    merge_previous_block(BLOCK_UNSHIFT(ptr4));
+    merge_previous_block(BLOCK_UNSHIFT(ptr5));    
+    merge_previous_block(BLOCK_UNSHIFT(ptr6));    
+    merge_previous_block(BLOCK_UNSHIFT(ptr7));    
+    // merge_previous_block(BLOCK_UNSHIFT(ptr8));    
+    merge_previous_block(BLOCK_UNSHIFT(ptr9));    
+    merge_previous_block(BLOCK_UNSHIFT(ptr10));    
+    
+    show_alloc_mem();
 
-    set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
+}
+
+void test7()
+{
+    void *ptr1 = malloc(16);
+
+    void *ptr2 = malloc(16);
+    
+    void *ptr3 = malloc(16);
+
+    show_alloc_mem();
+    write(1, "\n", 1);
 
     merge_previous_block(BLOCK_UNSHIFT(ptr2));
 
     show_alloc_mem();
 
-    display_block_chain(HEAP_SHIFT(heap_anchor));
+}
 
-    merge_previous_block(BLOCK_UNSHIFT(ptr3));    
+void test8()
+{
+    void *ptr1 = malloc(547);
+    void *ptr2 = malloc(245);
+    void *ptr3 = malloc(100);
 
+    set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr2), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr3), TRUE);
+
+    show_alloc_mem();
+    write(1, "\n", 1);
+
+    merge_next_block(BLOCK_UNSHIFT(ptr1));
+    merge_previous_block(BLOCK_UNSHIFT(ptr3));
 
     show_alloc_mem();
 }
 
+void test9()
+{
+    void *ptr1 = malloc(100);
+    void *ptr2 = malloc(100);
+    void *ptr3 = malloc(100);
+    void *ptr4 = malloc(100);
+    void *ptr5 = malloc(100);
+    void *ptr6 = malloc(100);
+    void *ptr7 = malloc(100);
+    void *ptr8 = malloc(100);
+    void *ptr9 = malloc(100);
+    void *ptr10 = malloc(100);
+
+
+    set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr2), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr3), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr4), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr5), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr6), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr7), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr8), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr9), TRUE);
+    set_block_is_free(BLOCK_UNSHIFT(ptr10), TRUE);
+
+    //display_block_chain(BLOCK_UNSHIFT(ptr1));
+
+
+    show_alloc_mem();
+
+    write(1, "\n", 1);
+
+    merge_next_block(BLOCK_UNSHIFT(ptr1));
+    merge_next_block(BLOCK_UNSHIFT(ptr3));
+    merge_next_block(BLOCK_UNSHIFT(ptr5));
+    merge_next_block(BLOCK_UNSHIFT(ptr7));
+    merge_next_block(BLOCK_UNSHIFT(ptr9));
+
+
+    show_alloc_mem();
+
+
+    merge_previous_block(BLOCK_UNSHIFT(ptr9));
+    merge_previous_block(BLOCK_UNSHIFT(ptr7));
+    merge_previous_block(BLOCK_UNSHIFT(ptr5));
+    merge_previous_block(BLOCK_UNSHIFT(ptr3));
+    //display_block_chain(BLOCK_UNSHIFT(ptr1));
+
+    show_alloc_mem();
+
+
+}
+
 int main()
 {
-    /*
-    test0();
-    write(1, "-----------------------------\n", 30);
+
+
     
-    test1();
+    test9();
     write(1, "-----------------------------\n", 30);
-
-    test2();
-    write(1, "-----------------------------\n", 30);
-
-    test3();
-    write(1, "-----------------------------\n", 30);
-
-    test4();
-
-    write(1, "-----------------------------\n", 30);
-    
-
-    test5();
-    write(1, "-----------------------------\n", 30);
-    */
-
-    test6();
-    //write(1, "-----------------------------\n", 30);
 
     return 0;
 }

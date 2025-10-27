@@ -6,7 +6,7 @@
 
 static void show_alloc_block(t_block *block)
 {
-    (void) block;
+
     display_hex((uintptr_t) BLOCK_SHIFT(block));
     ft_putstr_fd(" - ", 1);
     display_hex((uintptr_t) (BLOCK_SHIFT(block) + block->data_size));

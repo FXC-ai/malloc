@@ -36,27 +36,34 @@ t_block *merge_previous_block (t_block *block)
 {
     if (block == NULL || block->prev == NULL || block->prev->is_free == FALSE) {return NULL;}
 
-    ft_putstr_fd("A\n",2);
+    if (block->next)
+        block->next->prev = block->prev;
 
-    t_block *previous_block = block->prev;
-    ft_putstr_fd("B\n",2);
+    block->prev->next = block->next;
 
-    t_block *next_block = block->next;
-    ft_putstr_fd("C\n",2);
+    block->prev->data_size += block->data_size + sizeof(t_block);
 
-    next_block->prev = previous_block;
-    ft_putstr_fd("D\n",2);
+    t_block *result = block->prev;
 
-    previous_block->next = block->next;
-    ft_putstr_fd("E\n",2);
+    ft_bzero(BLOCK_SHIFT(block->prev), block->prev->data_size);
 
-    previous_block->data_size += block->data_size + sizeof(t_block);
-    ft_putstr_fd("F\n",2);
+    return result;
+}
 
-    ft_bzero(BLOCK_SHIFT(previous_block), previous_block->data_size);
-    ft_putstr_fd("G\n",2);
+t_block *merge_next_block(t_block *block)
+{
+    if (block == NULL || block->next == NULL || block->next->is_free == FALSE) {return block;}
 
-    return previous_block;
+    block->data_size += block->next->data_size;
+
+    if (block->next->next)
+        block->next->next->prev = block;
+
+    block->next = block->next->next;
+
+    ft_bzero(BLOCK_SHIFT(block), block->data_size);
+
+    return block;
 }
 
 void free(void *ptr)
