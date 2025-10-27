@@ -36,7 +36,7 @@ static void show_alloc_heap(t_heap *heap)
 
 static void show_total_size(t_heap *heap)
 {
-    size_t total;
+    size_t total = 0;
 
     t_heap *current_heap = heap;
 

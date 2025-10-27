@@ -322,8 +322,9 @@ void test12()
     show_alloc_mem();
     write(1, "\n", 1);
 
-    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+    delete_last_block(heap_anchor, BLOCK_UNSHIFT(ptr1));
 
+    display_t_heap(heap_anchor);
 
     show_alloc_mem();
 }
@@ -371,7 +372,7 @@ int main()
 
 
     
-    test14();
+    test12();
     write(1, "-----------------------------\n", 30);
 
     return 0;
