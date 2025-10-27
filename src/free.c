@@ -103,7 +103,7 @@ void delete_heap(t_heap **heap)
         heap_to_delete->prev->next = heap_to_delete->next;
     }
 
-    if (heap_to_delete->next)
+    if (heap_to_delete->next && heap_to_delete->prev)
     {
         heap_to_delete->next->prev = heap_to_delete->prev;
     }
