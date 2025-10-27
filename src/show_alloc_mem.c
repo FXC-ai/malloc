@@ -1,17 +1,6 @@
 #include "../inc/malloc.h"
 
-static void display_bool(t_bool bool)
-{
-    if (bool == TRUE)
-        ft_putstr_fd("TRUE", 1);
-    else
-        ft_putstr_fd("FALSE", 1);
-
-
-}
-
 /*
-
     Modèle du sujet : 0xB0020 - 0xBBEEF : 48847 bytes
 */
 

@@ -2,6 +2,9 @@
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
+
+
+
 void display_t_block(t_block *block)
 {
 

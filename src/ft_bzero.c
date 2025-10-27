@@ -1,5 +1,5 @@
 
-#include "malloc.h"
+#include "../inc/malloc.h"
 
 void	ft_bzero(void *s, size_t n)
 {

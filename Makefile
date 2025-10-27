@@ -30,7 +30,11 @@ SRCS := malloc.c \
 		ft_strlen.c \
 		ft_putstr_fd.c \
 		block_chain_iter.c \
-		round_nearest_multiple.c
+		round_nearest_multiple.c \
+		free.c \
+		display_bool.c \
+		ft_memcpy.c \
+		set_block.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

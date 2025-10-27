@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-
-
 void display_hex (uintptr_t nb)
 {
     const char *str = "0123456789abcdef";

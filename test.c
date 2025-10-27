@@ -1,16 +1,6 @@
 #include "inc/malloc.h"
 #include <stdio.h>
 
-void faux_free (void *ptr)
-{
-    t_block *block = (t_block *) BLOCK_UNSHIFT(ptr);
-
-    // write(1, "AA\n", 3);
-
-    block->is_free = TRUE;
-    // display_t_block(block);
-
-}
 
 void test0()
 {
@@ -30,7 +20,7 @@ void test1()
     show_alloc_mem();
     write(1, "\n", 1);
 
-    faux_free(ptr5);
+    set_block_is_free(BLOCK_UNSHIFT(ptr5), TRUE);
 
     void *ptr16 = malloc(128);
 
@@ -47,7 +37,7 @@ void test2()
     show_alloc_mem();
     write(1, "\n", 1);
 
-    faux_free(ptr5);
+    set_block_is_free( BLOCK_UNSHIFT(ptr5), TRUE);
 
     void *ptr16 = malloc(1);
 
@@ -64,7 +54,7 @@ void test3()
     show_alloc_mem();
     write(1, "\n", 1);
 
-    faux_free(ptr5);
+    set_block_is_free( BLOCK_UNSHIFT(ptr5) , TRUE);
 
     void *ptr16 = malloc(128);
 
@@ -126,14 +116,91 @@ void test4()
     t_block *block49 = malloc(555);
     t_block *block50 = malloc(200);
 
+
+    
+
     show_alloc_mem();
     write(1, "\n", 1);
 }
 
-int main()
+
+void test5()
 {
 
+    void *ptr1 = malloc(14);
+    void *ptr2 = malloc(15);
+    void *ptr3 = malloc(16);
+
+    write(1, "Les pointeurs existent -t- ils ?\n", 33);
+
+    display_bool( check_ptr_allocation( heap_anchor, ptr1));
+    write(1, "\n", 1);
+
+    display_bool( check_ptr_allocation( heap_anchor, ptr2));
+    write(1, "\n", 1);
+
+    display_bool( check_ptr_allocation( heap_anchor, ptr3));
+    write(1, "\n", 1);
+
+    char *stck_ptr = "poiteur dans la stack";
+    display_bool( check_ptr_allocation( heap_anchor, stck_ptr));
+    write(1, "\n", 1);
+
+    show_alloc_mem();
+    write(1, "\n", 1);
+}
+
+
+void test6()
+{
+    void *ptr1 = malloc(16);
+    void *ptr2 = malloc(16);
+    void *ptr3 = malloc(7);
+
+    show_alloc_mem();
+
+    write(1, "\n", 1);
+
+    set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
+
+    merge_previous_block(BLOCK_UNSHIFT(ptr2));
+
+    show_alloc_mem();
+
+    display_block_chain(HEAP_SHIFT(heap_anchor));
+
+    merge_previous_block(BLOCK_UNSHIFT(ptr3));    
+
+
+    show_alloc_mem();
+}
+
+int main()
+{
+    /*
+    test0();
+    write(1, "-----------------------------\n", 30);
+    
+    test1();
+    write(1, "-----------------------------\n", 30);
+
+    test2();
+    write(1, "-----------------------------\n", 30);
+
+    test3();
+    write(1, "-----------------------------\n", 30);
+
     test4();
+
+    write(1, "-----------------------------\n", 30);
+    
+
+    test5();
+    write(1, "-----------------------------\n", 30);
+    */
+
+    test6();
+    //write(1, "-----------------------------\n", 30);
 
     return 0;
 }
