@@ -34,7 +34,8 @@ SRCS := malloc.c \
 		free.c \
 		display_bool.c \
 		ft_memcpy.c \
-		set_block.c
+		set_block.c \
+		block_chain_datasize.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

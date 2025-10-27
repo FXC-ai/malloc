@@ -188,15 +188,15 @@ void test6()
 
     write(1, "\n", 1);
     
-    merge_previous_block(BLOCK_UNSHIFT(ptr2));
+    merge_previous_block(heap_anchor, BLOCK_UNSHIFT(ptr2));
     //merge_previous_block(BLOCK_UNSHIFT(ptr3));
-    merge_previous_block(BLOCK_UNSHIFT(ptr4));
-    merge_previous_block(BLOCK_UNSHIFT(ptr5));    
-    merge_previous_block(BLOCK_UNSHIFT(ptr6));    
-    merge_previous_block(BLOCK_UNSHIFT(ptr7));    
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr4));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr5));    
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr6));    
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr7));    
     // merge_previous_block(BLOCK_UNSHIFT(ptr8));    
-    merge_previous_block(BLOCK_UNSHIFT(ptr9));    
-    merge_previous_block(BLOCK_UNSHIFT(ptr10));    
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr9));    
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr10));    
     
     show_alloc_mem();
 
@@ -211,12 +211,12 @@ void test7()
     void *ptr3 = malloc(16);
 
     show_alloc_mem();
+
     write(1, "\n", 1);
 
-    merge_previous_block(BLOCK_UNSHIFT(ptr2));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr2));
 
     show_alloc_mem();
-
 }
 
 void test8()
@@ -232,8 +232,8 @@ void test8()
     show_alloc_mem();
     write(1, "\n", 1);
 
-    merge_next_block(BLOCK_UNSHIFT(ptr1));
-    merge_previous_block(BLOCK_UNSHIFT(ptr3));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr3));
 
     show_alloc_mem();
 }
@@ -251,7 +251,6 @@ void test9()
     void *ptr9 = malloc(100);
     void *ptr10 = malloc(100);
 
-
     set_block_is_free(BLOCK_UNSHIFT(ptr1), TRUE);
     set_block_is_free(BLOCK_UNSHIFT(ptr2), TRUE);
     set_block_is_free(BLOCK_UNSHIFT(ptr3), TRUE);
@@ -263,32 +262,108 @@ void test9()
     set_block_is_free(BLOCK_UNSHIFT(ptr9), TRUE);
     set_block_is_free(BLOCK_UNSHIFT(ptr10), TRUE);
 
-    //display_block_chain(BLOCK_UNSHIFT(ptr1));
-
-
     show_alloc_mem();
 
     write(1, "\n", 1);
 
-    merge_next_block(BLOCK_UNSHIFT(ptr1));
-    merge_next_block(BLOCK_UNSHIFT(ptr3));
-    merge_next_block(BLOCK_UNSHIFT(ptr5));
-    merge_next_block(BLOCK_UNSHIFT(ptr7));
-    merge_next_block(BLOCK_UNSHIFT(ptr9));
-
-
-    show_alloc_mem();
-
-
-    merge_previous_block(BLOCK_UNSHIFT(ptr9));
-    merge_previous_block(BLOCK_UNSHIFT(ptr7));
-    merge_previous_block(BLOCK_UNSHIFT(ptr5));
-    merge_previous_block(BLOCK_UNSHIFT(ptr3));
-    //display_block_chain(BLOCK_UNSHIFT(ptr1));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr3));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr5));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr7));
+    merge_next_block(heap_anchor,BLOCK_UNSHIFT(ptr9));
 
     show_alloc_mem();
 
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr9));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr7));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr5));
+    merge_previous_block(heap_anchor,BLOCK_UNSHIFT(ptr3));
 
+    show_alloc_mem();
+}
+
+void test10()
+{
+    void *ptr1 = malloc(100);
+    void *ptr2 = malloc(112);
+    void *ptr3 = malloc(65);
+    void *ptr4 = malloc(22);
+
+    show_alloc_mem();
+    write(1, "\n", 1);
+
+    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+
+    show_alloc_mem();
+}
+
+void test11()
+{
+    void *ptr1 = malloc(100);
+    void *ptr2 = malloc(112);
+    void *ptr3 = malloc(65);
+    void *ptr4 = malloc(22);
+
+    show_alloc_mem();
+    write(1, "\n", 1);
+
+    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+
+    show_alloc_mem();
+}
+
+void test12()
+{
+    void *ptr1 = malloc(100);
+
+    write(1, "AVANT \n\n", 9);
+    show_alloc_mem();
+    write(1, "\n", 1);
+
+    delete_last_block(heap_anchor,BLOCK_UNSHIFT(ptr1));
+
+
+    show_alloc_mem();
+}
+
+void test13()
+{
+    void *ptr1 = malloc(100);
+    void *ptr2 = malloc(100);
+    void *ptr3 = malloc(100);
+    void *ptr4 = malloc(100);
+    void *ptr5 = malloc(100);
+    void *ptr6 = malloc(100);
+    void *ptr7 = malloc(100);
+    void *ptr8 = malloc(100);
+    void *ptr9 = malloc(100);
+    void *ptr10 = malloc(100);
+    void *ptr11 = malloc(155);
+    void *ptr12 = malloc(160);
+    void *ptr13 = malloc(197);
+    void *ptr14 = malloc(199);
+    void *ptr15 = malloc(165);
+    void *ptr16 = malloc(984);
+    void *ptr17 = malloc(160);
+    
+    display_nb(block_chain_datasize(BLOCK_UNSHIFT(ptr1)));
+    write(1, "\n" ,1);
+    
+    show_alloc_mem();
+}
+
+void test14()
+{
+    void *ptr1 = malloc(16);
+    void *ptr2 = malloc(16);
+
+    void *ptr10 = malloc(256);
+    void *ptr11 = malloc(256);
+
+    
+    show_alloc_mem();
 }
 
 int main()
@@ -296,7 +371,7 @@ int main()
 
 
     
-    test9();
+    test14();
     write(1, "-----------------------------\n", 30);
 
     return 0;

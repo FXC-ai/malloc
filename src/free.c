@@ -32,7 +32,7 @@ t_bool check_ptr_allocation (t_heap *heap_anchor, void *ptr)
     return FALSE;
 }
 
-t_block *merge_previous_block (t_block *block)
+t_block *merge_previous_block (t_heap *heap, t_block *block)
 {
     if (block == NULL || block->prev == NULL || block->prev->is_free == FALSE) {return NULL;}
 
@@ -47,10 +47,12 @@ t_block *merge_previous_block (t_block *block)
 
     ft_bzero(BLOCK_SHIFT(block->prev), block->prev->data_size);
 
+    heap->block_count -= 1;
+
     return result;
 }
 
-t_block *merge_next_block(t_block *block)
+t_block *merge_next_block(t_heap *heap, t_block *block)
 {
     if (block == NULL || block->next == NULL || block->next->is_free == FALSE) {return block;}
 
@@ -63,8 +65,35 @@ t_block *merge_next_block(t_block *block)
 
     ft_bzero(BLOCK_SHIFT(block), block->data_size);
 
+    heap->block_count -= 1;
+
     return block;
 }
+
+void delete_last_block(t_heap *heap, t_block *first_block)
+{
+    if (!first_block) {return;}
+
+    t_block *current_block;
+
+    current_block = first_block;
+
+    while (current_block->next)
+    {
+        current_block = current_block->next;
+    }
+
+    display_block_chain(current_block);
+
+    if (current_block->prev)
+        current_block->prev->next = NULL;
+
+    ft_bzero(current_block, current_block->data_size + sizeof(t_block));
+
+    heap->block_count -= 1;
+}
+
+
 
 void free(void *ptr)
 {

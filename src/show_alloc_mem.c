@@ -17,12 +17,8 @@ static void show_alloc_block(t_block *block)
     display_bool(block->is_free);
     ft_putstr_fd(")", 1);
 
-
     write(1, "\n", 1);
-    
-
 }
-
 
 static void show_alloc_heap(t_heap *heap)
 {
@@ -32,7 +28,29 @@ static void show_alloc_heap(t_heap *heap)
     write(1, "\n" ,1);
 
     block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);
+
+
+
+    write(1, "\n" ,1);
 }
+
+static void show_total_size(t_heap *heap)
+{
+    size_t total;
+
+    t_heap *current_heap = heap;
+
+    while (current_heap)
+    { 
+        total += block_chain_datasize(HEAP_SHIFT(current_heap));
+        current_heap = current_heap->next;
+    }
+
+    ft_putstr_fd("Total : ", 1);
+    display_nb(total);
+    ft_putstr_fd(" bytes\n", 1);
+}
+
 
 /*
     TINY : 0xA0000
@@ -48,5 +66,8 @@ static void show_alloc_heap(t_heap *heap)
 void show_alloc_mem()
 {
     t_heap_chain_iter(heap_anchor, show_alloc_heap);
+    show_total_size(heap_anchor);
+
+
     // ATTENTION IL MANQUE LE TOTAL !!!!
 }

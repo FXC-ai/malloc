@@ -83,8 +83,9 @@ void         set_block_next(t_block *block, t_block *next);
 void         set_block_data_size(t_block *block, size_t size);
 void         set_block_is_free(t_block *block, t_bool is_free);
 
-t_block      *merge_previous_block (t_block *block);
-t_block      *merge_next_block(t_block *block);
+t_block      *merge_previous_block (t_heap *heap, t_block *block);
+t_block      *merge_next_block(t_heap *heap, t_block *block);
+void         delete_last_block(t_heap *heap, t_block *first_block);
 
 t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 
@@ -102,6 +103,8 @@ void         add_heap_front(t_heap **heap_start, t_heap *heap_to_add);
 
 void         t_heap_chain_iter(t_heap *first_heap, void (*f)(t_heap *));
 void         block_chain_iter(t_block *first_block, void (*f)(t_block *));
+
+size_t       block_chain_datasize (t_block *first_block);
 
 t_block      *init_block_chain(t_heap *heap, size_t data_size);
 
