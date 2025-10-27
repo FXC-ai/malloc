@@ -16,9 +16,9 @@ void display_hex (uintptr_t nb)
 int main()
 {
 
-    printf("Welcome back\n");
+    printf("Welcome back %zu\n", SIZE_MAX);
 
-    void *ptr = malloc(234);
+    void *ptr = malloc(1073741824);
 
     printf("%p\n", ptr);
     display_hex((uintptr_t) ptr);

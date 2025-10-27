@@ -93,6 +93,29 @@ void delete_last_block(t_heap *heap, t_block *first_block)
     heap->block_count -= 1;
 }
 
+void delete_heap(t_heap **heap)
+{
+
+    t_heap *heap_to_delete = *heap;
+
+    if (heap_to_delete->prev)
+    {
+        heap_to_delete->prev->next = heap_to_delete->next;
+    }
+
+    if (heap_to_delete->next)
+    {
+        heap_to_delete->next->prev = heap_to_delete->prev;
+    }
+
+    // LE PROBLEME EST LA !!! IL FAUT TROUVER UN MOYEN DE GERER LE CAS OU ON VEUT DELETE
+    // LA DERNIERE HEAP
+
+    munmap(heap_to_delete, heap_to_delete->total_size);
+
+    *heap = NULL;
+
+}
 
 
 void free(void *ptr)

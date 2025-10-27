@@ -65,6 +65,11 @@ static void show_total_size(t_heap *heap)
 
 void show_alloc_mem()
 {
+    if (heap_anchor == NULL)
+    {
+        ft_putstr_fd("PAS DE HEAP ALLOUEE\n", 1);
+        return;
+    }
     t_heap_chain_iter(heap_anchor, show_alloc_heap);
     show_total_size(heap_anchor);
 

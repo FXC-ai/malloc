@@ -367,13 +367,70 @@ void test14()
     show_alloc_mem();
 }
 
+void test15()
+{
+    void *ptr1 = malloc(34);
+    void *ptr2 = malloc(130);
+    void *ptr3 = malloc(2000);
+
+
+    t_heap *heap2 = heap_anchor->next;
+
+    display_t_heap(heap2);
+    write(1, "\n" ,1);
+
+    //display_t_heap_chain(heap_anchor);
+
+    delete_heap(&heap2);
+
+    write(1, "-----------------------------\n", 30);
+
+    display_t_heap(heap2);
+
+    write(1, "\n" ,1);
+
+    //display_t_heap_chain(heap_anchor);
+}
+
+void test16()
+{
+    void *ptr1 = malloc(34);
+
+    show_alloc_mem();
+
+    delete_heap(&heap_anchor);
+
+    show_alloc_mem();
+}
+
+void test17()
+{
+    void *ptr1 = malloc(3400);
+    void *ptr2 = malloc(3400);
+    void *ptr3 = malloc(3400);
+    void *ptr4 = malloc(3400);
+    void *ptr5 = malloc(3400);
+
+    show_alloc_mem();
+    
+    int i = 0;
+    while ( i < 5 )
+    {
+        delete_heap(&heap_anchor);
+        show_alloc_mem();
+        i++;
+    }
+
+
+    
+}
+
 int main()
 {
 
 
     
-    test12();
-    write(1, "-----------------------------\n", 30);
+    test17();
 
     return 0;
 }
