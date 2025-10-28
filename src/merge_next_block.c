@@ -1,8 +1,11 @@
 #include "../inc/malloc.h"
 
-t_block *merge_next_block(t_heap *heap, t_block *block)
+void merge_next_block(t_heap *heap, t_block *block)
 {
-    if (block == NULL || block->next == NULL || block->next->is_free == FALSE) {return block;}
+    if (block == NULL || block->next == NULL || block->next->is_free == FALSE)
+    {
+        return;
+    }
 
     block->data_size += block->next->data_size + sizeof(t_block);
 
@@ -14,6 +17,4 @@ t_block *merge_next_block(t_heap *heap, t_block *block)
     ft_bzero(BLOCK_SHIFT(block), block->data_size);
 
     heap->block_count -= 1;
-
-    return block;
 }

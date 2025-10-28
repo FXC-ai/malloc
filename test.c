@@ -3,10 +3,12 @@
 t_bool test1()
 {
     char *ptr1 = malloc(21);
-    (void) ptr1;
+
     char *dst = malloc(12);
 
     display_t_block((t_block *) BLOCK_UNSHIFT(dst));
+
+    show_alloc_mem();
 
     char *src = "Hello World !";
 
@@ -15,15 +17,17 @@ t_bool test1()
 
     ft_memcpy(dst, src, 13);
 
-    if (!ft_memcmp(dst, src, 13))
-    {
-        return TRUE;
-    }
+    ft_putstr_fd(dst, 1);
+    write(1, "\n",1);
     
     display_t_block((t_block *) BLOCK_UNSHIFT(dst));
 
     show_alloc_mem();
 
+    if (!ft_memcmp(dst, src, 13))
+    {
+        return TRUE;
+    }
     return FALSE;
 }
 
@@ -211,19 +215,38 @@ t_bool test8()
     }
 	show_alloc_mem();
 
+    free(ptr[1]);
+    free(ptr[3]);
+    
+	show_alloc_mem();
+
+    free(ptr[2]);
+
+	show_alloc_mem();
+
+    void *ptr_sup = malloc(128);
+
+    (void) ptr_sup;
+	show_alloc_mem();
+
+    void *ptr_sup2 = malloc(128);
+
+    (void) ptr_sup2;
+	show_alloc_mem();
+
     return TRUE;
 }
 
 int main()
 {
 
-    int choix = 1;
+    int choix = 8;
 
 
     switch (choix)
     {
         case 1:
-            ft_putstr_fd("test 1 : ", 1);
+            ft_putstr_fd("test 1 : \n", 1);
             display_bool(test1());
             write(1,"\n",1);
             break;
