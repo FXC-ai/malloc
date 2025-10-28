@@ -6,43 +6,45 @@ COLOUR_END=\033[0m
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS := malloc.c \
-		get_heap_group_from_block_size.c \
-		ft_putsize_t.c \
-		ft_putnb_hex.c \
-		create_block.c \
-		create_heap.c \
-        get_heap_size_from_heap_group.c \
-		add_heap_front.c \
-		display_t_heap.c \
-		display_t_heap_chain.c \
-		display_t_heap_group.c \
-		t_heap_chain_iter.c \
-		display_t_block.c \
-		add_block_back.c \
-		ft_bzero.c \
-		init_block_chain.c \
-		display_block_chain.c \
-		search_block.c \
-		search_heap.c \
-		split_block.c \
-		show_alloc_mem.c \
-		ft_strlen.c \
-		ft_putstr_fd.c \
-		block_chain_iter.c \
-		round_nearest_multiple.c \
-		free.c \
-		ft_putbool.c \
-		ft_memcpy.c \
-		set_block.c \
-		block_chain_datasize.c \
-		merge_next_block.c \
-		merge_previous_block.c \
-		find_heap_from_ptr.c \
-		delete_heap.c \
-		ft_memcmp.c
+SRCS := \
+	src/malloc.c \
+	src/free.c \
+	src/show_alloc_mem.c \
+	src/utils/get_heap_group_from_block_size.c \
+	src/utils/get_heap_size_from_heap_group.c \
+	src/utils/round_nearest_multiple.c \
+	src/heap_management/create_heap.c \
+	src/heap_management/add_heap_front.c \
+	src/heap_management/search_heap.c \
+	src/heap_management/find_heap_from_ptr.c \
+	src/heap_management/delete_heap.c \
+	src/heap_management/t_heap_chain_iter.c \
+	src/block_management/create_block.c \
+	src/block_management/add_block_back.c \
+	src/block_management/init_block_chain.c \
+	src/block_management/search_block.c \
+	src/block_management/split_block.c \
+	src/block_management/merge_previous_block.c \
+	src/block_management/merge_next_block.c \
+	src/block_management/delete_last_block.c \
+	src/block_management/set_block.c \
+	src/block_management/block_chain_iter.c \
+	src/block_management/block_chain_datasize.c \
+	src/display/display_t_heap.c \
+	src/display/display_t_heap_chain.c \
+	src/display/display_t_heap_group.c \
+	src/display/display_t_block.c \
+	src/display/display_block_chain.c \
+	src/libft/ft_bzero.c \
+	src/libft/ft_putstr_fd.c \
+	src/libft/ft_strlen.c \
+	src/libft/ft_memcpy.c \
+	src/libft/ft_memcmp.c \
+	src/libft/ft_putbool.c \
+	src/libft/ft_putsize_t.c \
+	src/libft/ft_putnb_hex.c
 
-OBJS := $(SRCS:%.c=obj/%.o)
+OBJS := $(SRCS:src/%.c=obj/%.o)
 
 NAME := libft_malloc.so
 
@@ -52,7 +54,7 @@ endif
 
 REAL_LIB := libft_malloc_$(HOSTTYPE).so
 
-all : $(NAME)
+all : dirs $(NAME)
 
 $(NAME) : $(REAL_LIB)
 	@rm -f $(NAME)
@@ -64,9 +66,19 @@ $(REAL_LIB) : $(OBJS)
 	@echo "$(COLOUR_GREEN)$(REAL_LIB) created\n$(COLOUR_END)"
 
 obj/%.o : src/%.c
+	@mkdir -p $(dir $@)
 	@echo "$(COLOUR_BLUE)$< => $@ in progress$(COLOUR_END)"
 	@$(CC) $(CFLAGS) -fPIC -c $< -o $@ -I inc
 	@echo "$(COLOUR_GREEN)$@ created \n$(COLOUR_END)"
+
+dirs :
+	@mkdir -p obj
+	@mkdir -p obj/utils
+	@mkdir -p obj/libft
+	@mkdir -p obj/block_management
+	@mkdir -p obj/heap_management
+	@mkdir -p obj/display
+	@echo "$(COLOUR_GREEN)All obj/ directories created$(COLOUR_END)"
 
 clean :
 	@rm -f $(OBJS)
@@ -78,7 +90,4 @@ fclean : clean
 
 re : fclean all
 
-dev :
-	gcc $(FLAGS) -fsanitize=address src/$(SRCS)
-
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re dirs

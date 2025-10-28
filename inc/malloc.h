@@ -6,6 +6,8 @@
 #include <sys/mman.h>
 #include <stdint.h>
 
+
+# define DEBUG_MOD 1
 # define BLOCK_MIN_SIZE 16
 
 # define TINY_HEAP_SIZE (size_t)(4 * getpagesize())
@@ -69,15 +71,15 @@ void         show_alloc_mem();
 
 
 
-/* ===========================
-** CLASSIFICATION / DIMENSION
-** =========================== */
+/* ======
+** UTILS
+** ======*/
 size_t       round_nearest_multiple(size_t size, size_t multiple_of);
 t_heap_group get_heap_group_from_block_size(size_t block_size);
 size_t       get_heap_size_from_heap_group(t_heap_group heap_group, size_t size);
 
 /* =====================
-** GESTION DES HEAPS
+** HEAP_MANAGEMENT
 ** ===================== */
 t_heap       *create_heap(t_heap_group heap_group, size_t heap_size);
 void         add_heap_front(t_heap **heap_start, t_heap *heap_to_add);
@@ -94,7 +96,7 @@ t_heap       *find_heap_from_ptr (t_heap *heap_anchor, void *ptr);
 void         t_heap_chain_iter(t_heap *first_heap, void (*f)(t_heap *));
 
 /* =====================
-** GESTION DES BLOCKS
+** BLOCK_MANAGEMENT
 ** ===================== */
 t_block      *init_block_chain(t_heap *heap, size_t data_size);
 t_block      *add_block_back(t_heap *heap, size_t data_size, t_bool is_free);
@@ -115,7 +117,7 @@ void         block_chain_iter(t_block *first_block, void (*f)(t_block *));
 size_t       block_chain_datasize (t_block *first_block);
 
 /* ============
-** AFFICHAGE
+** DISPLAY
 ** ============ */
 void         display_t_heap(t_heap *heap);
 void         display_t_heap_group(t_heap_group heap_group);
@@ -125,7 +127,7 @@ void         display_block_content(t_block *block);
 void         display_block_chain(t_block *b);
 
 /* ==============
-** UTILITAIRES
+** LIBFT
 ** ============== */
 void         ft_putbool(t_bool bool);
 void	     ft_bzero(void *s, size_t n);

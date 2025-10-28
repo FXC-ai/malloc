@@ -10,7 +10,8 @@ size_t block_chain_datasize (t_block *first_block)
 
     while(current_block)
     {
-        result += current_block->data_size;
+        if (current_block->is_free == FALSE)
+            result += current_block->data_size;
         current_block = current_block->next;
     }
 
