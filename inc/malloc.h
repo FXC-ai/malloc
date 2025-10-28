@@ -56,11 +56,11 @@ typedef struct	s_block
 	t_bool			is_free;       // FALSE : block alloué / TRUE : block non alloué
 }            t_block;
 
-# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap) + 1)
-# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block) + 1)
+# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
+# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
 
-# define BLOCK_UNSHIFT(start) ((void*)start - sizeof(t_block) -1)
-# define HEAP_UNSHIFT(start) ((void *)start - sizeof(t_heap) - 1)
+# define BLOCK_UNSHIFT(start) ((void*)start - sizeof(t_block))
+# define HEAP_UNSHIFT(start) ((void *)start - sizeof(t_heap))
 
 extern t_heap *heap_anchor;
 

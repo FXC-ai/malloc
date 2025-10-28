@@ -2,7 +2,9 @@
 
 t_bool test1()
 {
-    char *dst = malloc(128);
+    char *ptr1 = malloc(21);
+    (void) ptr1;
+    char *dst = malloc(12);
 
     display_t_block((t_block *) BLOCK_UNSHIFT(dst));
 
