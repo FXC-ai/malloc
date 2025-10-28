@@ -278,7 +278,7 @@ void test13()
     void *ptr16 = malloc(984);
     void *ptr17 = malloc(160);
     
-    display_nb(block_chain_datasize(BLOCK_UNSHIFT(ptr1)));
+    ft_putsize_t(block_chain_datasize(BLOCK_UNSHIFT(ptr1)));
     write(1, "\n" ,1);
     
     show_alloc_mem();

@@ -12,27 +12,27 @@ void display_t_block(t_block *block)
 
 
     write(1, "location    = ", 14);
-    display_hex((uintptr_t) block);
+    ft_putnb_hex((uintptr_t) block);
     write(1, "\n", 1);
     write(1, "\n", 1);
 
     write(1, "prev        = ", 14);
-    display_hex((uintptr_t) block->prev);
+    ft_putnb_hex((uintptr_t) block->prev);
     write(1, "\n", 1);
 
     write(1, "next        = ", 14);
-    display_hex((uintptr_t) block->next);
+    ft_putnb_hex((uintptr_t) block->next);
     write(1, "\n", 1);
     write(1, "\n", 1);
 
 
 
     write(1, "data size   = ", 14);
-    display_nb(block->data_size);
+    ft_putsize_t(block->data_size);
     write(1, "\n", 1);
 
     write(1, "is free     = ", 14);
-    display_nb(block->is_free);
+    ft_putsize_t(block->is_free);
     write(1, "\n", 1);
 
 

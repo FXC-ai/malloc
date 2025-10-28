@@ -8,8 +8,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCS := malloc.c \
 		get_heap_group_from_block_size.c \
-		display_nb.c \
-		display_hex.c \
+		ft_putsize_t.c \
+		ft_putnb_hex.c \
 		create_block.c \
 		create_heap.c \
         get_heap_size_from_heap_group.c \
@@ -32,7 +32,7 @@ SRCS := malloc.c \
 		block_chain_iter.c \
 		round_nearest_multiple.c \
 		free.c \
-		display_bool.c \
+		ft_putbool.c \
 		ft_memcpy.c \
 		set_block.c \
 		block_chain_datasize.c \

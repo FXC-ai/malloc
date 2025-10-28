@@ -117,23 +117,24 @@ size_t       block_chain_datasize (t_block *first_block);
 /* ============
 ** AFFICHAGE
 ** ============ */
-void         display_nb(size_t nb);
-void         display_hex(uintptr_t hex);
 void         display_t_heap(t_heap *heap);
 void         display_t_heap_group(t_heap_group heap_group);
 void         display_t_heap_chain(t_heap *first_heap);
 void         display_t_block(t_block *block);
 void         display_block_content(t_block *block);
 void         display_block_chain(t_block *b);
-void         display_bool(t_bool bool);
 
 /* ==============
 ** UTILITAIRES
 ** ============== */
+void         ft_putbool(t_bool bool);
 void	     ft_bzero(void *s, size_t n);
 void	     ft_putstr_fd(char *s, int fd);
 size_t	     ft_strlen(const char *str);
 void         *ft_memcpy(void *dst, const void *src, size_t n);
 int          ft_memcmp(const void *s1, const void *s2, size_t n);
+void         ft_putsize_t(size_t nb);
+void         ft_putnb_hex(uintptr_t hex);
+
 
 #endif

@@ -247,42 +247,42 @@ int main()
     {
         case 1:
             ft_putstr_fd("test 1 : \n", 1);
-            display_bool(test1());
+            ft_putbool(test1());
             write(1,"\n",1);
             break;
         case 2:
             ft_putstr_fd("test 2 : ", 1);
-            display_bool(test2());
+            ft_putbool(test2());
             write(1,"\n",1);
             break;
         case 3:
             ft_putstr_fd("test 3 : ", 1);
-            display_bool(test3());
+            ft_putbool(test3());
             write(1,"\n",1);
             break;
         case 4:
             ft_putstr_fd("test 4 : \n", 1);
-            display_bool(test4());
+            ft_putbool(test4());
             write(1,"\n",1);
             break;
         case 5:
             ft_putstr_fd("test 5 : \n", 1);
-            display_bool(test5());
+            ft_putbool(test5());
             write(1,"\n",1);
             break;
         case 6:
             ft_putstr_fd("test 6 : \n", 1);
-            display_bool(test6());
+            ft_putbool(test6());
             write(1,"\n",1);
             break;
         case 7:
             ft_putstr_fd("test 7 : \n", 1);
-            display_bool(test7());
+            ft_putbool(test7());
             write(1,"\n",1);
             break;
         case 8:
             ft_putstr_fd("test 8 : \n", 1);
-            display_bool(test8());
+            ft_putbool(test8());
             write(1,"\n",1);
             break; 
         default:
