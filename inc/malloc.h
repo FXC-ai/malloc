@@ -56,11 +56,11 @@ typedef struct	s_block
 	t_bool			is_free;       // FALSE : block alloué / TRUE : block non alloué
 }            t_block;
 
-# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
-# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
+# define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap) + 1)
+# define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block) + 1)
 
-# define BLOCK_UNSHIFT(start) ((void*)start - sizeof(t_block))
-# define HEAP_UNSHIFT(start) ((void *)start - sizeof(t_heap))
+# define BLOCK_UNSHIFT(start) ((void*)start - sizeof(t_block) -1)
+# define HEAP_UNSHIFT(start) ((void *)start - sizeof(t_heap) - 1)
 
 extern t_heap *heap_anchor;
 
@@ -87,13 +87,13 @@ void         set_block_is_free(t_block *block, t_bool is_free);
 
 t_block      *merge_previous_block (t_heap *heap, t_block *block);
 t_block      *merge_next_block(t_heap *heap, t_block *block);
-void         delete_last_block(t_heap *heap, t_block *first_block);
+void         delete_last_block(t_heap *heap);
 
 t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 
 t_heap       *search_heap(t_heap *heap_start, t_heap_group	group, size_t total_size, size_t free_size, size_t block_count);
 
-t_bool       check_ptr_allocation (t_heap *heap_anchor, void *ptr);
+t_heap       *find_heap_from_ptr (t_heap *heap_anchor, void *ptr);
 
 void     	 split_block(t_heap  *heap, t_block *left_block, size_t  size);
 
@@ -103,7 +103,7 @@ t_heap       *create_heap(t_heap_group heap_group, size_t heap_size);
 t_block      *add_block_back(t_heap *heap, size_t data_size, t_bool is_free);
 void         add_heap_front(t_heap **heap_start, t_heap *heap_to_add);
 
-void         delete_heap(t_heap **heap);
+void         delete_heap(t_heap *heap_to_delete, t_heap **heap_anchor);
 
 void         t_heap_chain_iter(t_heap *first_heap, void (*f)(t_heap *));
 void         block_chain_iter(t_block *first_block, void (*f)(t_block *));
@@ -128,5 +128,6 @@ void	     ft_bzero(void *s, size_t n);
 void	     ft_putstr_fd(char *s, int fd);
 size_t	     ft_strlen(const char *str);
 void         *ft_memcpy(void *dst, const void *src, size_t n);
+int          ft_memcmp(const void *s1, const void *s2, size_t n);
 
 #endif

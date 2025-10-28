@@ -35,7 +35,12 @@ SRCS := malloc.c \
 		display_bool.c \
 		ft_memcpy.c \
 		set_block.c \
-		block_chain_datasize.c
+		block_chain_datasize.c \
+		merge_next_block.c \
+		merge_previous_block.c \
+		find_heap_from_ptr.c \
+		delete_heap.c \
+		ft_memcmp.c
 
 OBJS := $(SRCS:%.c=obj/%.o)
 

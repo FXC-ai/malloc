@@ -28,10 +28,6 @@ static void show_alloc_heap(t_heap *heap)
     write(1, "\n" ,1);
 
     block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);
-
-
-
-    write(1, "\n" ,1);
 }
 
 static void show_total_size(t_heap *heap)
@@ -70,9 +66,10 @@ void show_alloc_mem()
         ft_putstr_fd("PAS DE HEAP ALLOUEE\n", 1);
         return;
     }
-    t_heap_chain_iter(heap_anchor, show_alloc_heap);
-    show_total_size(heap_anchor);
 
+    t_heap_chain_iter(heap_anchor, show_alloc_heap);
+
+    show_total_size(heap_anchor);
 
     // ATTENTION IL MANQUE LE TOTAL !!!!
 }
