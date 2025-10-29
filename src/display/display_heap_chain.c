@@ -1,6 +1,6 @@
 #include "../inc/malloc.h"
 
-void         display_t_heap_chain(t_heap *first_heap)
+void         display_heap_chain(t_heap *first_heap)
 {
     t_heap *current_heap = first_heap;
 

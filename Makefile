@@ -31,7 +31,7 @@ SRCS := \
 	src/block_management/block_chain_iter.c \
 	src/block_management/block_chain_datasize.c \
 	src/display/display_t_heap.c \
-	src/display/display_t_heap_chain.c \
+	src/display/display_heap_chain.c \
 	src/display/display_t_heap_group.c \
 	src/display/display_t_block.c \
 	src/display/display_block_chain.c \

@@ -1,30 +1,67 @@
+#include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdint.h>
+#define MAX 100000
 
-void ft_putnb_hex (uintptr_t nb)
+pthread_mutex_t mutex;
+
+typedef struct s_test_philo
 {
-    const char *str = "0123456789abcdef";
-    if (nb / 16)
-    {
-        ft_putnb_hex( nb / 16);
-    }
-    write(1, &str[nb % 16], 1);
+
+	int *count;
+	int id_thread;
+
+} t_test_philo;
+
+void *routine(void *test_philo)
+{
+	t_test_philo *cpy_test_philo = (t_test_philo *) test_philo;
+	int i;
+
+	printf("Début de processus pour le thread : %d\n", cpy_test_philo->id_thread);
+	
+	i = 0;
+	while (i < MAX)
+	{
+        pthread_mutex_lock(&mutex);
+		(*(cpy_test_philo->count))++;
+		pthread_mutex_unlock(&mutex);
+		i++;
+	}
+	printf("Fin de processus %d pour le thread %d\n", *(cpy_test_philo->count), cpy_test_philo->id_thread);
+	
+	return (NULL);
 }
 
 int main()
 {
-
-    printf("Welcome back %zu\n", SIZE_MAX);
-
-    void *ptr = malloc(1073741824);
-
-    printf("%p\n", ptr);
-    ft_putnb_hex((uintptr_t) ptr);
+	pthread_t	tid1;
+	pthread_t	tid2;
 
 
-    printf("\n");
+    pthread_mutex_init(&mutex, NULL);
 
-    return 0;
+	int shared_value;
+	shared_value = 0;
+	
+	t_test_philo	test_philo;
+	test_philo.count = &shared_value;
+	test_philo.id_thread = 1;
+	
+	t_test_philo	test_philo2;
+	test_philo2.count = &shared_value;
+	test_philo2.id_thread = 2;
+
+
+	
+	pthread_create(&tid1, NULL, routine, &test_philo);
+	pthread_create(&tid2, NULL, routine, &test_philo2);
+
+	pthread_join(tid1, NULL);
+	pthread_join(tid2, NULL);
+
+	printf("shared value = %d\n", shared_value);
+
+    pthread_mutex_destroy(&mutex);
+
+	return 0;
 }

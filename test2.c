@@ -312,7 +312,7 @@ void test17()
 
     write(1, "\n" ,1);
     
-    display_t_heap_chain(heap_anchor);
+    display_heap_chain(heap_anchor);
     show_alloc_mem();
     write(1, "\n" ,1);
 

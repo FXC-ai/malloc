@@ -1,6 +1,7 @@
 #include "../inc/malloc.h"
 
 t_heap *heap_anchor = NULL;
+pthread_mutex_t mt_protect = PTHREAD_MUTEX_INITIALIZER;
 
 /*
 ** ─────────────────────────────────────────────────────────────────────────────
@@ -32,14 +33,20 @@ t_heap *heap_anchor = NULL;
 ** ─────────────────────────────────────────────────────────────────────────────
 */
 
+
+
+
 void *malloc (size_t size)
 {
+    pthread_mutex_lock(&mt_protect);
+
     size_t size_alloc;
     t_block *block = NULL;
     t_block *block_found = NULL;
     t_heap *heap_found = NULL;
     t_heap *new_heap = NULL;
 
+    
     // Si la taille demandée est nulle, on ne fait rien
     if (size == 0) {return NULL;}
 
@@ -120,6 +127,8 @@ void *malloc (size_t size)
         // On initialise le premier bloc de cette nouvelle heap
         block = init_block_chain(heap_anchor, size_alloc);
     }
+
+    pthread_mutex_unlock(&mt_protect);
 
     // On renvoie le pointeur vers la zone de données du bloc alloué
     return BLOCK_SHIFT(block);

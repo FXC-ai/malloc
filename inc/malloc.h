@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <stdint.h>
+#include <pthread.h>
 
 
 # define DEBUG_MOD 1
@@ -60,6 +61,7 @@ typedef struct s_block
 # define HEAP_UNSHIFT(start) ((void *)start - sizeof(t_heap))
 
 extern t_heap *heap_anchor;
+extern pthread_mutex_t mt_protect;
 
 /* =========================
 ** API PUBLIQUE (allocateur)
@@ -68,8 +70,6 @@ void         *malloc(size_t size);
 void         *realloc(void *ptr, size_t size);
 void         free(void *ptr);
 void         show_alloc_mem();
-
-
 
 /* ======
 ** UTILS
@@ -121,7 +121,8 @@ size_t       block_chain_datasize (t_block *first_block);
 ** ============ */
 void         display_t_heap(t_heap *heap);
 void         display_t_heap_group(t_heap_group heap_group);
-void         display_t_heap_chain(t_heap *first_heap);
+void         display_heap_chain(t_heap *first_heap);
+
 void         display_t_block(t_block *block);
 void         display_block_content(t_block *block);
 void         display_block_chain(t_block *b);
@@ -137,6 +138,5 @@ void         *ft_memcpy(void *dst, const void *src, size_t n);
 int          ft_memcmp(const void *s1, const void *s2, size_t n);
 void         ft_putsize_t(size_t nb);
 void         ft_putnb_hex(uintptr_t hex);
-
 
 #endif
