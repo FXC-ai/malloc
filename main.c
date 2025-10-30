@@ -34,34 +34,13 @@ void *routine(void *test_philo)
 
 int main()
 {
-	pthread_t	tid1;
-	pthread_t	tid2;
 
+	void *ptr = malloc(23);
 
-    pthread_mutex_init(&mutex, NULL);
+	free(ptr);
 
-	int shared_value;
-	shared_value = 0;
-	
-	t_test_philo	test_philo;
-	test_philo.count = &shared_value;
-	test_philo.id_thread = 1;
-	
-	t_test_philo	test_philo2;
-	test_philo2.count = &shared_value;
-	test_philo2.id_thread = 2;
+	void *ptr1 = realloc(27);
 
-
-	
-	pthread_create(&tid1, NULL, routine, &test_philo);
-	pthread_create(&tid2, NULL, routine, &test_philo2);
-
-	pthread_join(tid1, NULL);
-	pthread_join(tid2, NULL);
-
-	printf("shared value = %d\n", shared_value);
-
-    pthread_mutex_destroy(&mutex);
 
 	return 0;
 }

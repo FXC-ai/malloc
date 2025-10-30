@@ -15,7 +15,6 @@ t_heap *find_heap_from_ptr (t_heap *heap_anchor, void *ptr)
 
             while (block_found != NULL)
             {
-                
                 if (BLOCK_SHIFT(block_found) == ptr)
                 {
                     return heap_found;

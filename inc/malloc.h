@@ -2,11 +2,10 @@
 # define MALLOC_H
 
 #include <stddef.h>
-#include <unistd.h>
 #include <sys/mman.h>
 #include <stdint.h>
 #include <pthread.h>
-
+#include <unistd.h>
 
 # define DEBUG_MOD 1
 # define BLOCK_MIN_SIZE 16
@@ -63,13 +62,21 @@ typedef struct s_block
 extern t_heap *heap_anchor;
 extern pthread_mutex_t mt_protect;
 
-/* =========================
-** API PUBLIQUE (allocateur)
-** ========================= */
+/* =====================================
+** API PUBLIQUE (allocateur thread safe)
+** ===================================== */
 void         *malloc(size_t size);
 void         *realloc(void *ptr, size_t size);
 void         free(void *ptr);
 void         show_alloc_mem();
+
+/* =========================
+** API PRIVE (allocateur)
+** ========================= */
+void         *execute_malloc (size_t size);
+void         execute_free(void *ptr);
+
+
 
 /* ======
 ** UTILS
@@ -138,5 +145,7 @@ void         *ft_memcpy(void *dst, const void *src, size_t n);
 int          ft_memcmp(const void *s1, const void *s2, size_t n);
 void         ft_putsize_t(size_t nb);
 void         ft_putnb_hex(uintptr_t hex);
+void         *ft_memmove(void *dst, const void *src, size_t len);
+
 
 #endif

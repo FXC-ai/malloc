@@ -5,7 +5,7 @@ pthread_mutex_t mt_protect = PTHREAD_MUTEX_INITIALIZER;
 
 /*
 ** ─────────────────────────────────────────────────────────────────────────────
-** Fonction : malloc
+** Fonction : execute_malloc
 **
 ** Description :
 **     Implémentation personnalisée de malloc().
@@ -32,13 +32,13 @@ pthread_mutex_t mt_protect = PTHREAD_MUTEX_INITIALIZER;
 **
 ** ─────────────────────────────────────────────────────────────────────────────
 */
-
-
-
-
-void *malloc (size_t size)
+void *execute_malloc (size_t size)
 {
-    pthread_mutex_lock(&mt_protect);
+    /*
+    ft_putstr_fd("malloc : ", 1);
+    ft_putsize_t((uintptr_t) size);
+    ft_putstr_fd("\n", 1);
+    */
 
     size_t size_alloc;
     t_block *block = NULL;
@@ -100,9 +100,9 @@ void *malloc (size_t size)
         heap_found = search_heap(
             heap_anchor,
             heap_group,
-            0,                            // On ne filtre pas sur la taille totale
+            0,                             // On ne filtre pas sur la taille totale
             size_alloc + sizeof(t_block),  // On vérifie l’espace libre disponible
-            0                             // Pas de contrainte sur le nombre de blocs
+            0                              // Pas de contrainte sur le nombre de blocs
         );
 
         // On ajoute un nouveau bloc à la fin de cette heap existante
@@ -128,8 +128,20 @@ void *malloc (size_t size)
         block = init_block_chain(heap_anchor, size_alloc);
     }
 
-    pthread_mutex_unlock(&mt_protect);
+    // ft_putnb_hex((uintptr_t) BLOCK_SHIFT(block));
+    // ft_putstr_fd("\n", 1);
 
     // On renvoie le pointeur vers la zone de données du bloc alloué
     return BLOCK_SHIFT(block);
+}
+
+void *malloc (size_t size)
+{
+    pthread_mutex_lock(&mt_protect);
+
+    void *ptr = execute_malloc(size);
+
+    pthread_mutex_unlock(&mt_protect);
+
+    return ptr;
 }

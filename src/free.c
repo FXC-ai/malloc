@@ -2,7 +2,7 @@
 
 /*
 ** ─────────────────────────────────────────────────────────────────────────────
-** Fonction : free
+** Fonction : execute_free
 **
 ** Description :
 **     Libère un bloc précédemment alloué par malloc().
@@ -27,40 +27,42 @@
 **
 ** ─────────────────────────────────────────────────────────────────────────────
 */
-void free(void *ptr)
+void execute_free(void *ptr)
 {
-    pthread_mutex_lock(&mt_protect);
-    ft_putnb_hex((uintptr_t) ptr);
-    ft_putstr_fd("free appelée\n",1 );
+    //ft_putstr_fd("free : ", 1);
+    //ft_putnb_hex((uintptr_t) ptr);
+    
+    if (ptr == NULL) 
+    {
+        ft_putnb_hex((uintptr_t) ptr);
+        ft_putstr_fd("\n ", 1);
+        return;
+    }
+
     // On récupère le pointeur vers la structure du bloc associée à la zone mémoire
     t_block *block_to_free = BLOCK_UNSHIFT(ptr);
-    ft_putstr_fd("free appelée 1\n",1 );
 
     // Recherche de la heap contenant ce bloc
     t_heap *heap_found = find_heap_from_ptr(heap_anchor, ptr);
-    ft_putstr_fd("free appelée 2\n",1 );
 
     // Si aucune heap ne correspond au pointeur, on ignore l’appel
     if (heap_found == NULL)
     {
-        ft_putstr_fd("free appelée 2.1\n",1 );
+        ft_putnb_hex((uintptr_t) ptr);
 
+        ft_putstr_fd("pas trouvé \n ", 1);
 
         return;
     }
-    ft_putstr_fd("free appelée 3\n",1 );
 
     // Marque le bloc comme libre
     block_to_free->is_free = TRUE;
-    ft_putstr_fd("free appelée 4\n",1 );
 
     // Fusion avec le bloc précédent s’il est également libre
     block_to_free = merge_previous_block(heap_found, block_to_free);
-    ft_putstr_fd("free appelée 5\n",1 );
 
     // Fusion avec le bloc suivant s’il est libre
     merge_next_block(heap_found, block_to_free);
-    ft_putstr_fd("free appelée 6\n",1 );
 
     // ───────────────────────────────────────────────
     // Si le bloc libéré est le dernier de la heap,
@@ -79,7 +81,6 @@ void free(void *ptr)
         // Mise à jour du compteur de blocs de la heap
         heap_found->block_count -= 1;
     }
-    ft_putstr_fd("free appelée 7\n",1 );
 
     // ───────────────────────────────────────────────
     // Si la heap ne contient plus aucun bloc,
@@ -89,7 +90,13 @@ void free(void *ptr)
     {
         delete_heap(heap_found, &heap_anchor);
     }
-    ft_putstr_fd("free appelée 8\n",1 );
+}
+
+void free(void *ptr)
+{
+    pthread_mutex_lock(&mt_protect);
+
+    execute_free(ptr);
 
     pthread_mutex_unlock(&mt_protect);
 }

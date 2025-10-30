@@ -159,29 +159,7 @@ t_bool test5()
     return TRUE;
 }
 
-t_bool test6()
-{
-    int		i;
-	char	*addr;
 
-	i = 0;
-	while (i < 1024)
-	{
-		addr = (char*)malloc(1024);
-		addr[0] = 42;
-        show_alloc_mem();
-        write(1,"\n",1);
-        ft_putstr_fd(addr,1);
-        write(1,"\n",1);
-
-		free(addr);
-		i++;
-	}
-
-    show_alloc_mem();
-
-	return (TRUE);
-}
 
 t_bool test7()
 {

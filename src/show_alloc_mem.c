@@ -110,10 +110,8 @@ static void show_total_size(t_heap *heap)
 **
 ** ============================================================================
 */
-void show_alloc_mem()
+static void execute_show_alloc_mem()
 {
-    pthread_mutex_lock(&mt_protect);
-
     if (heap_anchor == NULL)
     {
         ft_putstr_fd("PAS DE HEAP ALLOUEE\n", 1);
@@ -123,6 +121,13 @@ void show_alloc_mem()
     t_heap_chain_iter(heap_anchor, show_alloc_heap);
 
     show_total_size(heap_anchor);
+}
+
+void show_alloc_mem()
+{
+    pthread_mutex_lock(&mt_protect);
+
+    execute_show_alloc_mem();
 
     pthread_mutex_unlock(&mt_protect);
 }
