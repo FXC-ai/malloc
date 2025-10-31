@@ -44,8 +44,11 @@ SRCS := \
 	src/libft/ft_memcmp.c \
 	src/libft/ft_putbool.c \
 	src/libft/ft_putsize_t.c \
-	src/libft/ft_putnb_hex.c \
-	src/libft/ft_memmove.c 
+	src/libft/ft_putsize_t_fd.c \
+	src/libft/ft_putnb_hex_fd.c \
+	src/libft/ft_memmove.c \
+	src/libft/ft_putconststr_fd.c \
+
 
 
 OBJS := $(SRCS:src/%.c=obj/%.o)

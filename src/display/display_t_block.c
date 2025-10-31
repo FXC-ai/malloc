@@ -12,16 +12,16 @@ void display_t_block(t_block *block)
 
 
     write(1, "location    = ", 14);
-    ft_putnb_hex((uintptr_t) block);
+    ft_putnb_hex_fd((uintptr_t) block ,1);
     write(1, "\n", 1);
     write(1, "\n", 1);
 
     write(1, "prev        = ", 14);
-    ft_putnb_hex((uintptr_t) block->prev);
+    ft_putnb_hex_fd((uintptr_t) block->prev, 1);
     write(1, "\n", 1);
 
     write(1, "next        = ", 14);
-    ft_putnb_hex((uintptr_t) block->next);
+    ft_putnb_hex_fd((uintptr_t) block->next, 1);
     write(1, "\n", 1);
     write(1, "\n", 1);
 

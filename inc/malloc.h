@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 # define DEBUG_MOD 1
 # define BLOCK_MIN_SIZE 16
@@ -146,8 +147,11 @@ size_t	     ft_strlen(const char *str);
 void         *ft_memcpy(void *dst, const void *src, size_t n);
 int          ft_memcmp(const void *s1, const void *s2, size_t n);
 void         ft_putsize_t(size_t nb);
-void         ft_putnb_hex(uintptr_t hex);
+void         ft_putsize_t_fd (size_t nb, int fd);
+void         ft_putnb_hex_fd(uintptr_t hex, int fd);
 void         *ft_memmove(void *dst, const void *src, size_t len);
+void	     ft_putconststr_fd(const char *s, int fd);
+
 
 
 #endif

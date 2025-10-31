@@ -7,21 +7,21 @@
 **     Affiche les informations d’un bloc mémoire :
 **       - Adresse de début et de fin
 **       - Taille du bloc (en octets)
-**       - État (alloué / libre) si DEBUG_MOD est activé
+**       - État (alloué / libre) si DEBUG_MOD_MOD est activé
 **
 ** ============================================================================
 */
 static void show_alloc_block(t_block *block)
 {
-    int debug = DEBUG_MOD;
 
-    if (debug == 0)
+
+    if (DEBUG_MOD == 0)
     {
         if (block->is_free == FALSE)
         {
-            ft_putnb_hex((uintptr_t) BLOCK_SHIFT(block));
+            ft_putnb_hex_fd((uintptr_t) BLOCK_SHIFT(block), 1);
             ft_putstr_fd(" - ", 1);
-            ft_putnb_hex((uintptr_t) (BLOCK_SHIFT(block) + block->data_size));
+            ft_putnb_hex_fd((uintptr_t) (BLOCK_SHIFT(block) + block->data_size), 1);
             ft_putstr_fd(" : ", 1);
             ft_putsize_t(block->data_size);
             ft_putstr_fd(" bytes", 1);
@@ -30,9 +30,9 @@ static void show_alloc_block(t_block *block)
     }
     else
     {
-        ft_putnb_hex((uintptr_t) BLOCK_SHIFT(block));
+        ft_putnb_hex_fd((uintptr_t) BLOCK_SHIFT(block), 1);
         ft_putstr_fd(" - ", 1);
-        ft_putnb_hex((uintptr_t) (BLOCK_SHIFT(block) + block->data_size));
+        ft_putnb_hex_fd((uintptr_t) (BLOCK_SHIFT(block) + block->data_size), 1);
         ft_putstr_fd(" : ", 1);
         ft_putsize_t(block->data_size);
         ft_putstr_fd(" bytes", 1);
@@ -55,7 +55,7 @@ static void show_alloc_heap(t_heap *heap)
 {
     display_t_heap_group(heap->group);
     ft_putstr_fd(" : ", 1);
-    ft_putnb_hex((uintptr_t) heap);
+    ft_putnb_hex_fd((uintptr_t) heap, 1);
     write(1, "\n" ,1);
 
     block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);

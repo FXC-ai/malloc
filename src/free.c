@@ -30,7 +30,7 @@
 void execute_free(void *ptr)
 {
     //ft_putstr_fd("free : ", 1);
-    //ft_putnb_hex((uintptr_t) ptr);
+    //ft_putnb_hex_fd((uintptr_t) ptr, 1);
     
     if (ptr == NULL) 
     {
@@ -90,10 +90,17 @@ void free(void *ptr)
 {
     pthread_mutex_lock(&mt_protect);
 
-    ft_putstr_fd("\033[0;33mfree : \033[0m", 1);
-    ft_putnb_hex((uintptr_t) ptr);
-    ft_putstr_fd("\n",1);
-   
+    int fd = open("malloc.log", O_WRONLY | O_CREAT | O_APPEND, 0644);
+
+    if (fd > 0 && DEBUG_MOD == 1)
+    {
+
+        ft_putstr_fd("free(", fd);
+        ft_putnb_hex_fd((uintptr_t) ptr, fd);
+        ft_putstr_fd(")\n",fd);
+    }
+
+    close(fd);
     //if (ptr != NULL) {execute_show_alloc_mem();}
     execute_free(ptr);
     //if (ptr != NULL) {execute_show_alloc_mem();}
