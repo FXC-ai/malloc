@@ -1,7 +1,7 @@
 #include "../inc/malloc.h"
 
 
-void *realloc(void *ptr, size_t size)
+void *execute_realloc(void *ptr, size_t size)
 {
     void   *new_ptr;
     size_t size_alloc;
@@ -46,6 +46,24 @@ void *realloc(void *ptr, size_t size)
     ft_memmove(new_ptr, ptr, size_memmove);
 
     execute_free(ptr);
+
+    return new_ptr;
+}
+
+
+void *realloc(void *ptr, size_t size)
+{
+    pthread_mutex_lock(&mt_protect);
+    
+    //ft_putstr_fd("realloc : ",1);
+    //ft_putnb_hex((uintptr_t) ptr);
+    //ft_putstr_fd(", ",1);
+    //ft_putsize_t(size);
+    //ft_putstr_fd("\n",1);
+    
+    void *new_ptr = execute_realloc(ptr, size);
+
+    pthread_mutex_unlock(&mt_protect);
 
     return new_ptr;
 }

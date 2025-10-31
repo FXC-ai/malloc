@@ -1,46 +1,19 @@
 #include <pthread.h>
 #include <stdio.h>
-#define MAX 100000
-
-pthread_mutex_t mutex;
-
-typedef struct s_test_philo
-{
-
-	int *count;
-	int id_thread;
-
-} t_test_philo;
-
-void *routine(void *test_philo)
-{
-	t_test_philo *cpy_test_philo = (t_test_philo *) test_philo;
-	int i;
-
-	printf("Début de processus pour le thread : %d\n", cpy_test_philo->id_thread);
-	
-	i = 0;
-	while (i < MAX)
-	{
-        pthread_mutex_lock(&mutex);
-		(*(cpy_test_philo->count))++;
-		pthread_mutex_unlock(&mutex);
-		i++;
-	}
-	printf("Fin de processus %d pour le thread %d\n", *(cpy_test_philo->count), cpy_test_philo->id_thread);
-	
-	return (NULL);
-}
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 int main()
 {
 
-	void *ptr = malloc(23);
+	int *ptr = calloc(10, sizeof(int));
 
-	free(ptr);
+	printf("p = %p\n", ptr);
 
-	void *ptr1 = realloc(27);
+	int *ptr1 = malloc(10 * sizeof(int));
 
+	printf("p1 = %p\n", ptr);
 
 	return 0;
 }

@@ -8,13 +8,12 @@ void *routine(void *value)
     size_t v = *((size_t *)value);
     void *ptr = malloc(v);
     //ft_putstr_fd("routine = ",1);
-	printf("Routine %lu\n", v);
+	//printf("Routine %lu\n", v);
 	return ptr;
 }
 
 int main(void)
 {
-	printf("Hello !\n");
 	pthread_t	tid[10];
 	size_t		thread_ids[10];
 

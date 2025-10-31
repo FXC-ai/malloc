@@ -34,8 +34,6 @@ void execute_free(void *ptr)
     
     if (ptr == NULL) 
     {
-        ft_putnb_hex((uintptr_t) ptr);
-        ft_putstr_fd("\n ", 1);
         return;
     }
 
@@ -48,10 +46,6 @@ void execute_free(void *ptr)
     // Si aucune heap ne correspond au pointeur, on ignore l’appel
     if (heap_found == NULL)
     {
-        ft_putnb_hex((uintptr_t) ptr);
-
-        ft_putstr_fd("pas trouvé \n ", 1);
-
         return;
     }
 
@@ -95,7 +89,9 @@ void execute_free(void *ptr)
 void free(void *ptr)
 {
     pthread_mutex_lock(&mt_protect);
-
+    //ft_putstr_fd("free : ",1);
+    //ft_putnb_hex((uintptr_t) ptr);
+    //ft_putstr_fd("\n",1);   
     execute_free(ptr);
 
     pthread_mutex_unlock(&mt_protect);

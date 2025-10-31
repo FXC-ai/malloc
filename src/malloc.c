@@ -138,7 +138,11 @@ void *execute_malloc (size_t size)
 void *malloc (size_t size)
 {
     pthread_mutex_lock(&mt_protect);
-
+    
+    //ft_putstr_fd("malloc : ",1);
+    //ft_putsize_t(size);
+    //ft_putstr_fd("\n",1);
+    
     void *ptr = execute_malloc(size);
 
     pthread_mutex_unlock(&mt_protect);

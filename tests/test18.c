@@ -19,5 +19,12 @@ int main()
     show_alloc_mem();
     ft_putstr_fd("\n",1);
 
+    char* realloc_ptr2 = realloc(ptr1, 32);
+
+    ft_putstr_fd(realloc_ptr2, 1);
+    ft_putstr_fd("\n",1);
+    show_alloc_mem();
+    ft_putstr_fd("\n",1);
+
     return 0;
 }
