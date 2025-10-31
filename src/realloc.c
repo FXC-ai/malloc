@@ -55,11 +55,13 @@ void *realloc(void *ptr, size_t size)
 {
     pthread_mutex_lock(&mt_protect);
     
-    //ft_putstr_fd("realloc : ",1);
-    //ft_putnb_hex((uintptr_t) ptr);
-    //ft_putstr_fd(", ",1);
-    //ft_putsize_t(size);
-    //ft_putstr_fd("\n",1);
+    ft_putstr_fd("\033[0;32mrealloc : \033[0m", 1);
+
+    ft_putnb_hex((uintptr_t) ptr);
+    ft_putstr_fd(", ",1);
+    ft_putsize_t(size);
+     ft_putstr_fd("\n",1);
+
     
     void *new_ptr = execute_realloc(ptr, size);
 

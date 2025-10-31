@@ -68,7 +68,7 @@ extern pthread_mutex_t mt_protect;
 void         *malloc(size_t size);
 void         *realloc(void *ptr, size_t size);
 void         free(void *ptr);
-//void         *calloc (size_t size);
+void		 *calloc(size_t nmemb, size_t size);
 void         show_alloc_mem();
 
 /* =========================
@@ -77,8 +77,7 @@ void         show_alloc_mem();
 void         *execute_malloc (size_t size);
 void         execute_free(void *ptr);
 void         *execute_realloc(void *ptr, size_t size);
-
-
+void         execute_show_alloc_mem();
 
 
 /* ======

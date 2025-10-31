@@ -110,7 +110,7 @@ static void show_total_size(t_heap *heap)
 **
 ** ============================================================================
 */
-static void execute_show_alloc_mem()
+void execute_show_alloc_mem()
 {
     if (heap_anchor == NULL)
     {
@@ -126,6 +126,7 @@ static void execute_show_alloc_mem()
 void show_alloc_mem()
 {
     pthread_mutex_lock(&mt_protect);
+    ft_putstr_fd("\n", 1);
 
     execute_show_alloc_mem();
 

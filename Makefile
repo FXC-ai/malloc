@@ -10,6 +10,7 @@ SRCS := \
 	src/malloc.c \
 	src/free.c \
 	src/realloc.c \
+	src/calloc.c \
 	src/show_alloc_mem.c \
 	src/utils/get_heap_group_from_block_size.c \
 	src/utils/get_heap_size_from_heap_group.c \
@@ -45,7 +46,6 @@ SRCS := \
 	src/libft/ft_putsize_t.c \
 	src/libft/ft_putnb_hex.c \
 	src/libft/ft_memmove.c 
-#	src/calloc.c \
 
 
 OBJS := $(SRCS:src/%.c=obj/%.o)

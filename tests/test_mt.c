@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "../inc/malloc.h"
 
+#define NB_ROUTINE 6
 
 void *routine(void *value)
 {
@@ -14,16 +15,16 @@ void *routine(void *value)
 
 int main(void)
 {
-	pthread_t	tid[10];
-	size_t		thread_ids[10];
+	pthread_t	tid[NB_ROUTINE];
+	size_t		thread_ids[NB_ROUTINE];
 
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < NB_ROUTINE; i++)
 		thread_ids[i] = i + 1;
 
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < NB_ROUTINE; i++)
 		pthread_create(&tid[i], NULL, routine, &thread_ids[i]);
 
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < NB_ROUTINE; i++)
 		pthread_join(tid[i], NULL);
 
 	show_alloc_mem();

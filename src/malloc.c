@@ -34,12 +34,6 @@ pthread_mutex_t mt_protect = PTHREAD_MUTEX_INITIALIZER;
 */
 void *execute_malloc (size_t size)
 {
-    /*
-    ft_putstr_fd("malloc : ", 1);
-    ft_putsize_t((uintptr_t) size);
-    ft_putstr_fd("\n", 1);
-    */
-
     size_t size_alloc;
     t_block *block = NULL;
     t_block *block_found = NULL;
@@ -139,13 +133,18 @@ void *malloc (size_t size)
 {
     pthread_mutex_lock(&mt_protect);
     
-    //ft_putstr_fd("malloc : ",1);
-    //ft_putsize_t(size);
-    //ft_putstr_fd("\n",1);
+    ft_putstr_fd("\033[0;34mmalloc : \033[0m", 1);
+
+
+    ft_putsize_t(size);
     
     void *ptr = execute_malloc(size);
-
+    
+    ft_putstr_fd("      => ",1);
+    ft_putnb_hex((uintptr_t) ptr);
+    ft_putstr_fd("\n",1);
     pthread_mutex_unlock(&mt_protect);
+
 
     return ptr;
 }
