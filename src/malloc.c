@@ -64,12 +64,15 @@ void *execute_malloc (size_t size)
 
         while (heap_found)
         {
-            block_found = search_block
-            (
-                HEAP_SHIFT(heap_found),   // Premier bloc de la heap
-                size_alloc,               // Taille minimale recherchée
-                TRUE                      // On cherche un bloc libre (TRUE signifit "free")
-            );
+            if (heap_found->group == heap_group)
+            {
+                block_found = search_block
+                (
+                    HEAP_SHIFT(heap_found),   // Premier bloc de la heap
+                    size_alloc,               // Taille minimale recherchée
+                    TRUE                      // On cherche un bloc libre (TRUE signifit "free")
+                );
+            }
             
             if (block_found != NULL)
             {
