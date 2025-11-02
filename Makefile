@@ -12,6 +12,7 @@ SRCS := \
 	src/realloc.c \
 	src/calloc.c \
 	src/show_alloc_mem.c \
+	src/show_alloc_mem_ex.c \
 	src/utils/get_heap_group_from_block_size.c \
 	src/utils/get_heap_size_from_heap_group.c \
 	src/utils/round_nearest_multiple.c \

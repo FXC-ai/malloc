@@ -71,11 +71,13 @@ void         *realloc(void *ptr, size_t size);
 void         free(void *ptr);
 void		 *calloc(size_t nmemb, size_t size);
 void         show_alloc_mem();
+void         show_alloc_mem_ex();
 
 /* =========================
 ** API PRIVE (allocateur)
 ** ========================= */
-void         *execute_malloc (size_t size);
+
+void         *execute_malloc(size_t size);
 void         execute_free(void *ptr);
 void         *execute_realloc(void *ptr, size_t size);
 void         execute_show_alloc_mem();
@@ -124,7 +126,7 @@ void         delete_last_block(t_heap *heap);
 t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 
 void         block_chain_iter(t_block *first_block, void (*f)(t_block *));
-size_t       block_chain_datasize (t_block *first_block);
+size_t		 block_chain_datasize (t_block *first_block, t_bool is_free);
 
 /* ============
 ** DISPLAY

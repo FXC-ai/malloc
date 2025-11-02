@@ -101,9 +101,8 @@ void free(void *ptr)
     }
 
     close(fd);
-    //if (ptr != NULL) {execute_show_alloc_mem();}
+    
     execute_free(ptr);
-    //if (ptr != NULL) {execute_show_alloc_mem();}
 
 
     pthread_mutex_unlock(&mt_protect);

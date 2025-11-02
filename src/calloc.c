@@ -1,6 +1,5 @@
 #include "../inc/malloc.h"
 
-
 void *execute_calloc(size_t nmemb, size_t size)
 {
     if (size && nmemb > SIZE_MAX / size)
@@ -17,7 +16,6 @@ void *execute_calloc(size_t nmemb, size_t size)
 
     return ptr;
 }
-
 
 void *calloc(size_t nmemb, size_t size)
 {

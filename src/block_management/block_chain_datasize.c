@@ -1,6 +1,6 @@
 #include "../inc/malloc.h"
 
-size_t block_chain_datasize (t_block *first_block)
+size_t block_chain_datasize (t_block *first_block, t_bool is_free)
 {
     if (first_block == NULL)
         return 0;
@@ -10,7 +10,7 @@ size_t block_chain_datasize (t_block *first_block)
 
     while(current_block)
     {
-        if (current_block->is_free == FALSE)
+        if (current_block->is_free == is_free)
             result += current_block->data_size;
         current_block = current_block->next;
     }

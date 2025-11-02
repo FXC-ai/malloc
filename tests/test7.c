@@ -18,7 +18,7 @@ int main()
     void *ptr_realloc4 = realloc(ptr_realloc3, 32);
 
     ft_putstr_fd("ptr_realloc4 = ",1);
-    ft_putnb_hex_fd((uintptr_t) ptr_realloc4);
+    ft_putnb_hex_fd((uintptr_t) ptr_realloc4, 1);
     ft_putstr_fd("\n",1);
 
     show_alloc_mem();
@@ -28,10 +28,12 @@ int main()
     void *ptr_realloc5 = realloc(ptr_realloc2, 149);
 
     ft_putstr_fd("ptr_realloc5 = ",1);
-    ft_putnb_hex_fd((uintptr_t) ptr_realloc5);
+    ft_putnb_hex_fd((uintptr_t) ptr_realloc5, 1);
     ft_putstr_fd("\n",1);
 
-    show_alloc_mem();
+    free(ptr_realloc1);
+
+    show_alloc_mem_ex();
     write(1, "\n",1);
 
     return 0;
