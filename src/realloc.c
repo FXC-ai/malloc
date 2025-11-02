@@ -1,15 +1,42 @@
 #include "../inc/malloc.h"
 #include <stdio.h>
 
+
+void block_mem_move(void *new_ptr, void *former_ptr)
+{
+    size_t size_memmove = 0;
+
+    t_block *former_block = (t_block *) BLOCK_UNSHIFT(former_ptr);
+    t_block *new_block = (t_block *) BLOCK_UNSHIFT(former_ptr);
+
+    if (new_block->data_size > former_block->data_size)
+    {
+        size_memmove = former_block->data_size;
+    }
+    else
+    {
+        size_memmove = new_block->data_size;
+    }
+
+    ft_memmove(new_ptr, former_ptr, size_memmove);
+
+    execute_free(former_ptr);
+}
+
+
 void *execute_realloc(void *ptr, size_t size)
 {
     void   *new_ptr;
     size_t size_alloc;
-    size_t size_memmove;
+    t_heap *heap_found;
+    t_block *block_to_realloc;
 
     new_ptr = NULL;
+    heap_found = NULL;
+    block_to_realloc = (t_block *) BLOCK_UNSHIFT(ptr);
+
+
     size_alloc = round_nearest_multiple(size, BLOCK_MIN_SIZE);
-    size_memmove = 0;
 
     if (ptr == NULL)
     {
@@ -22,30 +49,66 @@ void *execute_realloc(void *ptr, size_t size)
         return NULL;
     }
 
-    if (find_heap_from_ptr(heap_anchor, ptr) == NULL)
+    heap_found = find_heap_from_ptr(heap_anchor, ptr);
+    if (heap_found == NULL)
     {
         return NULL;
     }
 
-    if (size_alloc == ((t_block *) BLOCK_UNSHIFT(ptr))->data_size)
+    if (heap_found->group != get_heap_group_from_block_size(size_alloc))
+    {
+        execute_free(ptr);
+        return execute_malloc(size_alloc);
+    }
+
+    if (size_alloc == block_to_realloc->data_size)
     {
         return ptr;
     }
 
+    
+    if (size_alloc > block_to_realloc->data_size)
+    {
+
+        if
+        (
+            block_to_realloc->next == NULL 
+            && heap_found->free_size > (size_alloc - block_to_realloc->data_size)
+        )
+        {
+            heap_found->free_size -= (size_alloc - block_to_realloc->data_size);
+            block_to_realloc->data_size = size_alloc;
+
+            return BLOCK_SHIFT(block_to_realloc);
+        }
+        
+        if
+        (
+            block_to_realloc->next == NULL 
+            && heap_found->free_size < (size_alloc - block_to_realloc->data_size)
+        )
+        {
+            new_ptr = execute_malloc(size_alloc);
+            if (new_ptr == NULL)
+            {
+                return NULL;
+            }
+
+            block_mem_move(new_ptr, ptr);
+            
+            return new_ptr;
+        }
+
+
+
+    }
+    
+
     new_ptr = execute_malloc(size_alloc);
 
-    if (size_alloc > ((t_block *) BLOCK_UNSHIFT(ptr))->data_size)
-    {
-        size_memmove = ((t_block *) BLOCK_UNSHIFT(ptr))->data_size;
-    }
-    else
-    {
-        size_memmove = size;
-    }
+    if (new_ptr != NULL)
+        block_mem_move(new_ptr, ptr);
 
-    ft_memmove(new_ptr, ptr, size_memmove);
-
-    execute_free(ptr);
 
     return new_ptr;
 }

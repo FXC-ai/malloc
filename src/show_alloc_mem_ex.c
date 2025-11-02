@@ -1,5 +1,9 @@
 #include "../inc/malloc.h"
 
+#define COLOR_RESET   "\033[0m"
+#define COLOR_BLUE    "\033[34m"
+#define COLOR_YELLOW  "\033[33m"
+#define COLOR_MAGENTA "\033[35m"
 
 /* ============================================================================
 ** Fonction : show_alloc_block
@@ -27,14 +31,50 @@ static void show_alloc_block(t_block *block)
     write(1, "\n", 1);
 }
 
-
+static const char *get_heap_color(t_heap_group group)
+{
+    if (group == TINY)
+        return COLOR_BLUE;
+    else if (group == SMALL)
+        return COLOR_YELLOW;
+    else
+        return COLOR_MAGENTA;
+}
 
 static void show_alloc_heap(t_heap *heap)
 {
-    display_t_heap(heap);
+    const char *color = get_heap_color(heap->group);
+
+    ft_putconststr_fd(color, 1);  // Début de la couleur
+
+    display_t_heap_group(heap->group);
+    ft_putstr_fd(": total size     = ", 1);
+    ft_putsize_t(heap->total_size); 
+    ft_putstr_fd("\n       block count    = ", 1);
+    ft_putsize_t(heap->block_count);
+    ft_putstr_fd("\n       non used space = ", 1);
+    ft_putsize_t(heap->free_size);
+
+
+
+    ft_putstr_fd("\n       used space     = ", 1);
+    ft_putsize_t(heap->total_size - heap->free_size);
+
+
+    ft_putstr_fd("\n       metadata space = ", 1);
+    ft_putsize_t(sizeof(t_heap) + heap->block_count * sizeof(t_block));
+
+    ft_putstr_fd("\n       data space     = ", 1);
+    ft_putsize_t(heap->total_size - sizeof(t_heap) - heap->free_size - (sizeof(t_block) * heap->block_count));
+    ft_putstr_fd("\n", 1);
+    ft_putstr_fd("\n", 1);
+
+    ft_putconststr_fd(COLOR_RESET, 1);  // Réinitialise la couleur
+    ft_putstr_fd("BLOCKS ALLOCATED DETAILS :\n", 1);
 
     block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);
 }
+
 
 
 static void show_total_size_used(t_heap *heap)
@@ -91,6 +131,8 @@ void show_alloc_mem_ex()
     ft_putstr_fd("\n", 1);
 
     execute_show_alloc_mem_ex();
+    ft_putstr_fd("__________________________________________\n", 1);
+
 
     pthread_mutex_unlock(&mt_protect);
 }

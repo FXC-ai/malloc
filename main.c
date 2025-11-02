@@ -6,6 +6,7 @@
 
 int main()
 {
+	
 
 	int *ptr = calloc(10, sizeof(int));
 

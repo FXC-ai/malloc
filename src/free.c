@@ -52,11 +52,14 @@ void execute_free(void *ptr)
     // Marque le bloc comme libre
     block_to_free->is_free = TRUE;
 
+
     // Fusion avec le bloc précédent s’il est également libre
     block_to_free = merge_previous_block(heap_found, block_to_free);
 
+
     // Fusion avec le bloc suivant s’il est libre
     merge_next_block(heap_found, block_to_free);
+
 
     // ───────────────────────────────────────────────
     // Si le bloc libéré est le dernier de la heap,
@@ -64,17 +67,20 @@ void execute_free(void *ptr)
     // ───────────────────────────────────────────────
     if (block_to_free->next == NULL) 
     {
+        //ft_putstr_fd("OUI\n",1);
+        //display_t_heap(heap_found);
+        //execute_show_alloc_mem_ex();
         if (block_to_free->prev)
         {
             block_to_free->prev->next = NULL;
         }
 
-        // Nettoyage de la mémoire (métadonnées + données)
-        ft_bzero(block_to_free, block_to_free->data_size + sizeof(t_block));
-
         // Mise à jour du compteur de blocs de la heap
         heap_found->block_count -= 1;
+
+        heap_found->free_size   += block_to_free->data_size + sizeof(t_block);
     }
+
 
     // ───────────────────────────────────────────────
     // Si la heap ne contient plus aucun bloc,
@@ -84,6 +90,7 @@ void execute_free(void *ptr)
     {
         delete_heap(heap_found, &heap_anchor);
     }
+
 }
 
 void free(void *ptr)
@@ -103,7 +110,6 @@ void free(void *ptr)
     close(fd);
     
     execute_free(ptr);
-
 
     pthread_mutex_unlock(&mt_protect);
 }

@@ -37,7 +37,7 @@ typedef struct s_heap
 	struct s_heap	*prev;
 	struct s_heap	*next;
 
-	t_heap_group	group;
+	t_heap_group	group;         // Constante type de la heap (TINY, SMALL ou LARGE)
 	size_t			total_size;    // Taille totale de la heap
 	size_t			free_size;     // Espace de la heap qui n'appartient à aucun block (free ou pas !)
 	size_t			block_count;   // Nombre de block dans la heap
@@ -81,6 +81,7 @@ void         *execute_malloc(size_t size);
 void         execute_free(void *ptr);
 void         *execute_realloc(void *ptr, size_t size);
 void         execute_show_alloc_mem();
+void         execute_show_alloc_mem_ex();
 
 
 /* ======
