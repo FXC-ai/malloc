@@ -1,0 +1,6 @@
+*.pdf
+*.out
+*.o
+*.out
+/.vscode
+/a.out.dSYM/Contents

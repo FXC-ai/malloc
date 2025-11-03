@@ -1,10 +1,13 @@
-COLOUR_GREEN=\033[0;32m
-COLOUR_RED=\033[0;31m
-COLOUR_BLUE=\033[0;34m
-COLOUR_END=\033[0m
+CC      := gcc
+CFLAGS  := -Wall -Wextra -Werror -fPIC -I inc
+LDFLAGS := -shared
+NAME    := libft_malloc.so
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+ifeq ($(HOSTTYPE),)
+HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
+REAL_LIB := libft_malloc_$(HOSTTYPE).so
 
 SRCS := \
 	src/malloc.c \
@@ -39,64 +42,38 @@ SRCS := \
 	src/display/display_t_heap_group.c \
 	src/display/display_t_block.c \
 	src/display/display_block_chain.c \
-	src/libft/ft_bzero.c \
-	src/libft/ft_putstr_fd.c \
-	src/libft/ft_strlen.c \
-	src/libft/ft_memcpy.c \
-	src/libft/ft_memcmp.c \
-	src/libft/ft_putbool.c \
-	src/libft/ft_putsize_t.c \
-	src/libft/ft_putsize_t_fd.c \
-	src/libft/ft_putnb_hex_fd.c \
-	src/libft/ft_memmove.c \
-	src/libft/ft_putconststr_fd.c \
-
 
 
 OBJS := $(SRCS:src/%.c=obj/%.o)
 
-NAME := libft_malloc.so
+all: libft/libft.a $(NAME)
 
-ifeq ($(HOSTTYPE),)
-HOSTTYPE := $(shell uname -m)_$(shell uname -s)
-endif
-
-REAL_LIB := libft_malloc_$(HOSTTYPE).so
-
-all : dirs $(NAME)
-
-$(NAME) : $(REAL_LIB)
+$(NAME): $(REAL_LIB)
 	@rm -f $(NAME)
 	@ln -s $(REAL_LIB) $(NAME)
-	@echo "$(COLOUR_GREEN)$(NAME) created\n$(COLOUR_END)"
 
-$(REAL_LIB) : $(OBJS)
-	@$(CC) $(CFLAGS) -shared $(OBJS) -o $(REAL_LIB)
-	@echo "$(COLOUR_GREEN)$(REAL_LIB) created\n$(COLOUR_END)"
 
-obj/%.o : src/%.c
+$(REAL_LIB): $(OBJS) libft/libft.a
+	$(CC) -shared $(OBJS) -Wl,--whole-archive libft/libft.a -Wl,--no-whole-archive -o $(REAL_LIB)
+
+
+obj/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	@echo "$(COLOUR_BLUE)$< => $@ in progress$(COLOUR_END)"
-	@$(CC) $(CFLAGS) -fPIC -c $< -o $@ -I inc
-	@echo "$(COLOUR_GREEN)$@ created \n$(COLOUR_END)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-dirs :
-	@mkdir -p obj
-	@mkdir -p obj/utils
-	@mkdir -p obj/libft
-	@mkdir -p obj/block_management
-	@mkdir -p obj/heap_management
-	@mkdir -p obj/display
-	@echo "$(COLOUR_GREEN)All obj/ directories created$(COLOUR_END)"
 
-clean :
-	@rm -f $(OBJS)
-	@echo "$(COLOUR_RED)$(OBJS) deleted\n$(COLOUR_RED)"
+libft/libft.a:
+	$(MAKE) -C libft clean
+	$(MAKE) -C libft
 
-fclean : clean
-	@rm -f $(NAME) $(REAL_LIB)
-	@echo "$(COLOUR_RED)$(NAME) $(REAL_LIB) deleted\n$(COLOUR_RED)"
+clean:
+	$(MAKE) -C libft clean
+	rm -f $(OBJS)
 
-re : fclean all
+fclean: clean
+	rm -f libft/libft.a
+	rm -f $(NAME) $(REAL_LIB)
 
-.PHONY: all clean fclean re dirs
+re: fclean all
+
+.PHONY: all clean fclean re

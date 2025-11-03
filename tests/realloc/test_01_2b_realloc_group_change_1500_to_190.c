@@ -52,38 +52,36 @@ static void print_n_bytes_as_str(const char *label, char *buf, size_t n)
     ((char*)buf)[n] = saved;
 }
 
-/* === Test 1.1 : Reallocation dans une heap de type différent (160 -> 1600) === */
+/* === Test 1.2b : malloc(1500) -> realloc(190) === */
 int main(void)
 {
     char *ptr1 = 0;
     char *ptr_test = 0;
 
-    /* 160 octets utiles (on imprimera 159 + '\0' pour éviter toute lecture hors-borne) */
     const char *str160 =
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
         "0123456789abcdef0123456789abcde";
 
-    banner("TEST 1.1 — Reallocation dans une heap de type différent",
-           "Scenario: malloc(160) → memcpy(data) → realloc(1600) + vérif du contenu");
+    banner("TEST 1.2b — Reallocation dans une heap de type différent",
+           "Scenario: malloc(1500) → memcpy(160) → realloc(190) + vérif du contenu");
 
-    /* Étape 1 : allocation initiale */
-    step("Étape 1: malloc(160)");
-    ptr1 = (char*)malloc(160);
+    /* Étape 1 : allocation */
+    step("Étape 1: malloc(1500)");
+    ptr1 = (char*)malloc(1500);
     show_alloc_mem_ex();
 
-    /* Étape 2 : écrire des données et afficher sans déborder */
-    step("Étape 2: ft_memcpy(ptr1, str160, 159); ptr1[159] = '\\0'  (pour affichage sûr)");
+    /* Étape 2 : copier 160 octets lisibles et afficher 159 */
+    step("Étape 2: ft_memcpy(ptr1, str160, 159); ptr1[159] = '\\0'");
     ft_memcpy(ptr1, str160, 159);
     ptr1[159] = '\0';
     print_n_bytes_as_str("ptr1     = ", ptr1, 159);
 
-    /* Étape 3 : réallocation vers 1600 (changement de groupe probable) */
-    step("Étape 3: realloc(ptr1, 1600)");
-    ptr_test = (char*)realloc(ptr1, 1600);
+    /* Étape 3 : réallocation vers 190 */
+    step("Étape 3: realloc(ptr1, 190)");
+    ptr_test = (char*)realloc(ptr1, 190);
 
-    /* Après realloc, le contenu initial (min(160,1600)=160) doit être conservé.
-       On affiche les 159 premiers octets pour rester sûr. */
+    /* Après réalloc, on peut afficher les 159 premiers octets sans risque */
     if (ptr_test) {
         ptr_test[159] = '\0';
         print_n_bytes_as_str("ptr_test = ", ptr_test, 159);
@@ -93,10 +91,10 @@ int main(void)
 
     show_alloc_mem_ex();
 
-    /* Étape 4 : récap adresses / déplacement */
+    /* Étape 4 : recap */
     recap(ptr1, ptr_test);
 
-    /* Étape 5 : nettoyage */
+    /* Étape 5 : free */
     step("Étape 5: free(ptr_test)");
     free(ptr_test);
     show_alloc_mem_ex();

@@ -1,11 +1,11 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
+#include "../libft/libft.h"
 #include <stddef.h>
 #include <sys/mman.h>
 #include <stdint.h>
 #include <pthread.h>
-#include <unistd.h>
 #include <fcntl.h>
 
 # define DEBUG_MOD 1
