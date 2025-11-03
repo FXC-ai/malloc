@@ -27,6 +27,7 @@ SRCS := \
 	src/block_management/init_block_chain.c \
 	src/block_management/search_block.c \
 	src/block_management/split_block.c \
+	src/block_management/split_block2.c \
 	src/block_management/merge_previous_block.c \
 	src/block_management/merge_next_block.c \
 	src/block_management/delete_last_block.c \

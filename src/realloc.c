@@ -2,20 +2,20 @@
 #include <stdio.h>
 
 
-void block_mem_move(void *new_ptr, void *former_ptr)
+void block_mem_move(void *new_ptr, void *former_ptr, size_t size)
 {
     size_t size_memmove = 0;
 
     t_block *former_block = (t_block *) BLOCK_UNSHIFT(former_ptr);
-    t_block *new_block = (t_block *) BLOCK_UNSHIFT(former_ptr);
 
-    if (new_block->data_size > former_block->data_size)
+
+    if (former_block->data_size > size)
     {
-        size_memmove = former_block->data_size;
+        size_memmove = size;
     }
     else
     {
-        size_memmove = new_block->data_size;
+        size_memmove = former_block->data_size;
     }
 
     ft_memmove(new_ptr, former_ptr, size_memmove);
@@ -55,12 +55,18 @@ void *execute_realloc(void *ptr, size_t size)
         return NULL;
     }
 
+    
     if (heap_found->group != get_heap_group_from_block_size(size_alloc))
     {
-        execute_free(ptr);
-        return execute_malloc(size_alloc);
-    }
+        new_ptr = execute_malloc(size_alloc);
 
+        if (new_ptr != NULL)
+            block_mem_move(new_ptr, ptr, size);
+
+        return new_ptr;
+    }
+    
+   
     if (size_alloc == block_to_realloc->data_size)
     {
         return ptr;
@@ -69,7 +75,7 @@ void *execute_realloc(void *ptr, size_t size)
     
     if (size_alloc > block_to_realloc->data_size)
     {
-
+        // Le block est à la fin de la heap
         if
         (
             block_to_realloc->next == NULL 
@@ -81,33 +87,41 @@ void *execute_realloc(void *ptr, size_t size)
 
             return BLOCK_SHIFT(block_to_realloc);
         }
-        
+
+        // Le block est dans la heap
         if
         (
-            block_to_realloc->next == NULL 
-            && heap_found->free_size < (size_alloc - block_to_realloc->data_size)
+            block_to_realloc->next != NULL 
+            && block_to_realloc->next->is_free
+            && size_alloc == sizeof(t_block) + block_to_realloc->next->data_size + block_to_realloc->data_size
         )
         {
-            new_ptr = execute_malloc(size_alloc);
-            if (new_ptr == NULL)
-            {
-                return NULL;
-            }
-
-            block_mem_move(new_ptr, ptr);
-            
-            return new_ptr;
+            merge_next_block2(heap_found, block_to_realloc);
+            return ptr;
         }
 
+    }
+
+    if (size_alloc < block_to_realloc->data_size)
+    {
+        if (block_to_realloc->data_size > size_alloc + sizeof(t_block) + BLOCK_MIN_SIZE)
+        {
+            ft_putstr_fd("time to split\n",1);
+            // il est pas free !!!!
+            split_block2(heap_found, block_to_realloc, size_alloc);
+            return ptr;
+        }
 
 
     }
     
 
+
     new_ptr = execute_malloc(size_alloc);
 
     if (new_ptr != NULL)
-        block_mem_move(new_ptr, ptr);
+        block_mem_move(new_ptr, ptr, size);
+
 
 
     return new_ptr;

@@ -121,8 +121,11 @@ void         set_block_data_size(t_block *block, size_t size);
 void         set_block_is_free(t_block *block, t_bool is_free);
 
 void         split_block(t_heap *heap, t_block *left_block, size_t size);
+void		 split_block2 (t_heap  *heap, t_block *left_block, size_t  size);
 t_block      *merge_previous_block (t_heap *heap, t_block *block);
 void         merge_next_block(t_heap *heap, t_block *block);
+void         merge_next_block2(t_heap *heap, t_block *block);
+
 void         delete_last_block(t_heap *heap);
 t_block      *search_block(t_block *first_block, size_t min_data_size, t_bool is_free);
 

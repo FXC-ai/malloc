@@ -102,7 +102,6 @@ void show_alloc_mem()
 {
     pthread_mutex_lock(&mt_protect);
     
-
     execute_show_alloc_mem();
 
     pthread_mutex_unlock(&mt_protect);
