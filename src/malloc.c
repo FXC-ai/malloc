@@ -1,4 +1,4 @@
-#include "../../includes/malloc.h"
+#include "../includes/malloc.h"
 
 t_heap *heap_anchor = NULL;
 pthread_mutex_t mt_protect = PTHREAD_MUTEX_INITIALIZER;

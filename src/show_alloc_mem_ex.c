@@ -1,4 +1,4 @@
-#include "../../includes/malloc.h"
+#include "../includes/malloc.h"
 
 #define COLOR_RESET   "\033[0m"
 #define COLOR_BLUE    "\033[34m"

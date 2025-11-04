@@ -1,4 +1,5 @@
 #include "libft.h"
+#include <stdint.h>
 
 void ft_putnb_hex_fd (uintptr_t nb, int fd)
 {
