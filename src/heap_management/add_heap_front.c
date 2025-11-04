@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 
 void add_heap_front(t_heap **heap_start, t_heap *heap)

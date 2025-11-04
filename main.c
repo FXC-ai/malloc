@@ -3,21 +3,26 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <limits.h>
 // #include "inc/malloc.h"
 
 int main()
 {
-	char *test[12];
 
-	ft_bzero(test, 12);
+	printf("%lu\n", SIZE_MAX);
 
-	int *ptr = calloc(10, sizeof(int));
+	size_t size = 1024 * 1024 * 1024 * 1024;
 
-	printf("p = %p\n", ptr);
+	printf("size = %lu\n", size);
 
-	int *ptr1 = malloc(10 * sizeof(int));
+	void *ptr = malloc(size);
 
-	printf("p1 = %p\n", ptr);
+	if (ptr == NULL)
+	{
+		printf("Echec de l allocation\n");
+	}
+
+	printf("ptr = %p\n", ptr);
 
 	return 0;
 }

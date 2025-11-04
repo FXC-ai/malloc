@@ -1,8 +1,8 @@
-#include "../inc/malloc.h"
+#include "libft.h"
 
-void ft_putbool(t_bool bool)
+void ft_putbool(int bool)
 {
-    if (bool == TRUE)
+    if (bool == 1)
     {
         ft_putstr_fd("\033[32mTRUE\033[0m", 1);
     }

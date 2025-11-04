@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "libft.h"
 
 void	ft_putconststr_fd(const char *s, int fd)
 {

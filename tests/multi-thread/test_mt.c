@@ -1,6 +1,6 @@
 #include <pthread.h>
 #include <stdio.h>
-#include "../../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 #define NB_ROUTINE 10
 
@@ -18,7 +18,7 @@ void *routine(void *value)
 		//free(addr);
 		i++;
 
-		show_alloc_mem();	
+		//show_alloc_mem();	
 	}
 	return NULL;
 }
@@ -40,7 +40,7 @@ int main(void)
 
 	ft_putstr_fd("\n",1);
 	
-	show_alloc_mem();
+	show_alloc_mem_ex();
 
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 #include <stdio.h>
 
 
@@ -106,8 +106,6 @@ void *execute_realloc(void *ptr, size_t size)
     {
         if (block_to_realloc->data_size > size_alloc + sizeof(t_block) + BLOCK_MIN_SIZE)
         {
-            ft_putstr_fd("time to split\n",1);
-            // il est pas free !!!!
             split_block2(heap_found, block_to_realloc, size_alloc);
             return ptr;
         }

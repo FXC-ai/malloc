@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 
 t_heap *create_heap(t_heap_group heap_group, size_t heap_size)

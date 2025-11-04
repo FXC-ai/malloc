@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 void merge_next_block(t_heap *heap, t_block *block)
 {

@@ -1,4 +1,4 @@
-#include "../../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 /* Couleurs ANSI (pas de rouge/vert) */
 #define C_RESET   "\033[0m"

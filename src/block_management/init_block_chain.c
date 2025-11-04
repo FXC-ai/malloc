@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 t_block *init_block_chain(t_heap *heap, size_t data_size)
 {

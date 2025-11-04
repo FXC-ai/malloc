@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "libft.h"
 
 void ft_putnb_hex_fd (uintptr_t nb, int fd)
 {

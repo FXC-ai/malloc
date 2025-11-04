@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 void display_t_heap_group(t_heap_group heap_group)
 {

@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 t_block *add_block_back(t_heap *heap, size_t data_size, t_bool is_free)
 {

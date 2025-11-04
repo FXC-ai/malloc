@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 size_t get_heap_size_from_heap_group(t_heap_group heap_group, size_t size)
 {

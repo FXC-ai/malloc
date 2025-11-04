@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "../../includes/malloc.h"
 
 void set_block_prev(t_block *block, t_block *prev)
 {

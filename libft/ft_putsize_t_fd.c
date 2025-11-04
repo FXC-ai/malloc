@@ -1,4 +1,4 @@
-#include "../inc/malloc.h"
+#include "libft.h"
 
 void ft_putsize_t_fd (size_t nb, int fd)
 {
