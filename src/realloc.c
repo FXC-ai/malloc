@@ -133,18 +133,6 @@ void *realloc(void *ptr, size_t size)
 
     void *new_ptr = execute_realloc(ptr, size);
 
-    int fd = open("malloc.log", O_WRONLY | O_CREAT | O_APPEND, 0644);
-    if (fd > 0 && DEBUG_MOD == 1)
-    {
-        ft_putstr_fd("realloc(", fd);
-        ft_putnb_hex_fd((uintptr_t) ptr, fd);
-        ft_putstr_fd(", ", fd);
-        ft_putsize_t_fd(size, fd);
-        ft_putstr_fd(") => ",fd);
-        ft_putnb_hex_fd((uintptr_t) new_ptr, fd);
-        ft_putstr_fd("\n",fd);
-    }
-    close(fd);
 
     pthread_mutex_unlock(&mt_protect);
 

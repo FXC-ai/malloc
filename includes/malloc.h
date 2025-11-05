@@ -4,7 +4,6 @@
 #include "../libft/libft.h"
 #include <stddef.h>
 #include <sys/mman.h>
-#include <stdint.h>
 #include <pthread.h>
 #include <fcntl.h>
 
@@ -16,11 +15,7 @@
 # define SMALL_HEAP_SIZE (size_t)(32 * getpagesize())
 # define SMALL_BLOCK_SIZE (SMALL_HEAP_SIZE / 128)
 
-typedef enum e_bool
-{
-	FALSE,
-	TRUE
-}				t_bool;
+
 
 typedef enum e_heap_group
 {

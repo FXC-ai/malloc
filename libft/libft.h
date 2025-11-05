@@ -13,7 +13,17 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <string.h>
+# include <stdlib.h>
 # include <unistd.h>
+# include <stdint.h>
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}				t_bool;
+
 
 int		ft_atoi(const char	*str);
 void	*ft_memset(void *b, int c, size_t len);
@@ -50,5 +60,12 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+void    ft_putbool(t_bool bool);
+void    ft_putconststr_fd(const char *s, int fd);
+void    ft_putnb_hex_fd(uintptr_t nb, int fd);
+void    ft_putsize_t(size_t size);
+void    ft_putsize_t_fd(size_t size, int fd);
+
 
 #endif

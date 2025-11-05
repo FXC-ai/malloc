@@ -1,6 +1,6 @@
 #include "libft.h"
 
-void ft_putbool(int bool)
+void ft_putbool(t_bool bool)
 {
     if (bool == 1)
     {

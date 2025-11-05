@@ -55,7 +55,8 @@ $(NAME): $(REAL_LIB)
 
 
 $(REAL_LIB): $(OBJS) libft/libft.a
-	$(CC) -shared $(OBJS) -Wl,--whole-archive libft/libft.a -Wl,--no-whole-archive -o $(REAL_LIB)
+	$(CC) -shared $(OBJS) libft/libft.a -o $(REAL_LIB)
+
 
 
 obj/%.o: src/%.c

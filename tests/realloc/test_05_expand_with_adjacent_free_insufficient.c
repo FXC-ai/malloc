@@ -9,6 +9,25 @@
 #define P(s)    ft_putstr_fd((char*)(s), 1)
 #define PHEX(x) ft_putnb_hex_fd((uintptr_t)(x), 1)
 
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+	char	*dst_cpy;
+	char	*src_cpy;
+
+	if (!dst && !src)
+		return (NULL);
+	dst_cpy = (char *) dst;
+	src_cpy = (char *) src;
+	i = 0;
+	while (i < n)
+	{
+		dst_cpy[i] = src_cpy[i];
+		i++;
+	}
+	return (dst);
+}
+
 /* --- Helpers d'affichage --- */
 static void banner(const char *title, const char *subtitle)
 {

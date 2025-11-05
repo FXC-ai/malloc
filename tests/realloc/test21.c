@@ -1,5 +1,24 @@
 #include "../../includes/malloc.h"
 
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+	char	*dst_cpy;
+	char	*src_cpy;
+
+	if (!dst && !src)
+		return (NULL);
+	dst_cpy = (char *) dst;
+	src_cpy = (char *) src;
+	i = 0;
+	while (i < n)
+	{
+		dst_cpy[i] = src_cpy[i];
+		i++;
+	}
+	return (dst);
+}
+
 int main()
 {
     char *ptr1 = NULL;
@@ -444,7 +463,7 @@ int main()
     ft_putstr_fd(ptr_test, 1);
     ft_putstr_fd("\n", 1);
 
-    //show_alloc_mem_ex();
+    show_alloc_mem_ex();
 
 
     ft_putstr_fd("\n",1);
@@ -467,7 +486,7 @@ int main()
     free(ptr_test);
 
 
-    show_alloc_mem_ex();
+    // show_alloc_mem_ex();
 
     
 

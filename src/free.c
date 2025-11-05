@@ -99,18 +99,6 @@ void execute_free(void *ptr)
 void free(void *ptr)
 {
     pthread_mutex_lock(&mt_protect);
-
-    int fd = open("malloc.log", O_WRONLY | O_CREAT | O_APPEND, 0644);
-
-    if (fd > 0 && DEBUG_MOD == 1)
-    {
-
-        ft_putstr_fd("free(", fd);
-        ft_putnb_hex_fd((uintptr_t) ptr, fd);
-        ft_putstr_fd(")\n",fd);
-    }
-
-    close(fd);
     
     execute_free(ptr);
 

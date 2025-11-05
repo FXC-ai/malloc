@@ -4,7 +4,7 @@ echo "-------------------------- Library Compilation --------------------------"
 echo ""
 
 export HOSTTYPE=Testing
-make
+make re
 echo ""
 echo ""
 

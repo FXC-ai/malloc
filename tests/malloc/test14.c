@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "includes/malloc.h"
+#include "../../includes/malloc.h"
 
 void    print(char *s)
 {
@@ -23,8 +20,9 @@ int     main(void)
             return (1);
         }
         addr[0] = 42;
-
+        show_alloc_mem();
         free(addr); 
+        show_alloc_mem();
 
 
         i++; 
