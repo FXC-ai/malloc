@@ -34,12 +34,16 @@ static void show_alloc_block(t_block *block)
 */
 static void show_alloc_heap(t_heap *heap)
 {
-    display_t_heap_group(heap->group);
-    ft_putstr_fd(" : ", 1);
-    ft_putnb_hex_fd((uintptr_t) heap, 1);
-    write(1, "\n" ,1);
+    if (heap->block_count > 0)
+    {
+        display_t_heap_group(heap->group);
+        ft_putstr_fd(" : ", 1);
+        ft_putnb_hex_fd((uintptr_t) heap, 1);
+        write(1, "\n" ,1);
+    
+        block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);
 
-    block_chain_iter((t_block*) HEAP_SHIFT(heap), show_alloc_block);
+    }
 }
 
 /* ============================================================================
@@ -61,10 +65,13 @@ static void show_total_size(t_heap *heap)
         current_heap = current_heap->next;
     }
 
-    ft_putstr_fd("Total : ", 1);
-    ft_putsize_t(total);
-    ft_putstr_fd(" bytes\n", 1);
-    
+    if (total > 0)
+    {
+        ft_putstr_fd("Total : ", 1);
+        ft_putsize_t(total);
+        ft_putstr_fd(" bytes\n", 1);
+    }
+
 }
 
 /* ============================================================================

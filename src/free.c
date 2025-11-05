@@ -40,6 +40,7 @@ void execute_free(void *ptr)
     // On récupère le pointeur vers la structure du bloc associée à la zone mémoire
     t_block *block_to_free = BLOCK_UNSHIFT(ptr);
 
+
     // Recherche de la heap contenant ce bloc
     t_heap *heap_found = find_heap_from_ptr(heap_anchor, ptr);
 
@@ -62,7 +63,7 @@ void execute_free(void *ptr)
 
 
     // ───────────────────────────────────────────────
-    // Si le bloc libéré est le dernier de la heap,
+    // Si le bloc libéré est le dernier de la chaine de block,
     // on le nettoie et on met à jour les liens
     // ───────────────────────────────────────────────
     if (block_to_free->next == NULL) 
@@ -75,6 +76,7 @@ void execute_free(void *ptr)
             block_to_free->prev->next = NULL;
         }
 
+        // ft_bzero(block_to_free, block_to_free_data_size + sizeof())
         // Mise à jour du compteur de blocs de la heap
         heap_found->block_count -= 1;
 
@@ -88,6 +90,7 @@ void execute_free(void *ptr)
     // ───────────────────────────────────────────────
     if (heap_found->block_count == 0 && delete_heap_authorization(heap_found) == TRUE)
     {
+
         delete_heap(heap_found, &heap_anchor);
     }
 

@@ -40,7 +40,7 @@ void *execute_malloc (size_t size)
     t_heap *heap_found = NULL;
     t_heap *new_heap = NULL;
 
-    
+
     // Si la taille demandée est nulle, on ne fait rien
     if (size == 0) {return NULL;}
 
@@ -64,7 +64,7 @@ void *execute_malloc (size_t size)
 
         while (heap_found)
         {
-            if (heap_found->group == heap_group)
+            if (heap_found->group == heap_group && heap_found->block_count > 0)
             {
                 block_found = search_block
                 (
@@ -94,17 +94,36 @@ void *execute_malloc (size_t size)
 
     if (heap_anchor != NULL)
     {
-        heap_found = search_heap(
+        heap_found = search_heap
+        (
             heap_anchor,
             heap_group,
             0,                             // On ne filtre pas sur la taille totale
             size_alloc + sizeof(t_block),  // On vérifie l’espace libre disponible
             0                              // Pas de contrainte sur le nombre de blocs
         );
+        
 
-        // On ajoute un nouveau bloc à la fin de cette heap existante
-        block = add_block_back(heap_found, size_alloc, FALSE);
+        if (heap_found != NULL && heap_found->block_count == 0)
+        {
+
+            // Si la heap ne contient encore aucun block, on crée son premier block
+            block = HEAP_SHIFT(heap_found);
+            block->data_size = size_alloc;
+            block->prev = NULL;
+            block->next = NULL;
+            block->is_free = FALSE;
+
+            heap_found->block_count += 1;
+            heap_found->free_size -= (size_alloc + sizeof(t_block));
+        }
+        else
+        {
+            // On ajoute un nouveau bloc à la fin de la chaine de block existente
+            block = add_block_back(heap_found, size_alloc, FALSE);
+        }
     }
+
 
     // ───────────────────────────────────────────────
     // 3. Aucune heap disponible : création d’une nouvelle heap
@@ -124,6 +143,8 @@ void *execute_malloc (size_t size)
         // On initialise le premier bloc de cette nouvelle heap
         block = init_block_chain(heap_anchor, size_alloc);
     }
+
+
 
     // ft_putnb_hex_fd((uintptr_t) BLOCK_SHIFT(block));
     // ft_putstr_fd("\n", 1);

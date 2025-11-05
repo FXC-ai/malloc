@@ -42,6 +42,7 @@ int main()
     free(ptr_test);
 
     show_alloc_mem_ex();
+    show_alloc_mem();
 
     
     ft_putstr_fd("\n========================================================\n", 1);

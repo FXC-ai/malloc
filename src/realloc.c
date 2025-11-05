@@ -49,6 +49,7 @@ void *execute_realloc(void *ptr, size_t size)
         return NULL;
     }
 
+    // Verifification que le pointeur a bien été alloué avant
     heap_found = find_heap_from_ptr(heap_anchor, ptr);
     if (heap_found == NULL)
     {
