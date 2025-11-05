@@ -1,3 +1,4 @@
+
 echo ""
 echo "-------------------------- Library Compilation --------------------------"
 echo ""
@@ -32,6 +33,20 @@ echo ""
 echo ""
 echo "-------------------------- Malloc test (test1.c) --------------------------"
 echo ""
+echo "test0.c"
+
+cat test0.c
+
+echo ""
+echo ""
+
+echo ""
+echo "test1.c"
+
+cat test1.c
+
+echo ""
+echo ""
 
 echo "malloc @ stdlib"
 echo ""
@@ -45,9 +60,9 @@ gcc -o test1 test1.c && /usr/bin/time -v ./test1
 echo ""
 echo ""
 
-echo "Let's test now both programs with our library"
 echo "malloc @ libft_malloc"
 
+echo ""
 echo ""
 
 ./run_linux.sh /usr/bin/time -v ./test0
@@ -62,6 +77,22 @@ echo ""
 
 cat test2.c
 
+echo ""
+echo ""
+
+echo "malloc @ stdlib"
+echo ""
+echo ""
+
+gcc -o test2 test2.c && /usr/bin/time -v ./test2
+
+
+echo ""
+echo ""
+
+echo "malloc @ libft_malloc"
+
+echo ""
 echo ""
 
 gcc -o test2 test2.c && ./run_linux.sh /usr/bin/time -v ./test2

@@ -23,6 +23,7 @@ SRCS := \
 	src/heap_management/add_heap_front.c \
 	src/heap_management/search_heap.c \
 	src/heap_management/find_heap_from_ptr.c \
+	src/heap_management/delete_heap_authorization.c \
 	src/heap_management/delete_heap.c \
 	src/heap_management/t_heap_chain_iter.c \
 	src/block_management/create_block.c \
@@ -41,7 +42,7 @@ SRCS := \
 	src/display/display_heap_chain.c \
 	src/display/display_t_heap_group.c \
 	src/display/display_t_block.c \
-	src/display/display_block_chain.c \
+	src/display/display_block_chain.c
 
 
 OBJS := $(SRCS:src/%.c=obj/%.o)

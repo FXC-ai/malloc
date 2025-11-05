@@ -4,25 +4,29 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <sys/mman.h>
 // #include "inc/malloc.h"
 
 int main()
 {
 
-	printf("%lu\n", SIZE_MAX);
+	char *p = mmap
+    (
+        NULL,
+        4096,
+        PROT_READ | PROT_WRITE,
+        MAP_PRIVATE | MAP_ANONYMOUS,
+        -1,
+        0
+    );
 
-	size_t size = 1024 * 1024 * 1024 * 1024;
+	p = "Hello world !!!";
 
-	printf("size = %lu\n", size);
 
-	void *ptr = malloc(size);
 
-	if (ptr == NULL)
-	{
-		printf("Echec de l allocation\n");
-	}
+	printf("%ld\n %s\n", sizeof(size_t), p);
 
-	printf("ptr = %p\n", ptr);
+
 
 	return 0;
 }

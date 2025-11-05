@@ -1,12 +1,13 @@
 #include "../../includes/malloc.h"
 
-
 /*
     Il y a 3 cas a traiter :
          - []->[X]->[] (1)
          - [X]->[]->[] (2)
          - []->[]->[X] (3)
          - [X]         (4)
+
+    
 */
 void delete_heap(t_heap *heap_to_delete, t_heap **heap_anchor)
 {

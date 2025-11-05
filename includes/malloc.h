@@ -96,6 +96,7 @@ size_t       get_heap_size_from_heap_group(t_heap_group heap_group, size_t size)
 ** ===================== */
 t_heap       *create_heap(t_heap_group heap_group, size_t heap_size);
 void         add_heap_front(t_heap **heap_start, t_heap *heap_to_add);
+t_bool       delete_heap_authorization(t_heap *heap);
 void         delete_heap(t_heap *heap_to_delete, t_heap **heap_anchor);
 
 void         set_heap (t_heap *heap, size_t total_size, size_t free_size, size_t block_count);

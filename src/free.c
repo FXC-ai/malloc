@@ -86,7 +86,7 @@ void execute_free(void *ptr)
     // Si la heap ne contient plus aucun bloc,
     // on la supprime complètement
     // ───────────────────────────────────────────────
-    if (heap_found->block_count == 0)
+    if (heap_found->block_count == 0 && delete_heap_authorization(heap_found) == TRUE)
     {
         delete_heap(heap_found, &heap_anchor);
     }
