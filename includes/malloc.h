@@ -7,7 +7,6 @@
 #include <pthread.h>
 #include <fcntl.h>
 
-# define DEBUG_MOD 1
 # define BLOCK_MIN_SIZE 16
 
 # define TINY_HEAP_SIZE (size_t)(4 * getpagesize())
