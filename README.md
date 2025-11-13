@@ -295,8 +295,6 @@ void free(void *ptr)
 
 ![free_last.png](malloc_img/free_last.png)
 
-### Structure du code
-
 ## Realloc :
 
 La fonction realloc() permet de modifier la taille d’un bloc de mémoire déjà alloué. Dans cette implémentation, son comportement est volontairement simplifié, tout en restant conforme à la spécification standard. Elle ne tente pas de redimensionner le bloc « en place » : lorsqu’une nouvelle taille est demandée, elle effectue une nouvelle allocation, copie les données, puis libère l’ancienne zone.
@@ -315,10 +313,6 @@ void *realloc(void *ptr, size_t size);
 ### Schema du fonctionnement
 
 ![schemaGeneral.png](malloc_img/realloc_new.png)
-
-### Schéma du fonctionnement
-
-### Structure du code
 
 # Show_alloc_mem
 
