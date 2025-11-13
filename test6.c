@@ -47,8 +47,7 @@ int     main(void)
         i++; 
     }
         
-    //show_alloc_mem_ex();
-
+    show_alloc_mem_ex();
 
     return (0);
 }

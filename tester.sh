@@ -173,6 +173,29 @@ echo ""
 
 gcc -o test5 test5.c -L. -lft_malloc && ./run_linux.sh ./test5
 
+echo ""
+echo "-------------------------- Alignement test (test6.c) --------------------------"
+echo ""
+echo "test6.c"
+echo ""
+echo ""
+
+echo "malloc @ stdlib"
+echo ""
+echo ""
+
+gcc -o test6 test6.c -L. -lft_malloc && ./run_linux.sh ./test6
+
+echo ""
+echo ""
+echo "malloc @ libft_malloc"
+echo ""
+echo ""
+
+gcc -o test6 test6.c -L. -lft_malloc && ./run_linux.sh ./test6
+
+
+
 echo "======================================================================"
 echo "                              BONUS"
 echo "======================================================================"
