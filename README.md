@@ -309,13 +309,10 @@ void *realloc(void *ptr, size_t size);
 
 - **Cas `ptr == NULL`** : Si le pointeur est nul, l’appel est équivalent à : `malloc(size)`;
 - **Cas `size == 0` et `ptr != NUL`**: Dans ce cas, le bloc est libéré. L’appel est équivalent à `free(ptr)`;
-- **Cas général (redimensionnement)**
-    - Si la nouvelle taille est **identique** à l’ancienne, aucune opération n’est effectuée : la fonction renvoie simplement le **même pointeur**.
-    - Si la nouvelle taille est **différente** (plus grande ou plus petite) :
-        - Un **nouveau bloc** est alloué avec `malloc(size)`
-        - Le contenu de l’ancien bloc est **copié** dans la nouvelle zone (jusqu’à la plus petite des deux tailles)
-        - L’ancien bloc est **libéré** avec `free(ptr)`
-        - Le **nouveau pointeur** est retourné
+- **Cas général (redimensionnement)** -> cf schéma
+### Schema du fonctionnement
+
+![schemaGeneral.png](malloc_img/realloc_new.png)
 
 ### Avantages et limites
 
