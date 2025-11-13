@@ -314,20 +314,6 @@ void *realloc(void *ptr, size_t size);
 
 ![schemaGeneral.png](malloc_img/realloc_new.png)
 
-### Avantages et limites
-
-✅ **Avantages :**
-
-- Implémentation claire et robuste
-- Respect du comportement attendu de `realloc()`
-- Réduit les risques d’erreurs complexes sur la heap
-
-⚠️ **Limites :**
-
-- Ne tente pas d’agrandir ou de réduire le bloc « en place »
-- Entraîne une **nouvelle allocation** et une **copie mémoire** à chaque redimensionnement
-- Moins efficace pour des réallocations fréquentes ou sur de gros volumes de données
-
 ### Schéma du fonctionnement
 
 ### Structure du code
