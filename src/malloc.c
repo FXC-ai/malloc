@@ -156,6 +156,8 @@ void *execute_malloc (size_t size)
 void *malloc (size_t size)
 {
     pthread_mutex_lock(&mt_protect);
+
+
     
     void *ptr = execute_malloc(size);
     

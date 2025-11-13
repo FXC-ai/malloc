@@ -13,6 +13,7 @@ t_heap *create_heap(t_heap_group heap_group, size_t heap_size)
         0
     );
 
+
     if (heap == MAP_FAILED)
     {
         write(2, "Error : create_heap\n", 19);
@@ -27,6 +28,6 @@ t_heap *create_heap(t_heap_group heap_group, size_t heap_size)
     heap->prev        = NULL;
     
     // ft_bzero(HEAP_SHIFT(heap), heap_size - sizeof(t_heap));
-
+    display_t_heap(heap);
     return heap;
 }
