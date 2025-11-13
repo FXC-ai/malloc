@@ -184,7 +184,7 @@ echo "malloc @ stdlib"
 echo ""
 echo ""
 
-gcc -o test6 test6.c -L. -lft_malloc && ./run_linux.sh ./test6
+gcc -o test6 test6.c && /usr/bin/time -v ./test6
 
 echo ""
 echo ""
@@ -192,7 +192,7 @@ echo "malloc @ libft_malloc"
 echo ""
 echo ""
 
-gcc -o test6 test6.c -L. -lft_malloc && ./run_linux.sh ./test6
+gcc -o test6 test6.c -L. -lft_malloc && ./run_linux.sh /usr/bin/time -v ./test6
 
 
 

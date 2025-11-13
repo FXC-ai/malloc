@@ -174,7 +174,7 @@ Chaque heap contient donc une **liste chaînée de blocks**, où chaque block re
 
 Voici un schéma représentatif de la structure de notre heap :
 
-![schemaGeneral.png](malloc/schemaGeneral.png)
+![schemaGeneral.png](malloc_png/schemaGeneral.png)
 
 Chaque heap contient donc une **liste chaînée de blocks**, où chaque block représente une zone allouée ou libérée à l’intérieur de cette heap.
 
@@ -198,11 +198,11 @@ Lorsqu’un appel à `malloc(size)` est effectué :
 
 ### Schéma du fonctionnement
 
-![AlgoMallocJterraz.png](malloc/AlgoMallocJterraz.png)
+![AlgoMallocJterraz.png](malloc_png/AlgoMallocJterraz.png)
 
 ### Structure du code
 
-![ScemaMalloc.png](malloc/ScemaMalloc.png)
+![ScemaMalloc.png](malloc_png/ScemaMalloc.png)
 
 ### Cas particulier : malloc(0)
 
@@ -368,7 +368,7 @@ Total : 52698 bytes
 
 ### Structure du code
 
-![SchemaSAM.png](malloc/SchemaSAM.png)
+![SchemaSAM.png](malloc_png/SchemaSAM.png)
 
 # BONUS : Rendre malloc thread-safe
 
@@ -581,11 +581,11 @@ Elle repose sur un système de **chunks** (blocs mémoire) organisés en listes 
 
 - une liste pour les blocs **libres :**
     
-    ![Screenshot 2024-07-12 at 14-31-07 Microsoft PowerPoint - 04 Dynamic Memory v6.ppt Compatibility Mode - 04_dynamic_memory_v6.pdf.png](malloc/e13e6898-a8e1-48eb-8bb3-7de137866517.png)
+    ![Screenshot 2024-07-12 at 14-31-07 Microsoft PowerPoint - 04 Dynamic Memory v6.ppt Compatibility Mode - 04_dynamic_memory_v6.pdf.png](malloc_png/e13e6898-a8e1-48eb-8bb3-7de137866517.png)
     
 - une autre pour les blocs **occupés :**
     
-    ![Screenshot 2024-07-12 at 14-30-06 Microsoft PowerPoint - 04 Dynamic Memory v6.ppt Compatibility Mode - 04_dynamic_memory_v6.pdf.png](malloc/b820f102-1eba-443a-836a-f9775bc038bf.png)
+    ![Screenshot 2024-07-12 at 14-30-06 Microsoft PowerPoint - 04 Dynamic Memory v6.ppt Compatibility Mode - 04_dynamic_memory_v6.pdf.png](malloc_png/b820f102-1eba-443a-836a-f9775bc038bf.png)
     
 
 Ce modèle permet une recherche de bloc libre **plus rapide** grâce à des structures adaptées (bins triés par taille, par exemple). C’est une source précieuse pour comprendre comment la gestion mémoire est optimisée dans les implémentations réelles du `malloc` système.
