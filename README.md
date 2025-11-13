@@ -293,6 +293,8 @@ void free(void *ptr)
 
 ### Schéma du fonctionnement
 
+![free_last.png](malloc_img/free_last.png)
+
 ### Structure du code
 
 ## Realloc :
