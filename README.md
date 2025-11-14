@@ -225,10 +225,10 @@ Exemple (illustratif) :
 
 - size = 1025 octets → arrondi(1025, 16) = 1040 octets
 - Les métadonnées : sizeof(t_heap) + sizeof(t_block) = 80 octets
-- Taille brute demandée : 80 + 1040 = 1120 → arrondi à 4096 (si page = 4096)
+- Taille brute demandée : 80 + 1040 = 1120 → arrondi à 4096
 - Mémoire utilisable par l’utilisateur : 1040 octets (pas 4096 − 80). Le reste de la page est du padding interne propre à cette heap LARGE.
 
-Il reste pas 4016 octets dont 1040 sont pour l’utilisateur. L’utilisateur ne doit utiliser que la taille demandée (arrondie à l’alignement), ici 1040. Le surplus vient de l’arrondi par pages et reste interne (pas garanti stable ni réutilisé dans une LARGE).
+L’utilisateur ne doit utiliser que la taille demandée (arrondie à l’alignement), ici 1040. Le surplus vient de l’arrondi par pages et reste interne.
 
 Sécurité mémoire
 
@@ -281,12 +281,12 @@ void free(void *ptr)
 ### Etapes du fonctionnement
 
 1. **Cas particulier : `free(NULL)`  :** Si le pointeur passé à `free()` est `NULL`, la fonction ne fait rien. Ce comportement simplifie l’usage de `free`.
-2. **Vérification du pointeur :** On s’assure que le pointeur correspond bien à un bloc appartenant à l’une de nos heaps internes. Si ce n’est pas le cas (pointeur corrompu ou double free), aucune opération n’est effectuée.
+2. **Vérification du pointeur :** On s’assure que le pointeur correspond bien à un bloc appartenant à l’une de nos heaps internes. Si ce n’est pas le cas (poiteur de la stack ou pointeur libéré prédemment), aucune opération n’est effectuée.
 3. **Libération du bloc :** Le champ `is_free` du bloc est mis à `TRUE`, indiquant qu’il est désormais libre.
 4. **Fusion des blocs adjacents libres :** Si les blocs voisins (précédent ou suivant) sont également libres, ils sont **fusionnés** en un seul bloc plus grand. Cette étape limite la **fragmentation interne**, c’est-à-dire la perte d’espace due à de multiples petits blocs libres.
 5. **Nettoyage de la heap**
     - Si le bloc libéré est le **dernier de sa heap**, il est supprimé.
-    - Si la heap devient complètement vide (tous ses blocs sont libres), elle est **désallouée intégralement** via `munmap()`.
+    - Si la heap devient complètement vide (tous ses blocs sont libres), elle est **désallouée intégralement** via `munmap()`. ERREUR !!! cf. remarque qui suit... J'ai passé la        correction avec cette erreur. Cela m'a valu un 0 ! J'ai fait un patch correctif qui conservait en permanence une heap en mémoire. Cela m'a permis de passer les tests de la       correction mais je ne faisais que masquer le problème. Je conseille d'effectuer des mnunmap unique lorsque getrlimit est atteint...
 
 > ATTENTION !!! Dans le code, la heap n’est PAS supprimée lorsqu’elle est vide ! Il ne faut supprimer les heaps que lorsque getrlimit est atteint ! J’ai négligé ce point lors du projet. C’est une erreur à ne pas reproduire !
 > 
@@ -308,8 +308,9 @@ void *realloc(void *ptr, size_t size);
 ### Étapes du fonctionnement
 
 - **Cas `ptr == NULL`** : Si le pointeur est nul, l’appel est équivalent à : `malloc(size)`;
-- **Cas `size == 0` et `ptr != NUL`**: Dans ce cas, le bloc est libéré. L’appel est équivalent à `free(ptr)`;
+- **Cas `size == 0` et `ptr != NULL`**: Dans ce cas, le bloc est libéré. L’appel est équivalent à `free(ptr)`;
 - **Cas général (redimensionnement)** -> cf schéma
+  
 ### Schema du fonctionnement
 
 ![schemaGeneral.png](malloc_img/realloc_new.png)
