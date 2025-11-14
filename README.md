@@ -210,7 +210,7 @@ Le comportement standard de malloc(0) dépend des implémentations, mais la plup
 
 ### Le cas particulier de l’allocation LARGE :
 
-Lorsqu’une demande dépasse la borne SMALL (dans ton design, > 1024 octets), l’allocation est traitée comme LARGE. Dans ce cas :
+Lorsqu’une demande dépasse la borne SMALL (> 1024 octets), l’allocation est traitée comme LARGE. Dans ce cas :
 
 - On crée une nouvelle heap dédiée via mmap (une zone indépendante, non partagée avec TINY/SMALL).
 - La taille réellement mappée est arrondie au multiple de la taille de page (souvent 4096 octets), conformément à getpagesize()/sysconf(_SC_PAGESIZE).
@@ -502,7 +502,7 @@ export LD_PRELOAD=$PWD/libft_malloc.so
 - `LD_LIBRARY_PATH` indique où chercher les bibliothèques partagées.
 - `LD_PRELOAD` force le chargement de notre bibliothèque avant toutes les autres (y compris la libc).
 
-⚠️ **Attention :** ne pas exécuter ces commandes globalement dans ton terminal, car elles affecteraient toutes les commandes (et la plupart cesseraient de fonctionner).
+⚠️ **Attention :** ne pas exécuter ces commandes globalement dans le terminal, car elles affecteraient toutes les commandes (et la plupart cesseraient de fonctionner).
 
 Pour une exécution sécurisée, il esr possible d’utiliser un script dans un fichier sh, par exemple run.sh:
 
@@ -547,7 +547,7 @@ Cependant, il faut noter que Valgrind utilise lui-même des appels à `malloc` e
 
 > 💡 Pour des tests précis, il est donc recommandé de :
 > 
-> - exécuter Valgrind **sans** `LD_PRELOAD` pour tester ton code utilisateur,
+> - exécuter Valgrind **sans** `LD_PRELOAD` pour tester le code utilisateur,
 > - et avec `LD_PRELOAD` uniquement pour vérifier le comportement général du `malloc` (pas pour mesurer les leaks).
 
 ## Pour aller plus loin…
