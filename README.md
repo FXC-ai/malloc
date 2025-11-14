@@ -219,11 +219,11 @@ Lorsqu’une demande dépasse la borne SMALL (> 1024 octets), l’allocation est
     2. les métadonnées de block (t_block),
     3. la zone utilisateur (taille demandée alignée au multiple de 16 supérieur)
 
-Important : on demande à mmap la taille sizeof(t_heap) + sizeof(t_block) + align(size, 16), puis on arrondit à la page. On n’expose que size (alignée) à l’utilisateur ; le surplus dû à l’arrondi n’est pas de la mémoire utilisable par l’appelant (même si elle est mappée dans la heap).
+Important : on demande à mmap la taille sizeof(t_heap) + sizeof(t_block) + arrondi(size, 16), puis on arrondit à la page. On n’expose que size (alignée) à l’utilisateur ; le surplus dû à l’arrondi n’est pas de la mémoire utilisable par l’appelant (même si elle est mappée dans la heap).
 
 Exemple (illustratif) :
 
-- size = 1025 octets → align(1025, 16) = 1040 octets
+- size = 1025 octets → arrondi(1025, 16) = 1040 octets
 - Les métadonnées : sizeof(t_heap) + sizeof(t_block) = 80 octets
 - Taille brute demandée : 80 + 1040 = 1120 → arrondi à 4096 (si page = 4096)
 - Mémoire utilisable par l’utilisateur : 1040 octets (pas 4096 − 80). Le reste de la page est du padding interne propre à cette heap LARGE.
