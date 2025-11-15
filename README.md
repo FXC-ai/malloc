@@ -357,9 +357,7 @@ Cela signifie que si le thread A modifie la liste des blocs (par exemple en allo
 
 ### Exemple de corruption du tas d’un malloc non thread-safe
 
-Voici un exemple
-
-Voici ce que l’on peut obtenir :
+Voici un exemple :
 
 ```c
 #include <pthread.h>
@@ -397,6 +395,8 @@ int main()
 	return 0;
 }
 ```
+
+Voici ce que l’on peut obtenir :
 
 ```bash
 routine = routine = 0x0x7733447755996689f8005500  21
