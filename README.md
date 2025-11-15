@@ -505,7 +505,7 @@ export LD_PRELOAD=$PWD/libft_malloc.so
 
 ⚠️ **Attention :** ne pas exécuter ces commandes globalement dans le terminal, car elles affecteraient toutes les commandes (et la plupart cesseraient de fonctionner).
 
-Pour une exécution sécurisée, il esr possible d’utiliser un script dans un fichier sh, par exemple run.sh:
+Pour une exécution sécurisée, il esr possible d’utiliser un script dans un fichier sh, par exemple run_linux.sh:
 
 ```bash
 #!/bin/sh
@@ -517,7 +517,7 @@ $@
 Ainsi la commande suivante permet de bypass le malloc par défaut uniquement pour notre executable de test.
 
 ```bash
-sh run.sh ./a.out
+sh run_linux.sh ./a.out
 ```
 
 Ce script applique le `LD_PRELOAD` **uniquement** pour le programme donné
@@ -527,7 +527,7 @@ Ce script applique le `LD_PRELOAD` **uniquement** pour le programme donné
 Pendant tout le projet je testais mon code avec la commande suivante qui effectue les 3 etapes précedentes en une seule fois :
 
 ```bash
- make && gcc simple_test.c -I inc -L. -lft_malloc && sh run.sh valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./a.out
+ make && gcc simple_test.c -I inc -L. -lft_malloc && sh run_linux.sh ./a.out
 ```
 
 ## A propos des leaks
